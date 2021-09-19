@@ -7,4 +7,7 @@ public class ComponentIcon extends DisplayIcon {
         super(displayBehavior);
     }
 
+    public void executeDisplay() {
+
+    }
 }
