@@ -1,11 +1,10 @@
 package network.utilities;
 
+import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import network.records.FactoryEntryComponent;
-import network.records.FactoryMetadata;
-import network.records.IconMetadata;
+import network.records.*;
 import org.xml.sax.SAXException;
 
 import org.w3c.dom.Document;
@@ -16,26 +15,7 @@ import org.w3c.dom.Node;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-
-/***************************************************************************************
- *    A part of the source code here to read XML with DOM parser is built off of
- *    or taken inspiration off of publicly-available demos from tutorials.
- *
- *    Title: Mkyong's XML Parser Source Code
- *    Author: mkyong
- *    Date: 2021
- *    Availability: https://mkyong.com/java/how-to-read-xml-file-in-java-dom-parser/
-***************************************************************************************/
-
-/***************************************************************************************
- *    Une partie du code source ici pour lire XML avec l'analyseur DOM est
- *    construite à partir ou inspiré des démos accéssibles au public à partir des tutoriels.
- *
- *    Titre: Mkyong's XML Parser Source Code
- *    Autheur: mkyong
- *    Date: 2021
- *    Site: https://mkyong.com/java/how-to-read-xml-file-in-java-dom-parser/
- ***************************************************************************************/
+import java.util.Arrays;
 
 public final class XMLUtils {
     private XMLUtils() {}
@@ -51,15 +31,13 @@ public final class XMLUtils {
     }
 
     public static ArrayList<FactoryMetadata> readFactoryMetadata(String filePath) throws ParserConfigurationException, IOException, SAXException {
-        var factory = DocumentBuilderFactory.newInstance();
-        var builder = factory.newDocumentBuilder();
+        var toolkit = getToolKit(filePath, "metadonnees");
 
-        Document doc = builder.parse(new File(filePath));
-        doc.getDocumentElement().normalize();
+        DocumentBuilder builder = toolkit.builder();
+        Document doc = toolkit.doc();
+        Node branch = toolkit.branch();
 
-        // Target only "usine" within the element "metadonnees"
-        Node metadata = doc.getElementsByTagName("metadonnees").item(0);
-        NodeList list = ((Element) metadata).getElementsByTagName("usine");
+        NodeList list = ((Element) branch).getElementsByTagName("usine");
 
         var factoryMetadataList = new ArrayList<FactoryMetadata>();
 
@@ -121,5 +99,47 @@ public final class XMLUtils {
         return factoryMetadataList;
     }
 
-    // TODO Implement readFactoryCoordinates()
+    public static ArrayList<FactoryCoordinates> readFactoryCoordinates(String filePath) throws IOException, SAXException, ParserConfigurationException {
+        var toolkit = getToolKit(filePath, "simulation");
+
+        DocumentBuilder builder = toolkit.builder();
+        Document doc = toolkit.doc();
+        Node branch = toolkit.branch();
+
+        NodeList list = ((Element) branch).getElementsByTagName("usine");
+
+        var factoryCoords = new ArrayList<FactoryCoordinates>();
+
+        for(int i = 0; i < list.getLength(); i++) {
+            String factoryType = null;
+            int id = 0, x = 0, y = 0;
+
+            Node node = list.item(i);
+
+            if(node.getNodeType() == Node.ELEMENT_NODE) {
+                Element element = (Element) node;
+
+                factoryType = element.getAttribute("type");
+                id = Integer.parseInt(element.getAttribute("id"));
+                x = Integer.parseInt(element.getAttribute("x"));
+                y = Integer.parseInt(element.getAttribute("y"));
+            }
+
+            factoryCoords.add(new FactoryCoordinates(factoryType, id, x, y));
+        }
+
+        return factoryCoords;
+    }
+
+    private static XMLToolKit getToolKit(String filePath, String tagName) throws IOException, SAXException, ParserConfigurationException {
+        var factory = DocumentBuilderFactory.newInstance();
+        var builder = factory.newDocumentBuilder();
+
+        Document doc = builder.parse(new File(filePath));
+        doc.getDocumentElement().normalize();
+
+        Node metadata = doc.getElementsByTagName(tagName).item(0);
+
+        return new XMLToolKit(builder, doc, metadata);
+    }
 }
