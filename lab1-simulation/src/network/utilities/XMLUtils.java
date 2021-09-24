@@ -15,26 +15,15 @@ import org.w3c.dom.Node;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public final class XMLUtils {
+
+    // Prevent accidental initialization
     private XMLUtils() {}
-
-    public static NodeList readXML(String filePath, String tagName) throws ParserConfigurationException, IOException, SAXException {
-        var factory = DocumentBuilderFactory.newInstance();
-        var builder = factory.newDocumentBuilder();
-
-        Document doc = builder.parse(new File(filePath));
-        doc.getDocumentElement().normalize();
-
-        return doc.getElementsByTagName(tagName);
-    }
 
     public static ArrayList<FactoryMetadata> readFactoryMetadata(String filePath) throws ParserConfigurationException, IOException, SAXException {
         var toolkit = getToolKit(filePath, "metadonnees");
 
-        DocumentBuilder builder = toolkit.builder();
-        Document doc = toolkit.doc();
         Node branch = toolkit.branch();
 
         NodeList list = ((Element) branch).getElementsByTagName("usine");
@@ -104,8 +93,6 @@ public final class XMLUtils {
     public static ArrayList<FactoryCoordinates> readFactoryCoordinates(String filePath) throws IOException, SAXException, ParserConfigurationException {
         var toolkit = getToolKit(filePath, "simulation");
 
-        DocumentBuilder builder = toolkit.builder();
-        Document doc = toolkit.doc();
         Node branch = toolkit.branch();
 
         NodeList list = ((Element) branch).getElementsByTagName("usine");
@@ -113,8 +100,8 @@ public final class XMLUtils {
         var factoryCoords = new ArrayList<FactoryCoordinates>();
 
         for(int i = 0; i < list.getLength(); i++) {
-            String factoryType = null;
-            int id = 0, x = 0, y = 0;
+            String factoryType;
+            int id, x, y;
 
             Node node = list.item(i);
 
@@ -136,8 +123,6 @@ public final class XMLUtils {
     public static ArrayList<Pathing> readPathing(String filePath) throws IOException, ParserConfigurationException, SAXException {
         var toolkit = getToolKit(filePath, "simulation");
 
-        DocumentBuilder builder = toolkit.builder();
-        Document doc = toolkit.doc();
         Node branch = toolkit.branch();
 
         NodeList list = ((Element) branch).getElementsByTagName("chemin");
@@ -145,7 +130,7 @@ public final class XMLUtils {
         var networkPathing = new ArrayList<Pathing>();
 
         for(int i = 0; i < list.getLength(); i++) {
-            int from = 0, to = 0;
+            int from, to;
 
             Node node = list.item(i);
 
