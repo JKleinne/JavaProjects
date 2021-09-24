@@ -90,7 +90,9 @@ public final class XMLUtils {
                 try {
                     exitType = exitTypeElement.getAttribute("type");
                     productionInterval = Integer.parseInt(element.getElementsByTagName("interval-production").item(0).getTextContent());
-                } catch (NullPointerException n) {}
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                }
             }
 
             factoryMetadataList.add(new FactoryMetadata(factoryType, icons, entryComponentList, exitType, productionInterval));
@@ -123,12 +125,41 @@ public final class XMLUtils {
                 id = Integer.parseInt(element.getAttribute("id"));
                 x = Integer.parseInt(element.getAttribute("x"));
                 y = Integer.parseInt(element.getAttribute("y"));
-            }
 
-            factoryCoords.add(new FactoryCoordinates(factoryType, id, x, y));
+                factoryCoords.add(new FactoryCoordinates(factoryType, id, x, y));
+            }
         }
 
         return factoryCoords;
+    }
+
+    public static ArrayList<Pathing> readPathing(String filePath) throws IOException, ParserConfigurationException, SAXException {
+        var toolkit = getToolKit(filePath, "simulation");
+
+        DocumentBuilder builder = toolkit.builder();
+        Document doc = toolkit.doc();
+        Node branch = toolkit.branch();
+
+        NodeList list = ((Element) branch).getElementsByTagName("chemin");
+
+        var networkPathing = new ArrayList<Pathing>();
+
+        for(int i = 0; i < list.getLength(); i++) {
+            int from = 0, to = 0;
+
+            Node node = list.item(i);
+
+            if (node.getNodeType() == Node.ELEMENT_NODE) {
+                Element element = (Element) node;
+
+                from = Integer.parseInt(element.getAttribute("de"));
+                to = Integer.parseInt(element.getAttribute("vers"));
+
+                networkPathing.add(new Pathing(from, to));
+            }
+        }
+
+        return networkPathing;
     }
 
     private static XMLToolKit getToolKit(String filePath, String tagName) throws IOException, SAXException, ParserConfigurationException {
