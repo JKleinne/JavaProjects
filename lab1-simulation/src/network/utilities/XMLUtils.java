@@ -93,11 +93,9 @@ public final class XMLUtils {
                 }
 
                 Element exitTypeElement =  (Element) element.getElementsByTagName("sortie").item(0);
-                try {
+                if(exitTypeElement != null) {
                     exitType = exitTypeElement.getAttribute("type");
                     productionInterval = Integer.parseInt(element.getElementsByTagName("interval-production").item(0).getTextContent());
-                } catch (NullPointerException e) {
-                    e.printStackTrace();
                 }
             }
 
