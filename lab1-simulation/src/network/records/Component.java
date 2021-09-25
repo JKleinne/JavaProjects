@@ -1,6 +1,6 @@
 package network.records;
 
-import network.icons.ComponentIcon;
+import network.icons.DisplayIcon;
 import network.utilities.ComponentType;
 
-public record Component(ComponentIcon icon, ComponentType type) {}
+public record Component(DisplayIcon icon, ComponentType type) {}
