@@ -2,11 +2,11 @@ package network.factories;
 
 import network.records.Component;
 import network.icons.IndicatorIcon;
-import network.observer.Observer;
+import network.observer.IObserver;
 
 import java.util.ArrayList;
 
-public class Factory implements Observer {
+public class Factory implements IObserver {
     protected ArrayList<Component> components;
     protected IndicatorIcon capacity;
 

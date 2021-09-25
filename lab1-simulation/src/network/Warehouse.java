@@ -1,23 +1,23 @@
 package network;
 
 import network.records.Component;
-import network.observer.Observer;
-import network.observer.Subject;
-import network.strategies.sell.SellBehavior;
+import network.observer.IObserver;
+import network.observer.ISubject;
+import network.strategies.sell.ISellBehavior;
 
 import java.util.ArrayList;
 
-public class Warehouse implements Subject {
+public class Warehouse implements ISubject {
     private ArrayList<Component> planes;
-    private SellBehavior sellBehavior;
+    private ISellBehavior sellBehavior;
 
     @Override
-    public void registerObserver(Observer o) {
+    public void registerObserver(IObserver o) {
 
     }
 
     @Override
-    public void removeObserver(Observer o) {
+    public void removeObserver(IObserver o) {
 
     }
 

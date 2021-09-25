@@ -1,5 +1,5 @@
 package network.observer;
 
-public interface Observer {
+public interface IObserver {
     public void update();
 }
