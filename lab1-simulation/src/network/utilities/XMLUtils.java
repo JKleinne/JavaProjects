@@ -21,6 +21,23 @@ public final class XMLUtils {
     // Prevent accidental initialization
     private XMLUtils() {}
 
+    public static ArrayList<FactoryConfig> getFactoryConfig(String filePath) throws ParserConfigurationException, IOException, SAXException {
+        var factoriesMetadata = readFactoryMetadata(filePath);
+        var factoriesCoords = readFactoryCoordinates(filePath);
+        var configList = new ArrayList<FactoryConfig>();
+
+        for(FactoryCoordinates coords : factoriesCoords) {
+            FactoryMetadata metadata = factoriesMetadata.stream()
+                    .filter(x -> x.factoryType().equals(coords.factoryType()))
+                    .findFirst()
+                    .orElse(null);
+
+            configList.add(new FactoryConfig(coords, metadata));
+        }
+
+        return configList;
+    }
+
     public static ArrayList<FactoryMetadata> readFactoryMetadata(String filePath) throws ParserConfigurationException, IOException, SAXException {
         var toolkit = getToolKit(filePath, "metadonnees");
 
