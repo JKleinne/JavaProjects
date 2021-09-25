@@ -4,10 +4,10 @@ import network.records.Component;
 import network.icons.IndicatorIcon;
 import network.observer.IObserver;
 
-import java.util.ArrayList;
+import java.util.Stack;
 
 public abstract class Factory implements IObserver {
-    protected ArrayList<Component> components;
+    protected Stack<Component> components;
     protected IndicatorIcon capacity;
 
     @Override
@@ -17,5 +17,5 @@ public abstract class Factory implements IObserver {
 
     public void addComponent() {}
 
-    public abstract Component craftComponent(ArrayList<Component> components);
+    public abstract Component craftComponent(Stack<Component> components);
 }
