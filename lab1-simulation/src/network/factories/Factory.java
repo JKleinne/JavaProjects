@@ -6,7 +6,7 @@ import network.observer.IObserver;
 
 import java.util.ArrayList;
 
-public class Factory implements IObserver {
+public abstract class Factory implements IObserver {
     protected ArrayList<Component> components;
     protected IndicatorIcon capacity;
 
@@ -17,5 +17,5 @@ public class Factory implements IObserver {
 
     public void addComponent() {}
 
-    public Component craftComponent(Component c) { return c;}
+    public abstract Component craftComponent(ArrayList<Component> components);
 }
