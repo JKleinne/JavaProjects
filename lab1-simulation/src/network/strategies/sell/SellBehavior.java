@@ -1,7 +1,7 @@
 package network.strategies.sell;
 
-import network.components.Plane;
+import network.records.Component;
 
 public interface SellBehavior {
-    public void sell(Plane p);
+    void sell(Component plane);
 }

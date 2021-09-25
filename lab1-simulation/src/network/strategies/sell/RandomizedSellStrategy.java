@@ -1,10 +1,10 @@
 package network.strategies.sell;
 
-import network.components.Plane;
+import network.records.Component;
 
 public class RandomizedSellStrategy implements SellBehavior {
     @Override
-    public void sell(Plane p) {
+    public void sell(Component plane) {
 
     }
 }

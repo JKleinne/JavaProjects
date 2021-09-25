@@ -1,6 +1,6 @@
 package network.factories;
 
-import network.components.Component;
+import network.records.Component;
 import network.icons.IndicatorIcon;
 import network.observer.Observer;
 
