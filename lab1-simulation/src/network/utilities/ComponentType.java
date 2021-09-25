@@ -1,7 +1,7 @@
 package network.utilities;
 
 public enum ComponentType {
-    MATERIAL,
+    METAL,
     WING,
     MOTOR,
     PLANE
