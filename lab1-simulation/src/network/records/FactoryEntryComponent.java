@@ -1,3 +1,3 @@
 package network.records;
 
-public record FactoryEntryComponent(String type, String quantity) {}
+public record FactoryEntryComponent(String type, int quantity) {}

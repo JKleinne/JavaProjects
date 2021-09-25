@@ -10,8 +10,8 @@ import java.util.Stack;
 public class MotorFactory extends Factory {
     private int motorCapacity;
 
-    public MotorFactory(FactoryConfig config, Stack<Component> stock, int motorCapacity) {
-        super(config, stock);
+    public MotorFactory(FactoryConfig config, int motorCapacity) {
+        super(config);
         this.motorCapacity = motorCapacity;
     }
 

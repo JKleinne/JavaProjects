@@ -10,9 +10,9 @@ public abstract class Factory implements IObserver {
     protected Stack<Component> stock;
     protected FactoryConfig config;
 
-    public Factory(FactoryConfig config, Stack<Component> stock) {
+    public Factory(FactoryConfig config) {
         this.config = config;
-        this.stock = stock;
+        stock = new Stack<>();
     }
 
     @Override

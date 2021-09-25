@@ -10,8 +10,8 @@ import java.util.Stack;
 public class WingFactory extends Factory {
     private int metalCapacity;
 
-    public WingFactory(FactoryConfig config, Stack<Component> stock, int metalCapacity) {
-        super(config, stock);
+    public WingFactory(FactoryConfig config, int metalCapacity) {
+        super(config);
         this.metalCapacity = metalCapacity;
     }
 

@@ -11,8 +11,8 @@ public class PlaneFactory extends Factory {
     private int wingCapacity;
     private int motorCapacity;
 
-    public PlaneFactory(FactoryConfig config, Stack<Component> stock, int wingCapacity, int motorCapacity) {
-        super(config, stock);
+    public PlaneFactory(FactoryConfig config, int wingCapacity, int motorCapacity) {
+        super(config);
         this.wingCapacity = wingCapacity;
         this.motorCapacity = motorCapacity;
     }

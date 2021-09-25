@@ -8,8 +8,8 @@ import network.utilities.ComponentType;
 import java.util.Stack;
 
 public class MetalFactory extends Factory {
-    public MetalFactory(FactoryConfig config, Stack<Component> stock) {
-        super(config, stock);
+    public MetalFactory(FactoryConfig config) {
+        super(config);
     }
 
     @Override
