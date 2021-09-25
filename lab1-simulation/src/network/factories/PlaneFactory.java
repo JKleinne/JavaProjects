@@ -1,5 +1,6 @@
 package network.factories;
 
+import network.icons.DisplayIcon;
 import network.records.Component;
 import network.utilities.ComponentType;
 
@@ -13,6 +14,8 @@ public class PlaneFactory extends Factory {
     }
 
     public Component craftComponent(ArrayList<Component> components) {
-        return null;
+        var icon = new DisplayIcon("src/ressources/avion.png");
+
+        return new Component(icon, ComponentType.PLANE);
     }
 }
