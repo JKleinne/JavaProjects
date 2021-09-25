@@ -86,7 +86,10 @@ public final class XMLUtils {
                         Element entryElement = (Element) entryNode;
 
                         String type = entryElement.getAttribute("type");
-                        String quantity = entryElement.getAttribute("quantite");
+                        int quantity = 0;
+
+                        if(!entryElement.getAttribute("quantite").equals(""))
+                            quantity = Integer.parseInt(entryElement.getAttribute("quantite"));
 
                         entryComponentList.add(new FactoryEntryComponent(type, quantity));
                     }

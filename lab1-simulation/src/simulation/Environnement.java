@@ -1,5 +1,8 @@
 package simulation;
 
+import network.factories.Factory;
+import network.factories.MetalFactory;
+
 import javax.swing.SwingWorker;
 
 public class Environnement extends SwingWorker<Object, String> {
@@ -11,9 +14,14 @@ public class Environnement extends SwingWorker<Object, String> {
 		while(actif) {
 			Thread.sleep(DELAI);
 			/**
-			 * C'est ici que vous aurez à faire la gestion de la notion de tour.
+			 * C'est ici que vous aurez ï¿½ faire la gestion de la notion de tour.
 			 */
-			firePropertyChange("TEST", null, "Ceci est un test");
+			firePropertyChange("TEST", null, "test");
+
+
+
+            //TODO Get each factories' current capacity and fire event
+            var factories = Simulation.getFactories();
 		}
 		return null;
 	}
