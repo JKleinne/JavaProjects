@@ -57,4 +57,8 @@ public class PanneauPrincipal extends JPanel {
         }
     }
 
+    public void setFactoriesStock() {
+        //TODO hook for PanneauPrincipal to receive updated state
+    }
+
 }

@@ -30,13 +30,6 @@ public class Simulation {
 
         factories = getFactoriesMappedWithConfig(factoriesConfig);
 
-//        factories = new ArrayList<>(Arrays.asList(
-//                new MetalFactory(),
-//                new MotorFactory(),
-//                new PlaneFactory(),
-//                new WingFactory()
-//        ));
-
 		Environnement environnement = new Environnement();
 		FenetrePrincipale fenetre = new FenetrePrincipale();
 

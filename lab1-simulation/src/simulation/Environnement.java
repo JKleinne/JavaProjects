@@ -22,6 +22,7 @@ public class Environnement extends SwingWorker<Object, String> {
 
             //TODO Get each factories' current capacity and fire event
             var factories = Simulation.getFactories();
+
 		}
 		return null;
 	}
