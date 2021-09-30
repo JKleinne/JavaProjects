@@ -1,5 +1,6 @@
 package simulation;
 
+import network.factories.Warehouse;
 import network.factories.*;
 import network.records.FactoryConfig;
 import network.records.FactoryEntryComponent;
@@ -27,8 +28,6 @@ public class Environnement extends SwingWorker<Object, String> {
 			 */
 			firePropertyChange("TEST", null, "test");
 
-            //TODO Get each factories' current capacity and fire event
-
 		}
 		return null;
 	}
@@ -40,10 +39,17 @@ public class Environnement extends SwingWorker<Object, String> {
             try {
                 factoriesConfig = XMLUtils.getFactoryConfig(configPath);
                 factories = getFactoriesMappedWithConfig(factoriesConfig);
+
+                firePropertyChange("FACTORIES_STATE_CHANGED", null, factories);
             } catch (IOException | SAXException | ParserConfigurationException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void setFactory(int index, Factory factory) {
+        factories.set(index, factory);
+        firePropertyChange("FACTORIES_STATE_CHANGED", null, factories);
     }
 
     public ArrayList<Factory> getFactories() {
@@ -84,6 +90,7 @@ public class Environnement extends SwingWorker<Object, String> {
                             .size();
                     yield new MotorFactory(config, maxMetalCapacity);
                 }
+                case "entrepot" -> new Warehouse(config);
                 default -> null;
             };
             factories.add(f);

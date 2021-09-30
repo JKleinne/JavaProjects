@@ -1,5 +1,6 @@
 package simulation;
 
+import network.factories.Factory;
 import network.records.FactoryConfig;
 import network.utilities.XMLUtils;
 import org.xml.sax.SAXException;
@@ -7,6 +8,8 @@ import org.xml.sax.SAXException;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -20,6 +23,7 @@ public class PanneauPrincipal extends JPanel {
 
 	private static final long serialVersionUID = 1L;
     public static String configPath = null;
+    public ArrayList<Factory> factories;
 	
 	// Variables temporaires de la demonstration:
 	private Point position = new Point(0,0);
@@ -33,18 +37,18 @@ public class PanneauPrincipal extends JPanel {
 		position.translate(vitesse.x, vitesse.y);
 		g.fillRect(position.x, position.y, taille, taille);
 
-        ArrayList<FactoryConfig> factoriesConfig = null;
 
-        if(configPath != null) {
-            try {
-                factoriesConfig = XMLUtils.getFactoryConfig(Simulation.environnement.configPath);
-            } catch (IOException | SAXException | ParserConfigurationException e) {
-                e.printStackTrace();
-            }
+        //Draw each factories' image
+        if(factories != null) {
+            for (Factory factory : factories) {
+                if(factory == null)
+                    continue;
 
-            //Draw each factories' image
-            for(FactoryConfig factory : factoriesConfig) {
-                String emptyFactoryImagePath = factory.metadata().icons().get(0).path();
+                String emptyFactoryImagePath = factory.getConfig().metadata().icons().get(0).path();
+
+                int x = factory.getConfig().coords().x();
+                int y = factory.getConfig().coords().y();
+
                 BufferedImage image = null;
                 try {
                     image = ImageIO.read(new File(emptyFactoryImagePath));
@@ -52,13 +56,14 @@ public class PanneauPrincipal extends JPanel {
                     e.printStackTrace();
                 }
 
-                g.drawImage(image, 0, 0, null);
+                g.drawImage(image, x, y, null);
             }
         }
     }
 
-    public void setFactoriesStock() {
-        //TODO hook for PanneauPrincipal to receive updated state
+
+    public void setFactories(ArrayList<Factory> factories) {
+        this.factories = factories;
     }
 
 }

@@ -1,9 +1,12 @@
 package simulation;
 
+import network.factories.Factory;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
@@ -13,8 +16,10 @@ public class FenetrePrincipale extends JFrame implements PropertyChangeListener 
 	private static final String TITRE_FENETRE = "Laboratoire 1 : LOG121 - Simulation";
 	private static final Dimension DIMENSION = new Dimension(700, 700);
 
+    PanneauPrincipal panneauPrincipal;
+
 	public FenetrePrincipale() {
-		PanneauPrincipal panneauPrincipal = new PanneauPrincipal();
+        panneauPrincipal = new PanneauPrincipal();
 		MenuFenetre menuFenetre = new MenuFenetre();
 		add(panneauPrincipal);
 		add(menuFenetre, BorderLayout.NORTH);
@@ -32,11 +37,15 @@ public class FenetrePrincipale extends JFrame implements PropertyChangeListener 
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		if (evt.getPropertyName().equals("TEST")) {
-			repaint();
-			System.out.println(evt.getNewValue());
-		}
-
+        switch(evt.getPropertyName()) {
+            case "TEST" -> {
+                repaint();
+                System.out.println(evt.getNewValue());
+            }
+            case "FACTORIES_STATE_CHANGED" -> {
+                panneauPrincipal.setFactories((ArrayList<Factory>) evt.getNewValue());
+            }
+        }
         //TODO listener for factories stock update
 	}
 }

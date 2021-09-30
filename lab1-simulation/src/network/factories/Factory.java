@@ -23,4 +23,12 @@ public abstract class Factory implements IObserver {
     public void addComponent() {}
 
     public abstract Component craftComponent(Stack<Component> components);
+
+    public Stack<Component> getStock() {
+        return stock;
+    }
+
+    public FactoryConfig getConfig() {
+        return config;
+    }
 }
