@@ -23,20 +23,17 @@ public class Simulation {
         if(configPath != null) {
             try {
                 factoriesConfig = XMLUtils.getFactoryConfig(configPath);
+                factories = getFactoriesMappedWithConfig(factoriesConfig);
             } catch (IOException | SAXException | ParserConfigurationException e) {
                 e.printStackTrace();
             }
         }
-
-        factories = getFactoriesMappedWithConfig(factoriesConfig);
 
 		Environnement environnement = new Environnement();
 		FenetrePrincipale fenetre = new FenetrePrincipale();
 
 		environnement.addPropertyChangeListener(fenetre);
 		environnement.execute();
-
-        XMLUtils.getFactoryConfig("src/ressources/configuration.xml");
 	}
 
     public static ArrayList<Factory> getFactories() {
