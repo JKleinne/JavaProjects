@@ -1,6 +1,7 @@
 package simulation;
 
 import network.factories.Facility;
+import network.records.Pathing;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -43,7 +44,12 @@ public class FenetrePrincipale extends JFrame implements PropertyChangeListener 
                 System.out.println(evt.getNewValue());
             }
             case "FACTORIES_STATE_CHANGED" -> {
+                repaint();
                 panneauPrincipal.setFactories((ArrayList<Facility>) evt.getNewValue());
+            }
+            case "PATHING_CHANGED" -> {
+                repaint();
+                panneauPrincipal.setPathing((ArrayList<Pathing>) evt.getNewValue());
             }
         }
         //TODO listener for factories stock update

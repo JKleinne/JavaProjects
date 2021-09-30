@@ -1,6 +1,8 @@
 package simulation;
 
 import network.factories.Facility;
+import network.records.FactoryCoordinates;
+import network.records.Pathing;
 
 import java.awt.Graphics;
 import java.awt.Point;
@@ -15,8 +17,10 @@ import javax.swing.JPanel;
 public class PanneauPrincipal extends JPanel {
 
 	private static final long serialVersionUID = 1L;
+
     public static String configPath = null;
     public ArrayList<Facility> factories;
+    public ArrayList<Pathing> pathing;
 	
 	// Variables temporaires de la demonstration:
 	private Point position = new Point(0,0);
@@ -52,11 +56,42 @@ public class PanneauPrincipal extends JPanel {
                 g.drawImage(image, x, y, null);
             }
         }
+
+        if(pathing != null) {
+            for(Pathing path : pathing) {
+                FactoryCoordinates from = getFacilityById(path.fromFactoryCoordinatesId())
+                        .getConfig()
+                        .coords();
+                FactoryCoordinates to = getFacilityById(path.toFactoryCoordinatesId())
+                        .getConfig()
+                        .coords();
+
+                int x1 = from.x(),
+                        y1 = from.y();
+
+                int x2 = to.x(),
+                        y2 = to.y();
+
+                g.drawLine(x1, y1, x2, y2);
+            }
+        }
     }
 
 
     public void setFactories(ArrayList<Facility> factories) {
         this.factories = factories;
+    }
+
+    public void setPathing(ArrayList<Pathing> pathing) {
+        this.pathing = pathing;
+    }
+
+    private Facility getFacilityById(int id) {
+        return factories
+                .stream()
+                .filter(x -> x.getConfig().coords().id() == id)
+                .findFirst()
+                .get();
     }
 
 }

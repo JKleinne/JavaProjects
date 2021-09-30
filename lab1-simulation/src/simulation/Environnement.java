@@ -4,6 +4,7 @@ import network.factories.Warehouse;
 import network.factories.*;
 import network.records.FactoryConfig;
 import network.records.FactoryEntryComponent;
+import network.records.Pathing;
 import network.utilities.XMLUtils;
 import org.xml.sax.SAXException;
 
@@ -16,7 +17,9 @@ public class Environnement extends SwingWorker<Object, String> {
 	private boolean actif = true;
 	private static final int DELAI = 100;
 
-    private ArrayList<Facility> factories = new ArrayList<>();
+    private ArrayList<Facility> factories;
+    private ArrayList<Pathing> pathing;
+
     public String configPath = null;
 	
 	@Override
@@ -39,8 +42,10 @@ public class Environnement extends SwingWorker<Object, String> {
             try {
                 factoriesConfig = XMLUtils.getFactoryConfig(configPath);
                 factories = getFactoriesMappedWithConfig(factoriesConfig);
+                pathing = XMLUtils.readPathing(configPath);
 
                 firePropertyChange("FACTORIES_STATE_CHANGED", null, factories);
+                firePropertyChange("PATHING_CHANGED", null, pathing);
             } catch (IOException | SAXException | ParserConfigurationException e) {
                 e.printStackTrace();
             }
@@ -54,6 +59,10 @@ public class Environnement extends SwingWorker<Object, String> {
 
     public ArrayList<Facility> getFactories() {
         return factories;
+    }
+
+    public ArrayList<Pathing> getPathing() {
+        return pathing;
     }
 
     public void setConfigPath(String configPath) {
