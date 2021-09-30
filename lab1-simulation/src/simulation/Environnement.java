@@ -31,6 +31,7 @@ public class Environnement extends SwingWorker<Object, String> {
 			 */
 			firePropertyChange("TEST", null, "test");
 
+            //TODO Logic when a factory capacity changes, icon changes to match capacity
 		}
 		return null;
 	}
