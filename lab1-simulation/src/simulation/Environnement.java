@@ -25,7 +25,7 @@ public class Environnement extends SwingWorker<Object, String> {
 			/**
 			 * C'est ici que vous aurez � faire la gestion de la notion de tour.
 			 */
-			firePropertyChange("TEST", null, "test";
+			firePropertyChange("TEST", null, "test");
 
             //TODO Get each factories' current capacity and fire event
 
