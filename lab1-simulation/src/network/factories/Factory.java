@@ -1,18 +1,15 @@
 package network.factories;
 
-import network.records.Component;
 import network.observer.IObserver;
+import network.records.Component;
 import network.records.FactoryConfig;
 
 import java.util.Stack;
 
-public abstract class Factory implements IObserver {
-    protected Stack<Component> stock;
-    protected FactoryConfig config;
+public abstract class Factory extends Facility implements IObserver {
 
     public Factory(FactoryConfig config) {
-        this.config = config;
-        stock = new Stack<>();
+        super(config);
     }
 
     @Override
@@ -20,15 +17,5 @@ public abstract class Factory implements IObserver {
 
     }
 
-    public void addComponent() {}
-
     public abstract Component craftComponent(Stack<Component> components);
-
-    public Stack<Component> getStock() {
-        return stock;
-    }
-
-    public FactoryConfig getConfig() {
-        return config;
-    }
 }

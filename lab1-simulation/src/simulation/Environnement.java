@@ -16,7 +16,7 @@ public class Environnement extends SwingWorker<Object, String> {
 	private boolean actif = true;
 	private static final int DELAI = 100;
 
-    private ArrayList<Factory> factories = new ArrayList<>();
+    private ArrayList<Facility> factories = new ArrayList<>();
     public String configPath = null;
 	
 	@Override
@@ -47,12 +47,12 @@ public class Environnement extends SwingWorker<Object, String> {
         }
     }
 
-    public void setFactory(int index, Factory factory) {
-        factories.set(index, factory);
+    public void setFactory(int index, Facility facility) {
+        factories.set(index, facility);
         firePropertyChange("FACTORIES_STATE_CHANGED", null, factories);
     }
 
-    public ArrayList<Factory> getFactories() {
+    public ArrayList<Facility> getFactories() {
         return factories;
     }
 
@@ -60,12 +60,12 @@ public class Environnement extends SwingWorker<Object, String> {
         this.configPath = configPath;
     }
 
-    private ArrayList<Factory> getFactoriesMappedWithConfig(ArrayList<FactoryConfig> factoriesConfig) {
-        var factories = new ArrayList<Factory>();
+    private ArrayList<Facility> getFactoriesMappedWithConfig(ArrayList<FactoryConfig> factoriesConfig) {
+        var factories = new ArrayList<Facility>();
 
         for(FactoryConfig config : factoriesConfig) {
             String factoryType = config.metadata().factoryType();
-            Factory f = switch(factoryType) {
+            Facility f = switch(factoryType) {
                 case "usine-matiere" -> new MetalFactory(config);
                 case "usine-aile" -> {
                     int maxMetalCapacity = config.metadata()

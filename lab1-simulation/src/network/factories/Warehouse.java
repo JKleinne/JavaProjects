@@ -9,7 +9,7 @@ import network.strategies.sell.ISellBehavior;
 import java.util.ArrayList;
 import java.util.Stack;
 
-public class Warehouse extends Factory implements ISubject {
+public class Warehouse extends Facility implements ISubject {
     private ArrayList<Component> planes;
     private ISellBehavior sellBehavior;
 
@@ -36,8 +36,4 @@ public class Warehouse extends Factory implements ISubject {
     private void resumeProduction() {}
     private void executeSell(Component p) {}
 
-    @Override
-    public Component craftComponent(Stack<Component> components) {
-        return null;
-    }
 }

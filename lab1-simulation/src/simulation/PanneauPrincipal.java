@@ -1,29 +1,22 @@
 package simulation;
 
-import network.factories.Factory;
-import network.records.FactoryConfig;
-import network.utilities.XMLUtils;
-import org.xml.sax.SAXException;
+import network.factories.Facility;
 
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
-import javax.xml.parsers.ParserConfigurationException;
 
 public class PanneauPrincipal extends JPanel {
 
 	private static final long serialVersionUID = 1L;
     public static String configPath = null;
-    public ArrayList<Factory> factories;
+    public ArrayList<Facility> factories;
 	
 	// Variables temporaires de la demonstration:
 	private Point position = new Point(0,0);
@@ -40,14 +33,14 @@ public class PanneauPrincipal extends JPanel {
 
         //Draw each factories' image
         if(factories != null) {
-            for (Factory factory : factories) {
-                if(factory == null)
+            for (Facility facility : factories) {
+                if(facility == null)
                     continue;
 
-                String emptyFactoryImagePath = factory.getConfig().metadata().icons().get(0).path();
+                String emptyFactoryImagePath = facility.getConfig().metadata().icons().get(0).path();
 
-                int x = factory.getConfig().coords().x();
-                int y = factory.getConfig().coords().y();
+                int x = facility.getConfig().coords().x();
+                int y = facility.getConfig().coords().y();
 
                 BufferedImage image = null;
                 try {
@@ -62,7 +55,7 @@ public class PanneauPrincipal extends JPanel {
     }
 
 
-    public void setFactories(ArrayList<Factory> factories) {
+    public void setFactories(ArrayList<Facility> factories) {
         this.factories = factories;
     }
 
