@@ -50,7 +50,9 @@ public class MenuFenetre extends JMenuBar {
 				File selectedFile = fileChooser.getSelectedFile();
 				System.out.println(selectedFile.getAbsolutePath());
 
-                Simulation.setConfigPath(selectedFile.getAbsolutePath());
+                Simulation.environnement.setConfigPath(selectedFile.getAbsolutePath());
+                Simulation.environnement.rebuildNetworkEnvironment();
+
                 PanneauPrincipal.configPath = selectedFile.getAbsolutePath();
 			}
 		});

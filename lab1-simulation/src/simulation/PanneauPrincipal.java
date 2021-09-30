@@ -37,7 +37,7 @@ public class PanneauPrincipal extends JPanel {
 
         if(configPath != null) {
             try {
-                factoriesConfig = XMLUtils.getFactoryConfig(configPath);
+                factoriesConfig = XMLUtils.getFactoryConfig(Simulation.environnement.configPath);
             } catch (IOException | SAXException | ParserConfigurationException e) {
                 e.printStackTrace();
             }
