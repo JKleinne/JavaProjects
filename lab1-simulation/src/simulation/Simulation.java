@@ -1,14 +1,9 @@
 package simulation;
 
-import network.factories.*;
-import network.records.FactoryConfig;
-import network.records.FactoryEntryComponent;
-import network.utilities.XMLUtils;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class Simulation {
     public static Environnement environnement;

@@ -2,8 +2,8 @@ package simulation;
 
 import network.factories.Warehouse;
 import network.factories.*;
-import network.records.FactoryConfig;
-import network.records.FactoryEntryComponent;
+import network.records.FacilityConfig;
+import network.records.FacilityEntryComponent;
 import network.records.Pathing;
 import network.utilities.XMLUtils;
 import org.xml.sax.SAXException;
@@ -37,7 +37,7 @@ public class Environnement extends SwingWorker<Object, String> {
 	}
 
     public void rebuildNetworkEnvironment() {
-        ArrayList<FactoryConfig> factoriesConfig = null;
+        ArrayList<FacilityConfig> factoriesConfig = null;
 
         if(configPath != null) {
             try {
@@ -70,10 +70,10 @@ public class Environnement extends SwingWorker<Object, String> {
         this.configPath = configPath;
     }
 
-    private ArrayList<Facility> getFactoriesMappedWithConfig(ArrayList<FactoryConfig> factoriesConfig) {
+    private ArrayList<Facility> getFactoriesMappedWithConfig(ArrayList<FacilityConfig> factoriesConfig) {
         var factories = new ArrayList<Facility>();
 
-        for(FactoryConfig config : factoriesConfig) {
+        for(FacilityConfig config : factoriesConfig) {
             String factoryType = config.metadata().factoryType();
             Facility f = switch(factoryType) {
                 case "usine-matiere" -> new MetalFactory(config);
@@ -85,7 +85,7 @@ public class Environnement extends SwingWorker<Object, String> {
                 }
                 case "usine-assemblage" -> {
                     int maxMotorCapacity = 0, maxWingCapacity = 0;
-                    for(FactoryEntryComponent entryComponent : config.metadata().entryType()) {
+                    for(FacilityEntryComponent entryComponent : config.metadata().entryType()) {
                         if(entryComponent.type().equals("moteur"))
                             maxMotorCapacity = entryComponent.quantity();
                         else if(entryComponent.type().equals("aile"))

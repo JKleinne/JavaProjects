@@ -1,13 +1,13 @@
 package network.factories;
 
 import network.records.Component;
-import network.records.FactoryConfig;
+import network.records.FacilityConfig;
 import network.utilities.ComponentType;
 
 import java.util.Stack;
 
 public class MetalFactory extends Factory {
-    public MetalFactory(FactoryConfig config) {
+    public MetalFactory(FacilityConfig config) {
         super(config);
     }
 

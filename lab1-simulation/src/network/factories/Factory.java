@@ -2,13 +2,13 @@ package network.factories;
 
 import network.observer.IObserver;
 import network.records.Component;
-import network.records.FactoryConfig;
+import network.records.FacilityConfig;
 
 import java.util.Stack;
 
 public abstract class Factory extends Facility implements IObserver {
 
-    public Factory(FactoryConfig config) {
+    public Factory(FacilityConfig config) {
         super(config);
     }
 

@@ -1,16 +1,15 @@
 package network.factories;
 
 import network.records.Component;
-import network.observer.IObserver;
-import network.records.FactoryConfig;
+import network.records.FacilityConfig;
 
 import java.util.Stack;
 
 public class Facility {
     protected Stack<Component> stock;
-    protected FactoryConfig config;
+    protected FacilityConfig config;
 
-    public Facility(FactoryConfig config) {
+    public Facility(FacilityConfig config) {
         this.config = config;
         stock = new Stack<>();
     }
@@ -21,7 +20,7 @@ public class Facility {
         return stock;
     }
 
-    public FactoryConfig getConfig() {
+    public FacilityConfig getConfig() {
         return config;
     }
 }

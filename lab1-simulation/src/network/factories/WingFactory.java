@@ -1,7 +1,7 @@
 package network.factories;
 
 import network.records.Component;
-import network.records.FactoryConfig;
+import network.records.FacilityConfig;
 import network.utilities.ComponentType;
 
 import java.util.Stack;
@@ -9,7 +9,7 @@ import java.util.Stack;
 public class WingFactory extends Factory {
     private int metalCapacity;
 
-    public WingFactory(FactoryConfig config, int metalCapacity) {
+    public WingFactory(FacilityConfig config, int metalCapacity) {
         super(config);
         this.metalCapacity = metalCapacity;
     }

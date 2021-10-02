@@ -1,6 +1,5 @@
 package network.utilities;
 
-import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -21,18 +20,18 @@ public final class XMLUtils {
     // Prevent accidental initialization
     private XMLUtils() {}
 
-    public static ArrayList<FactoryConfig> getFactoryConfig(String filePath) throws ParserConfigurationException, IOException, SAXException {
+    public static ArrayList<FacilityConfig> getFactoryConfig(String filePath) throws ParserConfigurationException, IOException, SAXException {
         var factoriesMetadata = readFactoryMetadata(filePath);
-        var factoriesCoords = readFactoryCoordinates(filePath);
-        var configList = new ArrayList<FactoryConfig>();
+        var factoriesCoords = readFacilityCoordinates(filePath);
+        var configList = new ArrayList<FacilityConfig>();
 
-        for(FactoryCoordinates coords : factoriesCoords) {
+        for(FacilityCoordinates coords : factoriesCoords) {
             FactoryMetadata metadata = factoriesMetadata.stream()
                     .filter(x -> x.factoryType().equals(coords.factoryType()))
                     .findFirst()
                     .orElse(null);
 
-            configList.add(new FactoryConfig(coords, metadata));
+            configList.add(new FacilityConfig(coords, metadata));
         }
 
         return configList;
@@ -52,7 +51,7 @@ public final class XMLUtils {
             int productionInterval = 0;
 
             var icons = new ArrayList<IconMetadata>();
-            var entryComponentList = new ArrayList<FactoryEntryComponent>();
+            var entryComponentList = new ArrayList<FacilityEntryComponent>();
 
             Node node = list.item(i);
 
@@ -91,7 +90,7 @@ public final class XMLUtils {
                         if(!entryElement.getAttribute("quantite").equals(""))
                             quantity = Integer.parseInt(entryElement.getAttribute("quantite"));
 
-                        entryComponentList.add(new FactoryEntryComponent(type, quantity));
+                        entryComponentList.add(new FacilityEntryComponent(type, quantity));
                     }
                 }
 
@@ -108,14 +107,14 @@ public final class XMLUtils {
         return factoryMetadataList;
     }
 
-    public static ArrayList<FactoryCoordinates> readFactoryCoordinates(String filePath) throws IOException, SAXException, ParserConfigurationException {
+    public static ArrayList<FacilityCoordinates> readFacilityCoordinates(String filePath) throws IOException, SAXException, ParserConfigurationException {
         var toolkit = getToolKit(filePath, "simulation");
 
         Node branch = toolkit.branch();
 
         NodeList list = ((Element) branch).getElementsByTagName("usine");
 
-        var factoryCoords = new ArrayList<FactoryCoordinates>();
+        var facilityCoords = new ArrayList<FacilityCoordinates>();
 
         for(int i = 0; i < list.getLength(); i++) {
             String factoryType;
@@ -131,11 +130,11 @@ public final class XMLUtils {
                 x = Integer.parseInt(element.getAttribute("x"));
                 y = Integer.parseInt(element.getAttribute("y"));
 
-                factoryCoords.add(new FactoryCoordinates(factoryType, id, x, y));
+                facilityCoords.add(new FacilityCoordinates(factoryType, id, x, y));
             }
         }
 
-        return factoryCoords;
+        return facilityCoords;
     }
 
     public static ArrayList<Pathing> readPathing(String filePath) throws IOException, ParserConfigurationException, SAXException {

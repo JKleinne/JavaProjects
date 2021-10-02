@@ -1,7 +1,7 @@
 package network.factories;
 
 import network.records.Component;
-import network.records.FactoryConfig;
+import network.records.FacilityConfig;
 import network.utilities.ComponentType;
 
 import java.util.Stack;
@@ -9,7 +9,7 @@ import java.util.Stack;
 public class MotorFactory extends Factory {
     private int motorCapacity;
 
-    public MotorFactory(FactoryConfig config, int motorCapacity) {
+    public MotorFactory(FacilityConfig config, int motorCapacity) {
         super(config);
         this.motorCapacity = motorCapacity;
     }

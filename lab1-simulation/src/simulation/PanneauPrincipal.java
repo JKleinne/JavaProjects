@@ -1,7 +1,7 @@
 package simulation;
 
 import network.factories.Facility;
-import network.records.FactoryCoordinates;
+import network.records.FacilityCoordinates;
 import network.records.Pathing;
 
 import java.awt.Graphics;
@@ -59,10 +59,10 @@ public class PanneauPrincipal extends JPanel {
 
         if(pathing != null) {
             for(Pathing path : pathing) {
-                FactoryCoordinates from = getFacilityById(path.fromFactoryCoordinatesId())
+                FacilityCoordinates from = getFacilityById(path.fromFactoryCoordinatesId())
                         .getConfig()
                         .coords();
-                FactoryCoordinates to = getFacilityById(path.toFactoryCoordinatesId())
+                FacilityCoordinates to = getFacilityById(path.toFactoryCoordinatesId())
                         .getConfig()
                         .coords();
 
