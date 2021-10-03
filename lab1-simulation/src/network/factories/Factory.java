@@ -17,5 +17,5 @@ public abstract class Factory extends Facility implements IObserver {
 
     }
 
-    public abstract Component craftComponent(Stack<Component> components);
+    public abstract Component craftComponent();
 }

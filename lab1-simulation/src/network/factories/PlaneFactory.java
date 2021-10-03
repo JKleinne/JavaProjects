@@ -16,7 +16,7 @@ public class PlaneFactory extends Factory {
         this.motorCapacity = motorCapacity;
     }
 
-    public Component craftComponent(Stack<Component> components) {
+    public Component craftComponent() {
         var icon = "src/ressources/avion.png";
 
         return new Component(icon, ComponentType.PLANE);

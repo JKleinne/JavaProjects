@@ -15,7 +15,7 @@ public class MotorFactory extends Factory {
     }
 
     @Override
-    public Component craftComponent(Stack<Component> components) {
+    public Component craftComponent() {
         var icon = "src/ressources/moteur.png";
 
         return new Component(icon, ComponentType.MOTOR);

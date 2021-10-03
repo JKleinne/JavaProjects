@@ -15,7 +15,7 @@ public class WingFactory extends Factory {
     }
 
     @Override
-    public Component craftComponent(Stack<Component> components) {
+    public Component craftComponent() {
         var icon = "src/ressources/aile.png";
 
         return new Component(icon, ComponentType.WING);

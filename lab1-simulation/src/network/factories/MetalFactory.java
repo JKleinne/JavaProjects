@@ -12,7 +12,7 @@ public class MetalFactory extends Factory {
     }
 
     @Override
-    public Component craftComponent(Stack<Component> components) {
+    public Component craftComponent() {
         var icon = "src/ressources/metal.png";
 
         return new Component(icon, ComponentType.METAL);
