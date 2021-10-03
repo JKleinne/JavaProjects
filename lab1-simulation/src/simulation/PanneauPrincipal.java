@@ -31,11 +31,34 @@ public class PanneauPrincipal extends JPanel {
 	public void paint(Graphics g) {
 		super.paint(g);
 		// On ajoute � la position le delta x et y de la vitesse
+        //TODO stop when components reach a Factory
 		position.translate(vitesse.x, vitesse.y);
 		g.fillRect(position.x, position.y, taille, taille);
 
+        drawFactories(g);
+        drawPathing(g);
 
-        //Draw each factories' image
+        //TODO draw Components
+    }
+
+
+    public void setFactories(ArrayList<Facility> factories) {
+        this.factories = factories;
+    }
+
+    public void setPathing(ArrayList<Pathing> pathing) {
+        this.pathing = pathing;
+    }
+
+    private Facility getFacilityById(int id) {
+        return factories
+                .stream()
+                .filter(x -> x.getConfig().coords().id() == id)
+                .findFirst()
+                .get();
+    }
+
+    private void drawFactories(Graphics g) {
         if(factories != null) {
             for (Facility facility : factories) {
                 if(facility == null)
@@ -56,7 +79,9 @@ public class PanneauPrincipal extends JPanel {
                 g.drawImage(image, x, y, null);
             }
         }
+    }
 
+    private void drawPathing(Graphics g) {
         if(pathing != null) {
             for(Pathing path : pathing) {
                 FacilityCoordinates from = getFacilityById(path.fromFactoryCoordinatesId())
@@ -76,22 +101,4 @@ public class PanneauPrincipal extends JPanel {
             }
         }
     }
-
-
-    public void setFactories(ArrayList<Facility> factories) {
-        this.factories = factories;
-    }
-
-    public void setPathing(ArrayList<Pathing> pathing) {
-        this.pathing = pathing;
-    }
-
-    private Facility getFacilityById(int id) {
-        return factories
-                .stream()
-                .filter(x -> x.getConfig().coords().id() == id)
-                .findFirst()
-                .get();
-    }
-
 }
