@@ -45,7 +45,7 @@ public class FenetrePrincipale extends JFrame implements PropertyChangeListener 
             }
             case "FACTORIES_STATE_CHANGED" -> {
                 repaint();
-                panneauPrincipal.setFactories((ArrayList<Facility>) evt.getNewValue());
+                panneauPrincipal.setFacilities((ArrayList<Facility>) evt.getNewValue());
             }
             case "PATHING_CHANGED" -> {
                 repaint();

@@ -19,7 +19,7 @@ public class PanneauPrincipal extends JPanel {
 	private static final long serialVersionUID = 1L;
 
     public static String configPath = null;
-    public ArrayList<Facility> factories;
+    public ArrayList<Facility> facilities;
     public ArrayList<Pathing> pathing;
 	
 	// Variables temporaires de la demonstration:
@@ -42,8 +42,8 @@ public class PanneauPrincipal extends JPanel {
     }
 
 
-    public void setFactories(ArrayList<Facility> factories) {
-        this.factories = factories;
+    public void setFacilities(ArrayList<Facility> facilities) {
+        this.facilities = facilities;
     }
 
     public void setPathing(ArrayList<Pathing> pathing) {
@@ -51,7 +51,7 @@ public class PanneauPrincipal extends JPanel {
     }
 
     private Facility getFacilityById(int id) {
-        return factories
+        return facilities
                 .stream()
                 .filter(x -> x.getConfig().coords().id() == id)
                 .findFirst()
@@ -59,8 +59,8 @@ public class PanneauPrincipal extends JPanel {
     }
 
     private void drawFactories(Graphics g) {
-        if(factories != null) {
-            for (Facility facility : factories) {
+        if(facilities != null) {
+            for (Facility facility : facilities) {
                 if(facility == null)
                     continue;
 

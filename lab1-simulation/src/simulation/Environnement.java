@@ -17,7 +17,7 @@ public class Environnement extends SwingWorker<Object, String> {
 	private boolean actif = true;
 	private static final int DELAI = 100;
 
-    private ArrayList<Facility> factories;
+    private ArrayList<Facility> facilities;
     private ArrayList<Pathing> pathing;
 
     public String configPath = null;
@@ -42,10 +42,10 @@ public class Environnement extends SwingWorker<Object, String> {
         if(configPath != null) {
             try {
                 factoriesConfig = XMLUtils.getFactoryConfig(configPath);
-                factories = getFactoriesMappedWithConfig(factoriesConfig);
+                facilities = getFactoriesMappedWithConfig(factoriesConfig);
                 pathing = XMLUtils.readPathing(configPath);
 
-                firePropertyChange("FACTORIES_STATE_CHANGED", null, factories);
+                firePropertyChange("FACTORIES_STATE_CHANGED", null, facilities);
                 firePropertyChange("PATHING_CHANGED", null, pathing);
             } catch (IOException | SAXException | ParserConfigurationException e) {
                 e.printStackTrace();
@@ -54,12 +54,12 @@ public class Environnement extends SwingWorker<Object, String> {
     }
 
     public void setFactory(int index, Facility facility) {
-        factories.set(index, facility);
-        firePropertyChange("FACTORIES_STATE_CHANGED", null, factories);
+        facilities.set(index, facility);
+        firePropertyChange("FACTORIES_STATE_CHANGED", null, facilities);
     }
 
-    public ArrayList<Facility> getFactories() {
-        return factories;
+    public ArrayList<Facility> getFacilities() {
+        return facilities;
     }
 
     public ArrayList<Pathing> getPathing() {
