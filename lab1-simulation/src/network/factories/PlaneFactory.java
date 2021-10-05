@@ -18,7 +18,9 @@ public class PlaneFactory extends Factory {
 
     public Component craftComponent() {
         var icon = "src/ressources/avion.png";
+        var c = new Component(icon, ComponentType.PLANE);
+        addComponent(c);
 
-        return new Component(icon, ComponentType.PLANE);
+        return c;
     }
 }
