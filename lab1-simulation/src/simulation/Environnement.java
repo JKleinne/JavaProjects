@@ -7,6 +7,7 @@ import network.records.Component;
 import network.records.FacilityConfig;
 import network.records.FacilityEntryComponent;
 import network.records.Pathing;
+import network.utilities.ComponentType;
 import network.utilities.XMLUtils;
 import org.xml.sax.SAXException;
 
@@ -14,6 +15,8 @@ import javax.swing.SwingWorker;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Stack;
 
 public class Environnement extends SwingWorker<Object, String> implements IObserver {
@@ -22,9 +25,10 @@ public class Environnement extends SwingWorker<Object, String> implements IObser
 
     private ArrayList<Facility> facilities;
     private ArrayList<Pathing> pathing;
+    private Map<Facility, Stack<Component>> facilitiesStock;
 
     public String configPath = null;
-	
+
 	@Override
 	protected Object doInBackground() throws Exception {
 		while(actif) {
@@ -35,6 +39,17 @@ public class Environnement extends SwingWorker<Object, String> implements IObser
 			firePropertyChange("TEST", null, "test");
 
             //TODO Logic when a factory capacity changes, icon changes to match capacity
+//            if(facilities != null) {
+//                for (Facility f : facilities) {
+//                    if (f instanceof MetalFactory)
+//                        ((MetalFactory) f).addComponent(new Component("", ComponentType.METAL));
+//                    else {
+//                        ((Warehouse) f).getConfig();
+//                    }
+//                }
+//            }
+
+
 		}
 		return null;
 	}
@@ -45,10 +60,10 @@ public class Environnement extends SwingWorker<Object, String> implements IObser
         if(configPath != null) {
             try {
                 factoriesConfig = XMLUtils.getFactoryConfig(configPath);
-                facilities = getFactoriesMappedWithConfig(factoriesConfig);
+                facilitiesStock = getFactoriesMappedWithConfig(factoriesConfig);
                 pathing = XMLUtils.readPathing(configPath);
 
-                firePropertyChange("FACTORIES_STATE_CHANGED", null, facilities);
+                firePropertyChange("FACTORIES_STATE_CHANGED", null, facilitiesStock);
                 firePropertyChange("PATHING_CHANGED", null, pathing);
             } catch (IOException | SAXException | ParserConfigurationException e) {
                 e.printStackTrace();
@@ -73,8 +88,8 @@ public class Environnement extends SwingWorker<Object, String> implements IObser
         this.configPath = configPath;
     }
 
-    private ArrayList<Facility> getFactoriesMappedWithConfig(ArrayList<FacilityConfig> factoriesConfig) {
-        var factories = new ArrayList<Facility>();
+    private Map<Facility, Stack<Component>> getFactoriesMappedWithConfig(ArrayList<FacilityConfig> factoriesConfig) {
+        Map<Facility, Stack<Component>> map = new HashMap<>();
 
         for(FacilityConfig config : factoriesConfig) {
             String factoryType = config.metadata().factoryType();
@@ -106,14 +121,16 @@ public class Environnement extends SwingWorker<Object, String> implements IObser
                 case "entrepot" -> new Warehouse(config);
                 default -> null;
             };
-            factories.add(f);
+
+            f.registerObserver(this);
+            map.put(f, new Stack<Component>());
         }
 
-        return factories;
+        return map;
     }
 
     @Override
-    public void update(Facility facility, Stack<Component> stock) {
-
+    public void update(Facility f, Stack<Component> stock) {
+        facilitiesStock.replace(f, stock);
     }
 }

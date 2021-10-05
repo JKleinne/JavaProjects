@@ -46,7 +46,7 @@ public class Facility implements ISubject {
     @Override
     public void notifyObservers() {
         for(IObserver o: observers) {
-            o.update(this, stock);
+            o.update(this, (Stack<Component>)stock.clone());
         }
     }
 }

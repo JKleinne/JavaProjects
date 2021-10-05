@@ -6,5 +6,5 @@ import network.records.Component;
 import java.util.Stack;
 
 public interface IObserver {
-    void update(Facility facility, Stack<Component> stock);
+    void update(Facility f, Stack<Component> stock);
 }

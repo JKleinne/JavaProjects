@@ -1,6 +1,7 @@
 package simulation;
 
 import network.factories.Facility;
+import network.records.Component;
 import network.records.FacilityCoordinates;
 import network.records.Pathing;
 
@@ -10,6 +11,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Stack;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
@@ -19,7 +22,7 @@ public class PanneauPrincipal extends JPanel {
 	private static final long serialVersionUID = 1L;
 
     public static String configPath = null;
-    public ArrayList<Facility> facilities;
+    public Map<Facility, Stack<Component>> facilities;
     public ArrayList<Pathing> pathing;
 	
 	// Variables temporaires de la demonstration:
@@ -42,7 +45,7 @@ public class PanneauPrincipal extends JPanel {
     }
 
 
-    public void setFacilities(ArrayList<Facility> facilities) {
+    public void setFacilities(Map<Facility, Stack<Component>> facilities) {
         this.facilities = facilities;
     }
 
@@ -52,6 +55,7 @@ public class PanneauPrincipal extends JPanel {
 
     private Facility getFacilityById(int id) {
         return facilities
+                .keySet()
                 .stream()
                 .filter(x -> x.getConfig().coords().id() == id)
                 .findFirst()
@@ -60,7 +64,7 @@ public class PanneauPrincipal extends JPanel {
 
     private void drawFactories(Graphics g) {
         if(facilities != null) {
-            for (Facility facility : facilities) {
+            for (Facility facility : facilities.keySet()) {
                 if(facility == null)
                     continue;
 
