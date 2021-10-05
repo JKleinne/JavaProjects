@@ -34,6 +34,7 @@ public class PanneauPrincipal extends JPanel {
 	// Variables temporaires de la demonstration:
 
     private Point straightPath = new Point(1,0);
+    //TODO Rest of the path templates { diagonal }
 
 	private int taille = 32;
 
@@ -47,7 +48,8 @@ public class PanneauPrincipal extends JPanel {
 	public void paint(Graphics g) {
 		super.paint(g);
 		// On ajoute � la position le delta x et y de la vitesse
-        //TODO stop when components reach a Factory
+
+        //TODO stop when components reach a Factory and add to Factory stock
 
         for(Map.Entry<Point, ComponentType> entry: points.entrySet()) {
             Point p = entry.getKey();
@@ -157,11 +159,8 @@ public class PanneauPrincipal extends JPanel {
 
             if(f instanceof MetalFactory) {
                 points.put(new Point(x, y), ComponentType.METAL);
-                Pathing path = pathing.stream()
-                        .filter(obj -> obj.fromFactoryCoordinatesId() == f.getConfig().coords().id())
-                        .findFirst()
-                        .get();
             }
+            //TODO Rest of the other Factory subclasses
         }
     }
 
