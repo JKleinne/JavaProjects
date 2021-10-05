@@ -138,7 +138,7 @@ public class PanneauPrincipal extends JPanel {
                 int x2 = to.x(),
                         y2 = to.y();
 
-                g.drawLine(x1, y1, x2, y2);
+                g.drawLine(x1 + 10, y1 + 15, x2 + 10, y2 + 15);
             }
         }
     }
