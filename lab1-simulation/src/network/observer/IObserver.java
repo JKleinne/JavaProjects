@@ -1,5 +1,10 @@
 package network.observer;
 
+import network.factories.Facility;
+import network.records.Component;
+
+import java.util.Stack;
+
 public interface IObserver {
-    public void update();
+    void update(Facility facility, Stack<Component> stock);
 }

@@ -6,15 +6,10 @@ import network.records.FacilityConfig;
 
 import java.util.Stack;
 
-public abstract class Factory extends Facility implements IObserver {
+public abstract class Factory extends Facility {
 
     public Factory(FacilityConfig config) {
         super(config);
-    }
-
-    @Override
-    public void update() {
-
     }
 
     public abstract Component craftComponent();

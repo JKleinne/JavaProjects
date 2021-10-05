@@ -2,6 +2,8 @@ package simulation;
 
 import network.factories.Warehouse;
 import network.factories.*;
+import network.observer.IObserver;
+import network.records.Component;
 import network.records.FacilityConfig;
 import network.records.FacilityEntryComponent;
 import network.records.Pathing;
@@ -12,8 +14,9 @@ import javax.swing.SwingWorker;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Stack;
 
-public class Environnement extends SwingWorker<Object, String> {
+public class Environnement extends SwingWorker<Object, String> implements IObserver {
 	private boolean actif = true;
 	private static final int DELAI = 100;
 
@@ -107,5 +110,10 @@ public class Environnement extends SwingWorker<Object, String> {
         }
 
         return factories;
+    }
+
+    @Override
+    public void update(Facility facility, Stack<Component> stock) {
+
     }
 }
