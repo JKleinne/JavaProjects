@@ -7,7 +7,6 @@ import network.records.Component;
 import network.records.FacilityConfig;
 import network.records.FacilityEntryComponent;
 import network.records.Pathing;
-import network.utilities.ComponentType;
 import network.utilities.XMLUtils;
 import org.xml.sax.SAXException;
 
@@ -23,7 +22,6 @@ public class Environnement extends SwingWorker<Object, String> implements IObser
 	private boolean actif = true;
 	private static final int DELAI = 100;
 
-    private ArrayList<Facility> facilities;
     private ArrayList<Pathing> pathing;
     private Map<Facility, Stack<Component>> facilitiesStock;
 
@@ -38,21 +36,17 @@ public class Environnement extends SwingWorker<Object, String> implements IObser
 			 */
 			firePropertyChange("TEST", null, "test");
 
-            //TODO Logic when a factory capacity changes, icon changes to match capacity
-//            if(facilities != null) {
-//                for (Facility f : facilities) {
-//                    if (f instanceof MetalFactory)
-//                        ((MetalFactory) f).addComponent(new Component("", ComponentType.METAL));
-//                    else {
-//                        ((Warehouse) f).getConfig();
-//                    }
-//                }
-//            }
-
+            //TODO Each Factory craft components each "tour"
+            executeTour();
 
 		}
 		return null;
 	}
+
+    @Override
+    public void update(Facility f, Stack<Component> stock) {
+        facilitiesStock.replace(f, stock);
+    }
 
     public void rebuildNetworkEnvironment() {
         ArrayList<FacilityConfig> factoriesConfig = null;
@@ -69,19 +63,6 @@ public class Environnement extends SwingWorker<Object, String> implements IObser
                 e.printStackTrace();
             }
         }
-    }
-
-    public void setFactory(int index, Facility facility) {
-        facilities.set(index, facility);
-        firePropertyChange("FACTORIES_STATE_CHANGED", null, facilities);
-    }
-
-    public ArrayList<Facility> getFacilities() {
-        return facilities;
-    }
-
-    public ArrayList<Pathing> getPathing() {
-        return pathing;
     }
 
     public void setConfigPath(String configPath) {
@@ -129,8 +110,7 @@ public class Environnement extends SwingWorker<Object, String> implements IObser
         return map;
     }
 
-    @Override
-    public void update(Facility f, Stack<Component> stock) {
-        facilitiesStock.replace(f, stock);
+    private void executeTour() {
+
     }
 }

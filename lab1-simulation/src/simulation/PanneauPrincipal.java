@@ -38,6 +38,7 @@ public class PanneauPrincipal extends JPanel {
 		position.translate(vitesse.x, vitesse.y);
 		g.fillRect(position.x, position.y, taille, taille);
 
+        //TODO draw factories with stock status
         drawFactories(g);
         drawPathing(g);
 
