@@ -1,9 +1,13 @@
 package simulation;
 
 import network.factories.Facility;
+import network.factories.MetalFactory;
+import network.factories.Warehouse;
 import network.records.Component;
 import network.records.FacilityCoordinates;
 import network.records.Pathing;
+import network.utilities.ComponentType;
+import network.utilities.IndicatorStatus;
 
 import java.awt.Graphics;
 import java.awt.Point;
@@ -11,6 +15,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
@@ -24,19 +29,42 @@ public class PanneauPrincipal extends JPanel {
     public static String configPath = null;
     public Map<Facility, Stack<Component>> facilities;
     public ArrayList<Pathing> pathing;
+    private Map<Point, ComponentType> points;
 	
 	// Variables temporaires de la demonstration:
-	private Point position = new Point(0,0);
-	private Point vitesse = new Point(1,1);
+
+    private Point straightPath = new Point(1,0);
+
 	private int taille = 32;
+
+    public PanneauPrincipal() {
+        super();
+
+        points = new HashMap<>();
+    }
 	
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
 		// On ajoute � la position le delta x et y de la vitesse
         //TODO stop when components reach a Factory
-		position.translate(vitesse.x, vitesse.y);
-		g.fillRect(position.x, position.y, taille, taille);
+
+        for(Map.Entry<Point, ComponentType> entry: points.entrySet()) {
+            Point p = entry.getKey();
+            ComponentType type = entry.getValue();
+
+            p.translate(straightPath.x, straightPath.y);
+
+            BufferedImage image = null;
+
+            try {
+                image = ImageIO.read(new File(type.getIconPath()));
+            } catch (IOException  | NullPointerException e) {
+                e.printStackTrace();
+            }
+
+            g.drawImage(image, p.x, p.y, null);
+        }
 
         //TODO draw factories with stock status
         drawFactories(g);
@@ -69,10 +97,18 @@ public class PanneauPrincipal extends JPanel {
                 if(facility == null)
                     continue;
 
-                String emptyFactoryImagePath = facility.getConfig().metadata().icons().get(0).path();
+                String emptyFactoryImagePath = facility.getConfig()
+                        .metadata()
+                        .icons()
+                        .get(IndicatorStatus.EMPTY.getIndex())
+                        .path();
 
-                int x = facility.getConfig().coords().x();
-                int y = facility.getConfig().coords().y();
+                int x = facility.getConfig()
+                        .coords()
+                        .x();
+                int y = facility.getConfig()
+                        .coords()
+                        .y();
 
                 BufferedImage image = null;
                 try {
@@ -106,4 +142,27 @@ public class PanneauPrincipal extends JPanel {
             }
         }
     }
+
+    public void drawBaseComponents(Graphics g) {
+        for(Facility f: facilities.keySet()) {
+            if(f instanceof Warehouse)
+                continue;
+
+            int x = f.getConfig()
+                    .coords()
+                    .x();
+            int y = f.getConfig()
+                    .coords()
+                    .y();
+
+            if(f instanceof MetalFactory) {
+                points.put(new Point(x, y), ComponentType.METAL);
+                Pathing path = pathing.stream()
+                        .filter(obj -> obj.fromFactoryCoordinatesId() == f.getConfig().coords().id())
+                        .findFirst()
+                        .get();
+            }
+        }
+    }
+
 }

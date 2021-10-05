@@ -13,6 +13,7 @@ import org.xml.sax.SAXException;
 import javax.swing.SwingWorker;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,6 +28,8 @@ public class Environnement extends SwingWorker<Object, String> implements IObser
 
     public String configPath = null;
 
+    private long timeStamp = 0;
+
 	@Override
 	protected Object doInBackground() throws Exception {
 		while(actif) {
@@ -34,11 +37,19 @@ public class Environnement extends SwingWorker<Object, String> implements IObser
 			/**
 			 * C'est ici que vous aurez � faire la gestion de la notion de tour.
 			 */
-			firePropertyChange("TEST", null, "test");
+            //NEW_FRAME repaints every doInBackground() call
+			firePropertyChange("NEW_FRAME", null, null);
 
-            //TODO Each Factory craft components each "tour"
-            if(facilities != null) {
-                craftComponents();
+            Instant instant = Instant.now();
+            long current = instant.getEpochSecond();
+
+            if(current - timeStamp >= 3) {
+                //TODO Each Factory craft components each "tour"
+                if(facilities != null) {
+                    craftComponents();
+                }
+
+                timeStamp = current;
             }
 
 		}
@@ -126,5 +137,7 @@ public class Environnement extends SwingWorker<Object, String> implements IObser
                 factory.craftComponent();
             }
         }
+
+        firePropertyChange("BASE_COMPONENTS_CRAFTED", null, null);
     }
 }

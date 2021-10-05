@@ -42,9 +42,8 @@ public class FenetrePrincipale extends JFrame implements PropertyChangeListener 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
         switch(evt.getPropertyName()) {
-            case "TEST" -> {
+            case "NEW_FRAME" -> {
                 repaint();
-                System.out.println(evt.getNewValue());
             }
             case "FACTORIES_STATE_CHANGED" -> {
                 repaint();
@@ -53,6 +52,10 @@ public class FenetrePrincipale extends JFrame implements PropertyChangeListener 
             case "PATHING_CHANGED" -> {
                 repaint();
                 panneauPrincipal.setPathing((ArrayList<Pathing>) evt.getNewValue());
+            }
+            case "BASE_COMPONENTS_CRAFTED" -> {
+                repaint();
+                panneauPrincipal.drawBaseComponents(panneauPrincipal.getGraphics());
             }
         }
         //TODO listener for factories stock update
