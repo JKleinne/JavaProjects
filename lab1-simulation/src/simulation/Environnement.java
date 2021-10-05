@@ -23,7 +23,7 @@ public class Environnement extends SwingWorker<Object, String> implements IObser
 	private static final int DELAI = 100;
 
     private ArrayList<Pathing> pathing;
-    private Map<Facility, Stack<Component>> facilitiesStock;
+    private Map<Facility, Stack<Component>> facilities;
 
     public String configPath = null;
 
@@ -37,7 +37,9 @@ public class Environnement extends SwingWorker<Object, String> implements IObser
 			firePropertyChange("TEST", null, "test");
 
             //TODO Each Factory craft components each "tour"
-            executeTour();
+            if(facilities != null) {
+                craftComponents();
+            }
 
 		}
 		return null;
@@ -45,7 +47,7 @@ public class Environnement extends SwingWorker<Object, String> implements IObser
 
     @Override
     public void update(Facility f, Stack<Component> stock) {
-        facilitiesStock.replace(f, stock);
+        facilities.replace(f, stock);
     }
 
     public void rebuildNetworkEnvironment() {
@@ -54,10 +56,10 @@ public class Environnement extends SwingWorker<Object, String> implements IObser
         if(configPath != null) {
             try {
                 factoriesConfig = XMLUtils.getFactoryConfig(configPath);
-                facilitiesStock = getFactoriesMappedWithConfig(factoriesConfig);
+                facilities = getFactoriesMappedWithConfig(factoriesConfig);
                 pathing = XMLUtils.readPathing(configPath);
 
-                firePropertyChange("FACTORIES_STATE_CHANGED", null, facilitiesStock);
+                firePropertyChange("FACTORIES_STATE_CHANGED", null, facilities);
                 firePropertyChange("PATHING_CHANGED", null, pathing);
             } catch (IOException | SAXException | ParserConfigurationException e) {
                 e.printStackTrace();
@@ -110,7 +112,19 @@ public class Environnement extends SwingWorker<Object, String> implements IObser
         return map;
     }
 
-    private void executeTour() {
-
+    private void craftComponents() {
+        for(Facility f: facilities.keySet()) {
+            if(f instanceof MetalFactory factory) {
+                factory.craftComponent();
+            }
+            else if(f instanceof MotorFactory factory) {
+                factory.craftComponent();
+            }
+            else if(f instanceof PlaneFactory factory) {
+                factory.craftComponent();
+            }else if(f instanceof WingFactory factory) {
+                factory.craftComponent();
+            }
+        }
     }
 }
