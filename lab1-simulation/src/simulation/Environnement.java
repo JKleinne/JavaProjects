@@ -67,7 +67,7 @@ public class Environnement extends SwingWorker<Object, String> implements IObser
         if(configPath != null) {
             try {
                 factoriesConfig = XMLUtils.getFactoryConfig(configPath);
-                facilities = getFactoriesMappedWithConfig(factoriesConfig);
+                facilities = getFacilitiesMappedWithConfig(factoriesConfig);
                 pathing = XMLUtils.readPathing(configPath);
 
                 firePropertyChange("FACTORIES_STATE_CHANGED", null, facilities);
@@ -82,7 +82,7 @@ public class Environnement extends SwingWorker<Object, String> implements IObser
         this.configPath = configPath;
     }
 
-    private Map<Facility, Stack<Component>> getFactoriesMappedWithConfig(ArrayList<FacilityConfig> factoriesConfig) {
+    private Map<Facility, Stack<Component>> getFacilitiesMappedWithConfig(ArrayList<FacilityConfig> factoriesConfig) {
         Map<Facility, Stack<Component>> map = new HashMap<>();
 
         for(FacilityConfig config : factoriesConfig) {
@@ -103,7 +103,6 @@ public class Environnement extends SwingWorker<Object, String> implements IObser
                         else if(entryComponent.type().equals("aile"))
                             maxWingCapacity = entryComponent.quantity();
                     }
-
                     yield new PlaneFactory(config, maxMotorCapacity, maxWingCapacity);
                 }
                 case "usine-moteur" -> {
@@ -137,6 +136,7 @@ public class Environnement extends SwingWorker<Object, String> implements IObser
                 factory.craftComponent();
             }
         }
+        //TODO Craft rest of components when have enough entryComponent
 
         firePropertyChange("BASE_COMPONENTS_CRAFTED", null, null);
     }

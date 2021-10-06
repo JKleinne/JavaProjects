@@ -51,6 +51,7 @@ public class PanneauPrincipal extends JPanel {
 
         //TODO stop when components reach a Factory and add to Factory stock
 
+        //TODO conditionals for path type { straight, diagonal }
         for(Map.Entry<Point, ComponentType> entry: points.entrySet()) {
             Point p = entry.getKey();
             ComponentType type = entry.getValue();
