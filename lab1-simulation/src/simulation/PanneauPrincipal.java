@@ -1,8 +1,6 @@
 package simulation;
 
 import network.factories.Facility;
-import network.factories.MetalFactory;
-import network.factories.Warehouse;
 import network.records.Component;
 import network.records.FacilityCoordinates;
 import network.records.Pathing;
@@ -73,7 +71,7 @@ public class PanneauPrincipal extends JPanel {
         this.pathing = pathing;
     }
 
-    public void plotBaseComponentsStartingCoords(Graphics g, ArrayList<Component> components) {
+    public void setComponentsList(ArrayList<Component> components) {
         this.components = components;
     }
 
@@ -140,13 +138,13 @@ public class PanneauPrincipal extends JPanel {
 
     private void drawBaseComponents(Graphics g) {
         //TODO conditionals for path type { straight, diagonal }
-        for(Component c: components) {
-            Point p = c.from();
-            ComponentType type = c.type();
+        for(Component component: components) {
+            Point position = component.currentPos();
+            Point delta = component.translate();
 
-            var translate = c.translate();
+            var type = component.type();
 
-            p.translate(translate.x, translate.y);
+            position.translate(delta.x, delta.y);
 
             BufferedImage image = null;
 
@@ -156,57 +154,8 @@ public class PanneauPrincipal extends JPanel {
                 e.printStackTrace();
             }
 
-            g.drawImage(image, p.x, p.y, null);
+            g.drawImage(image, position.x, position.y, null);
         }
     }
 
-    private Point getPathDestinationByFacilityId(Facility f) {
-        var path = pathing.stream()
-                .filter(x -> x.fromFactoryCoordinatesId() == f.getConfig().coords().id())
-                .findFirst()
-                .get();
-
-        var destinationFacility = getFacilityById(path.toFactoryCoordinatesId());
-
-        var x = destinationFacility.getConfig()
-                .coords()
-                .x();
-
-        var y = destinationFacility.getConfig()
-                .coords()
-                .y();
-
-        return new Point(x, y);
-    }
-
-    private Facility getFacilityByPoint(Point p) {
-        return facilities.keySet()
-                .stream()
-                .filter(x -> x.getConfig().coords().x() == p.x && x.getConfig().coords().y() == p.y)
-                .findFirst()
-                .get();
-    }
-
-    private Point getTranslatePoint(Point from, Point to) {
-        int x, y;
-
-        int deltaX = to.x - from.x;
-        int deltaY = to.y - from.y;
-
-        if(deltaX > 0)
-            x = 1;
-        else if(deltaX < 0)
-            x = -1;
-        else
-            x = 0;
-
-        if(deltaY > 0)
-            y = 1;
-        else if(deltaY < 0)
-            y = -1;
-        else
-            y = 0;
-
-        return new Point(x, y);
-    }
 }

@@ -15,9 +15,9 @@ public class MotorFactory extends Factory {
     }
 
     @Override
-    public Component craftComponent(Point translate, Point from, Point to) {
+    public Component craftComponent(Point translate, Point currentPos, Point to) {
         var icon = "src/ressources/moteur.png";
-        var c = new Component(icon, ComponentType.MOTOR, translate, from, to);
+        var c = new Component(icon, ComponentType.MOTOR, translate, currentPos, to);
         addComponent(c);
 
         return c;

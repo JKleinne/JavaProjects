@@ -11,5 +11,5 @@ public abstract class Factory extends Facility {
         super(config);
     }
 
-    public abstract Component craftComponent(Point translate, Point from, Point to);
+    public abstract Component craftComponent(Point translate, Point currentPos, Point to);
 }

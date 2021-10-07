@@ -12,9 +12,9 @@ public class MetalFactory extends Factory {
     }
 
     @Override
-    public Component craftComponent(Point translate, Point from, Point to) {
+    public Component craftComponent(Point translate, Point currentPos, Point to) {
         var icon = "src/ressources/metal.png";
-        var c = new Component(icon, ComponentType.METAL, translate, from, to);
+        var c = new Component(icon, ComponentType.METAL, translate, currentPos, to);
         addComponent(c);
 
         return c;

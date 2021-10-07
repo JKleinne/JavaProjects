@@ -15,9 +15,9 @@ public class WingFactory extends Factory {
     }
 
     @Override
-    public Component craftComponent(Point translate, Point from, Point to) {
+    public Component craftComponent(Point translate, Point currentPos, Point to) {
         var icon = "src/ressources/aile.png";
-        var c = new Component(icon, ComponentType.WING, translate, from, to);
+        var c = new Component(icon, ComponentType.WING, translate, currentPos, to);
         addComponent(c);
 
         return c;

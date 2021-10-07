@@ -175,14 +175,6 @@ public class Environnement extends SwingWorker<Object, String> implements IObser
         return new Point(x, y);
     }
 
-    private Facility getFacilityByPoint(Point p) {
-        return facilities.keySet()
-                .stream()
-                .filter(x -> x.getConfig().coords().x() == p.x && x.getConfig().coords().y() == p.y)
-                .findFirst()
-                .get();
-    }
-
     private Point getTranslatePoint(Facility from, Point to) {
         int x, y;
 

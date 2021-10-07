@@ -16,9 +16,9 @@ public class PlaneFactory extends Factory {
         this.motorCapacity = motorCapacity;
     }
 
-    public Component craftComponent(Point translate, Point from, Point to) {
+    public Component craftComponent(Point translate, Point currentPos, Point to) {
         var icon = "src/ressources/avion.png";
-        var c = new Component(icon, ComponentType.PLANE, translate, from, to);
+        var c = new Component(icon, ComponentType.PLANE, translate, currentPos, to);
         addComponent(c);
 
         return c;
