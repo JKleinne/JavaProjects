@@ -4,7 +4,7 @@ import network.records.Component;
 import network.records.FacilityConfig;
 import network.utilities.ComponentType;
 
-import java.util.Stack;
+import java.awt.*;
 
 public class PlaneFactory extends Factory {
     private int wingCapacity;
@@ -16,9 +16,9 @@ public class PlaneFactory extends Factory {
         this.motorCapacity = motorCapacity;
     }
 
-    public Component craftComponent() {
+    public Component craftComponent(Point translate, Point from, Point to) {
         var icon = "src/ressources/avion.png";
-        var c = new Component(icon, ComponentType.PLANE);
+        var c = new Component(icon, ComponentType.PLANE, translate, from, to);
         addComponent(c);
 
         return c;

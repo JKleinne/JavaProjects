@@ -25,11 +25,14 @@ import javax.swing.JPanel;
 public class PanneauPrincipal extends JPanel {
 
 	private static final long serialVersionUID = 1L;
+    private final int X_ALIGNMENT = 10;
+    private final int Y_ALIGNMENT = 15;
 
     public static String configPath = null;
     public Map<Facility, Stack<Component>> facilities;
     public ArrayList<Pathing> pathing;
     private Map<Point, ComponentType> componentsStartingPoints;
+    private ArrayList<Component> components;
 	
 	// Variables temporaires de la demonstration:
 
@@ -43,6 +46,7 @@ public class PanneauPrincipal extends JPanel {
         super();
 
         componentsStartingPoints = new HashMap<>();
+        components = new ArrayList<>();
     }
 	
 	@Override
@@ -69,24 +73,8 @@ public class PanneauPrincipal extends JPanel {
         this.pathing = pathing;
     }
 
-    public void plotBaseComponentsStartingCoords(Graphics g) {
-        for(Facility f: facilities.keySet()) {
-            if(f instanceof Warehouse)
-                continue;
-
-            int x = f.getConfig()
-                    .coords()
-                    .x();
-            int y = f.getConfig()
-                    .coords()
-                    .y();
-
-            if(f instanceof MetalFactory) {
-                componentsStartingPoints.put(new Point(x, y), ComponentType.METAL);
-            }
-
-            //TODO Rest of the other Factory subclasses
-        }
+    public void plotBaseComponentsStartingCoords(Graphics g, ArrayList<Component> components) {
+        this.components = components;
     }
 
     private Facility getFacilityById(int id) {
@@ -145,18 +133,20 @@ public class PanneauPrincipal extends JPanel {
                 int x2 = to.x(),
                         y2 = to.y();
 
-                g.drawLine(x1 + 10, y1 + 15, x2 + 10, y2 + 15);
+                g.drawLine(x1 + X_ALIGNMENT, y1 + Y_ALIGNMENT, x2 + X_ALIGNMENT, y2 + Y_ALIGNMENT);
             }
         }
     }
 
     private void drawBaseComponents(Graphics g) {
         //TODO conditionals for path type { straight, diagonal }
-        for(Map.Entry<Point, ComponentType> entry: componentsStartingPoints.entrySet()) {
-            Point p = entry.getKey();
-            ComponentType type = entry.getValue();
+        for(Component c: components) {
+            Point p = c.from();
+            ComponentType type = c.type();
 
-            p.translate(straightPath.x, straightPath.y);
+            var translate = c.translate();
+
+            p.translate(translate.x, translate.y);
 
             BufferedImage image = null;
 
@@ -170,4 +160,53 @@ public class PanneauPrincipal extends JPanel {
         }
     }
 
+    private Point getPathDestinationByFacilityId(Facility f) {
+        var path = pathing.stream()
+                .filter(x -> x.fromFactoryCoordinatesId() == f.getConfig().coords().id())
+                .findFirst()
+                .get();
+
+        var destinationFacility = getFacilityById(path.toFactoryCoordinatesId());
+
+        var x = destinationFacility.getConfig()
+                .coords()
+                .x();
+
+        var y = destinationFacility.getConfig()
+                .coords()
+                .y();
+
+        return new Point(x, y);
+    }
+
+    private Facility getFacilityByPoint(Point p) {
+        return facilities.keySet()
+                .stream()
+                .filter(x -> x.getConfig().coords().x() == p.x && x.getConfig().coords().y() == p.y)
+                .findFirst()
+                .get();
+    }
+
+    private Point getTranslatePoint(Point from, Point to) {
+        int x, y;
+
+        int deltaX = to.x - from.x;
+        int deltaY = to.y - from.y;
+
+        if(deltaX > 0)
+            x = 1;
+        else if(deltaX < 0)
+            x = -1;
+        else
+            x = 0;
+
+        if(deltaY > 0)
+            y = 1;
+        else if(deltaY < 0)
+            y = -1;
+        else
+            y = 0;
+
+        return new Point(x, y);
+    }
 }

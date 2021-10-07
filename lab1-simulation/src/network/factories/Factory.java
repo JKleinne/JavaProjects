@@ -1,10 +1,9 @@
 package network.factories;
 
-import network.observer.IObserver;
 import network.records.Component;
 import network.records.FacilityConfig;
 
-import java.util.Stack;
+import java.awt.*;
 
 public abstract class Factory extends Facility {
 
@@ -12,5 +11,5 @@ public abstract class Factory extends Facility {
         super(config);
     }
 
-    public abstract Component craftComponent();
+    public abstract Component craftComponent(Point translate, Point from, Point to);
 }

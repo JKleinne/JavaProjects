@@ -4,7 +4,7 @@ import network.records.Component;
 import network.records.FacilityConfig;
 import network.utilities.ComponentType;
 
-import java.util.Stack;
+import java.awt.*;
 
 public class WingFactory extends Factory {
     private int metalCapacity;
@@ -15,9 +15,9 @@ public class WingFactory extends Factory {
     }
 
     @Override
-    public Component craftComponent() {
+    public Component craftComponent(Point translate, Point from, Point to) {
         var icon = "src/ressources/aile.png";
-        var c = new Component(icon, ComponentType.WING);
+        var c = new Component(icon, ComponentType.WING, translate, from, to);
         addComponent(c);
 
         return c;

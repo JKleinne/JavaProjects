@@ -12,6 +12,7 @@ import org.xml.sax.SAXException;
 
 import javax.swing.SwingWorker;
 import javax.xml.parsers.ParserConfigurationException;
+import java.awt.*;
 import java.io.IOException;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public class Environnement extends SwingWorker<Object, String> implements IObser
 
     private ArrayList<Pathing> pathing;
     private Map<Facility, Stack<Component>> facilities;
+    private ArrayList<Component> components = new ArrayList<>();
 
     public String configPath = null;
 
@@ -125,19 +127,82 @@ public class Environnement extends SwingWorker<Object, String> implements IObser
     private void craftComponents() {
         for(Facility f: facilities.keySet()) {
             if(f instanceof MetalFactory factory) {
-                factory.craftComponent();
+                Point destination = getPathDestinationByFacilityId(f);
+                Point from = new Point(f.getConfig().coords().x(), f.getConfig().coords().y());
+                Point translate = getTranslatePoint(f, destination);
+
+                components.add(factory.craftComponent(translate, from, destination));
             }
-            else if(f instanceof MotorFactory factory) {
-                factory.craftComponent();
-            }
-            else if(f instanceof PlaneFactory factory) {
-                factory.craftComponent();
-            }else if(f instanceof WingFactory factory) {
-                factory.craftComponent();
-            }
+//            else if(f instanceof MotorFactory factory) {
+//                factory.craftComponent();
+//            }
+//            else if(f instanceof PlaneFactory factory) {
+//                factory.craftComponent();
+//            }else if(f instanceof WingFactory factory) {
+//                factory.craftComponent();
+//            }
         }
         //TODO Craft rest of components when have enough entryComponent
 
-        firePropertyChange("BASE_COMPONENTS_CRAFTED", null, null);
+        firePropertyChange("BASE_COMPONENTS_CRAFTED", null, components);
+    }
+
+    private Facility getFacilityById(int id) {
+        return facilities
+                .keySet()
+                .stream()
+                .filter(x -> x.getConfig().coords().id() == id)
+                .findFirst()
+                .get();
+    }
+
+    private Point getPathDestinationByFacilityId(Facility f) {
+        var path = pathing.stream()
+                .filter(x -> x.fromFactoryCoordinatesId() == f.getConfig().coords().id())
+                .findFirst()
+                .get();
+
+        var destinationFacility = getFacilityById(path.toFactoryCoordinatesId());
+
+        var x = destinationFacility.getConfig()
+                .coords()
+                .x();
+
+        var y = destinationFacility.getConfig()
+                .coords()
+                .y();
+
+        return new Point(x, y);
+    }
+
+    private Facility getFacilityByPoint(Point p) {
+        return facilities.keySet()
+                .stream()
+                .filter(x -> x.getConfig().coords().x() == p.x && x.getConfig().coords().y() == p.y)
+                .findFirst()
+                .get();
+    }
+
+    private Point getTranslatePoint(Facility from, Point to) {
+        int x, y;
+
+        int deltaX = to.x - from.getConfig().coords().x();
+        int deltaY = to.y - from.getConfig().coords().y();
+
+        if(deltaX > 0)
+            x = 1;
+        else if(deltaX < 0)
+            x = -1;
+        else
+            x = 0;
+
+        if(deltaY > 0)
+            y = 1;
+        else if(deltaY < 0)
+            y = -1;
+        else
+            y = 0;
+
+        return new Point(x, y);
     }
 }

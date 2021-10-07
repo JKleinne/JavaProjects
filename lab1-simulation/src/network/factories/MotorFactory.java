@@ -4,7 +4,7 @@ import network.records.Component;
 import network.records.FacilityConfig;
 import network.utilities.ComponentType;
 
-import java.util.Stack;
+import java.awt.*;
 
 public class MotorFactory extends Factory {
     private int motorCapacity;
@@ -15,9 +15,9 @@ public class MotorFactory extends Factory {
     }
 
     @Override
-    public Component craftComponent() {
+    public Component craftComponent(Point translate, Point from, Point to) {
         var icon = "src/ressources/moteur.png";
-        var c = new Component(icon, ComponentType.MOTOR);
+        var c = new Component(icon, ComponentType.MOTOR, translate, from, to);
         addComponent(c);
 
         return c;
