@@ -52,23 +52,7 @@ public class PanneauPrincipal extends JPanel {
 
         //TODO stop when components reach a Factory and add to Factory stock
 
-        //TODO conditionals for path type { straight, diagonal }
-        for(Map.Entry<Point, ComponentType> entry: componentsStartingPoints.entrySet()) {
-            Point p = entry.getKey();
-            ComponentType type = entry.getValue();
-
-            p.translate(straightPath.x, straightPath.y);
-
-            BufferedImage image = null;
-
-            try {
-                image = ImageIO.read(new File(type.getIconPath()));
-            } catch (IOException  | NullPointerException e) {
-                e.printStackTrace();
-            }
-
-            g.drawImage(image, p.x, p.y, null);
-        }
+        drawBaseComponents(g);
 
         //TODO draw factories with stock status
         drawFactories(g);
@@ -164,6 +148,26 @@ public class PanneauPrincipal extends JPanel {
 
                 g.drawLine(x1 + 10, y1 + 15, x2 + 10, y2 + 15);
             }
+        }
+    }
+
+    private void drawBaseComponents(Graphics g) {
+        //TODO conditionals for path type { straight, diagonal }
+        for(Map.Entry<Point, ComponentType> entry: componentsStartingPoints.entrySet()) {
+            Point p = entry.getKey();
+            ComponentType type = entry.getValue();
+
+            p.translate(straightPath.x, straightPath.y);
+
+            BufferedImage image = null;
+
+            try {
+                image = ImageIO.read(new File(type.getIconPath()));
+            } catch (IOException  | NullPointerException e) {
+                e.printStackTrace();
+            }
+
+            g.drawImage(image, p.x, p.y, null);
         }
     }
 
