@@ -43,7 +43,7 @@ public class Environnement extends SwingWorker<Object, String> implements IObser
             Instant instant = Instant.now();
             long current = instant.getEpochSecond();
 
-            if(current - timeStamp >= 3) {
+            if(current - timeStamp >= 10) {
                 //TODO Each Factory craft components each "tour"
                 if(facilities != null) {
                     craftComponents();

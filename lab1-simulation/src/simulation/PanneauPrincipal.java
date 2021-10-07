@@ -29,11 +29,12 @@ public class PanneauPrincipal extends JPanel {
     public static String configPath = null;
     public Map<Facility, Stack<Component>> facilities;
     public ArrayList<Pathing> pathing;
-    private Map<Point, ComponentType> points;
+    private Map<Point, ComponentType> componentsStartingPoints;
 	
 	// Variables temporaires de la demonstration:
 
     private Point straightPath = new Point(1,0);
+    private Point leftUpperDiagonalPath = new Point(-1, 1);
     //TODO Rest of the path templates { diagonal }
 
 	private int taille = 32;
@@ -41,7 +42,7 @@ public class PanneauPrincipal extends JPanel {
     public PanneauPrincipal() {
         super();
 
-        points = new HashMap<>();
+        componentsStartingPoints = new HashMap<>();
     }
 	
 	@Override
@@ -52,7 +53,7 @@ public class PanneauPrincipal extends JPanel {
         //TODO stop when components reach a Factory and add to Factory stock
 
         //TODO conditionals for path type { straight, diagonal }
-        for(Map.Entry<Point, ComponentType> entry: points.entrySet()) {
+        for(Map.Entry<Point, ComponentType> entry: componentsStartingPoints.entrySet()) {
             Point p = entry.getKey();
             ComponentType type = entry.getValue();
 
@@ -83,6 +84,26 @@ public class PanneauPrincipal extends JPanel {
 
     public void setPathing(ArrayList<Pathing> pathing) {
         this.pathing = pathing;
+    }
+
+    public void plotBaseComponentsStartingCoords(Graphics g) {
+        for(Facility f: facilities.keySet()) {
+            if(f instanceof Warehouse)
+                continue;
+
+            int x = f.getConfig()
+                    .coords()
+                    .x();
+            int y = f.getConfig()
+                    .coords()
+                    .y();
+
+            if(f instanceof MetalFactory) {
+                componentsStartingPoints.put(new Point(x, y), ComponentType.METAL);
+            }
+
+            //TODO Rest of the other Factory subclasses
+        }
     }
 
     private Facility getFacilityById(int id) {
@@ -143,25 +164,6 @@ public class PanneauPrincipal extends JPanel {
 
                 g.drawLine(x1 + 10, y1 + 15, x2 + 10, y2 + 15);
             }
-        }
-    }
-
-    public void drawBaseComponents(Graphics g) {
-        for(Facility f: facilities.keySet()) {
-            if(f instanceof Warehouse)
-                continue;
-
-            int x = f.getConfig()
-                    .coords()
-                    .x();
-            int y = f.getConfig()
-                    .coords()
-                    .y();
-
-            if(f instanceof MetalFactory) {
-                points.put(new Point(x, y), ComponentType.METAL);
-            }
-            //TODO Rest of the other Factory subclasses
         }
     }
 

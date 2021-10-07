@@ -55,7 +55,7 @@ public class FenetrePrincipale extends JFrame implements PropertyChangeListener 
             }
             case "BASE_COMPONENTS_CRAFTED" -> {
                 repaint();
-                panneauPrincipal.drawBaseComponents(panneauPrincipal.getGraphics());
+                panneauPrincipal.plotBaseComponentsStartingCoords(panneauPrincipal.getGraphics());
             }
         }
         //TODO listener for factories stock update
