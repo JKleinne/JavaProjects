@@ -52,13 +52,12 @@ public class PanneauPrincipal extends JPanel {
 
         //TODO stop when components reach a Factory and add to Factory stock
 
-        drawBaseComponents(g);
-
         //TODO draw factories with stock status
-        drawFactories(g);
         drawPathing(g);
+        drawFactories(g);
 
         //TODO draw Components
+        drawBaseComponents(g);
     }
 
 
