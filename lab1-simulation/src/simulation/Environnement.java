@@ -183,19 +183,8 @@ public class Environnement extends SwingWorker<Object, String> implements IObser
         int deltaX = to.x - from.getConfig().coords().x();
         int deltaY = to.y - from.getConfig().coords().y();
 
-        if(deltaX > 0)
-            x = 1;
-        else if(deltaX < 0)
-            x = -1;
-        else
-            x = 0;
-
-        if(deltaY > 0)
-            y = 1;
-        else if(deltaY < 0)
-            y = -1;
-        else
-            y = 0;
+        x = Integer.compare(deltaX, 0);
+        y = Integer.compare(deltaY, 0);
 
         return new Point(x, y);
     }
