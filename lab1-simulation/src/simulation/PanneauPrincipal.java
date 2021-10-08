@@ -4,7 +4,6 @@ import network.factories.Facility;
 import network.records.Component;
 import network.records.FacilityCoordinates;
 import network.records.Pathing;
-import network.utilities.ComponentType;
 import network.utilities.IndicatorStatus;
 
 import java.awt.Graphics;
@@ -13,7 +12,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
@@ -29,21 +27,12 @@ public class PanneauPrincipal extends JPanel {
     public static String configPath = null;
     public Map<Facility, Stack<Component>> facilities;
     public ArrayList<Pathing> pathing;
-    private Map<Point, ComponentType> componentsStartingPoints;
     private ArrayList<Component> components;
-	
-	// Variables temporaires de la demonstration:
-
-    private Point straightPath = new Point(1,0);
-    private Point leftUpperDiagonalPath = new Point(-1, 1);
-    //TODO Rest of the path templates { diagonal }
 
 	private int taille = 32;
 
     public PanneauPrincipal() {
         super();
-
-        componentsStartingPoints = new HashMap<>();
         components = new ArrayList<>();
     }
 	

@@ -26,7 +26,7 @@ public class Environnement extends SwingWorker<Object, String> implements IObser
 
     private ArrayList<Pathing> pathing;
     private Map<Facility, Stack<Component>> facilities;
-    private ArrayList<Component> components = new ArrayList<>();
+    private final ArrayList<Component> components = new ArrayList<>();
 
     public String configPath = null;
 
