@@ -72,6 +72,8 @@ public class Environnement extends SwingWorker<Object, String> implements IObser
                 facilities = getFacilitiesMappedWithConfig(factoriesConfig);
                 pathing = XMLUtils.readPathing(configPath);
 
+                components.clear();
+
                 firePropertyChange("FACTORIES_STATE_CHANGED", null, facilities);
                 firePropertyChange("PATHING_CHANGED", null, pathing);
             } catch (IOException | SAXException | ParserConfigurationException e) {
