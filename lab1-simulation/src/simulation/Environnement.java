@@ -149,6 +149,30 @@ public class Environnement extends SwingWorker<Object, String> implements IObser
         firePropertyChange("BASE_COMPONENTS_CRAFTED", null, components);
     }
 
+    //TODO check components position every tour to see if it reaches a facility
+    private void checkComponentsPosition() {
+        for(Component comp: components) {
+            if(comp.currentPos().equals(comp.to())) {
+                var destinationFacility = getFacilityByCoords(comp.currentPos());
+            }
+        }
+    }
+
+    private Facility getFacilityByCoords(Point p) {
+        return facilities
+                .keySet()
+                .stream()
+                .filter(x -> {
+                    int Fx = x.getConfig().coords().x();
+                    int Fy = x.getConfig().coords().y();
+
+                    var facilityCoords = new Point(Fx, Fy);
+                    return facilityCoords.equals(p);
+                })
+                .findFirst()
+                .get();
+    }
+
     private Facility getFacilityById(int id) {
         return facilities
                 .keySet()
