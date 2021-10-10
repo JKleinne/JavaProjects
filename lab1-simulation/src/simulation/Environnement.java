@@ -23,15 +23,17 @@ import java.util.Stack;
 
 public class Environnement extends SwingWorker<Object, String> implements IObserver {
 	private boolean actif = true;
+
 	private static final int DELAI = 100;
+    private static final int TOUR = 2;
+
+    private long timeStamp = 0;
 
     private ArrayList<Pathing> pathing;
     private Map<Facility, Stack<Component>> facilities;
     private final ArrayList<Component> components = new ArrayList<>();
 
     public String configPath = null;
-
-    private long timeStamp = 0;
 
 	@Override
 	protected Object doInBackground() throws Exception {
@@ -46,7 +48,7 @@ public class Environnement extends SwingWorker<Object, String> implements IObser
             Instant instant = Instant.now();
             long current = instant.getEpochSecond();
 
-            if(current - timeStamp >= 10) {
+            if(current - timeStamp >= TOUR) {
                 //TODO Each Factory craft components each "tour"
                 if(facilities != null) {
                     craftComponents();
