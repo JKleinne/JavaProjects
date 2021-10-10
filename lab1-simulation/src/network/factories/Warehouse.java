@@ -8,27 +8,12 @@ import network.strategies.sell.ISellBehavior;
 
 import java.util.ArrayList;
 
-public class Warehouse extends Facility implements ISubject {
+public class Warehouse extends Facility {
     private ArrayList<Component> planes;
     private ISellBehavior sellBehavior;
 
     public Warehouse(FacilityConfig config) {
         super(config);
-    }
-
-    @Override
-    public void registerObserver(IObserver o) {
-
-    }
-
-    @Override
-    public void removeObserver(IObserver o) {
-
-    }
-
-    @Override
-    public void notifyObservers() {
-
     }
 
     private void suspendProduction() {}

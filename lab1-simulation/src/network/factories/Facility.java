@@ -14,7 +14,7 @@ public class Facility implements ISubject {
     protected FacilityConfig config;
     protected IndicatorStatus status;
 
-    private ArrayList<IObserver> observers;
+    private final ArrayList<IObserver> observers;
 
     public Facility(FacilityConfig config) {
         this.config = config;
@@ -42,6 +42,7 @@ public class Facility implements ISubject {
 
     public void setStatus(IndicatorStatus status) {
         this.status = status;
+        notifyObservers();
     }
 
     @Override
