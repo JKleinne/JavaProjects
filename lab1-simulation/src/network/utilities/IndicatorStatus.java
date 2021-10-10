@@ -15,4 +15,8 @@ public enum IndicatorStatus {
     public int getIndex() {
         return index;
     }
+
+    public IndicatorStatus getNext() {
+        return ordinal() != values().length - 1 ? values()[ordinal() + 1] : null;
+    }
 }

@@ -80,10 +80,10 @@ public class PanneauPrincipal extends JPanel {
                 if(facility == null)
                     continue;
 
-                String emptyFactoryImagePath = facility.getConfig()
+                String iconPath = facility.getConfig()
                         .metadata()
                         .icons()
-                        .get(IndicatorStatus.EMPTY.getIndex())
+                        .get(facility.getStatus().getIndex())
                         .path();
 
                 int x = facility.getConfig()
@@ -95,7 +95,7 @@ public class PanneauPrincipal extends JPanel {
 
                 BufferedImage image = null;
                 try {
-                    image = ImageIO.read(new File(emptyFactoryImagePath));
+                    image = ImageIO.read(new File(iconPath));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

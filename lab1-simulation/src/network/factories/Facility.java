@@ -4,6 +4,7 @@ import network.observer.IObserver;
 import network.observer.ISubject;
 import network.records.Component;
 import network.records.FacilityConfig;
+import network.utilities.IndicatorStatus;
 
 import java.util.ArrayList;
 import java.util.Stack;
@@ -11,6 +12,7 @@ import java.util.Stack;
 public class Facility implements ISubject {
     protected Stack<Component> stock;
     protected FacilityConfig config;
+    protected IndicatorStatus status;
 
     private ArrayList<IObserver> observers;
 
@@ -18,6 +20,7 @@ public class Facility implements ISubject {
         this.config = config;
         stock = new Stack<>();
         observers = new ArrayList<>();
+        status = IndicatorStatus.EMPTY;
     }
 
     public void addComponent(Component c) {
@@ -31,6 +34,14 @@ public class Facility implements ISubject {
 
     public FacilityConfig getConfig() {
         return config;
+    }
+
+    public IndicatorStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(IndicatorStatus status) {
+        this.status = status;
     }
 
     @Override

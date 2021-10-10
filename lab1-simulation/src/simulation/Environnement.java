@@ -7,6 +7,7 @@ import network.records.Component;
 import network.records.FacilityConfig;
 import network.records.FacilityEntryComponent;
 import network.records.Pathing;
+import network.utilities.IndicatorStatus;
 import network.utilities.XMLUtils;
 import org.xml.sax.SAXException;
 
@@ -130,11 +131,18 @@ public class Environnement extends SwingWorker<Object, String> implements IObser
     private void craftComponents() {
         for(Facility f: facilities.keySet()) {
             if(f instanceof MetalFactory factory) {
-                Point destination = getPathDestinationByFacilityId(f);
-                Point from = new Point(f.getConfig().coords().x(), f.getConfig().coords().y());
-                Point translate = getTranslatePoint(f, destination);
+                IndicatorStatus currentProductionStatus = f.getStatus();
 
-                components.add(factory.craftComponent(translate, from, destination));
+                if(currentProductionStatus.getNext() == null) {
+                    Point destination = getPathDestinationByFacilityId(f);
+                    Point from = new Point(f.getConfig().coords().x(), f.getConfig().coords().y());
+                    Point translate = getTranslatePoint(f, destination);
+
+                    components.add(factory.craftComponent(translate, from, destination));
+                    f.setStatus(IndicatorStatus.EMPTY);
+                } else {
+                    f.setStatus(currentProductionStatus.getNext());
+                }
             }
 //            else if(f instanceof MotorFactory factory) {
 //                factory.craftComponent();
