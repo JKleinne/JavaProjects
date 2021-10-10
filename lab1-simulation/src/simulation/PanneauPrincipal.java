@@ -73,6 +73,7 @@ public class PanneauPrincipal extends JPanel {
                 .get();
     }
 
+    // TODO Add parameter Map<Facility, IndicatorStatus> facilityStatus
     private void drawFactories(Graphics g) {
         if(facilities != null) {
             for (Facility facility : facilities.keySet()) {

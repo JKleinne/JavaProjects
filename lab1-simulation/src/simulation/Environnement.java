@@ -126,6 +126,7 @@ public class Environnement extends SwingWorker<Object, String> implements IObser
         return map;
     }
 
+    //TODO craft base components only when stock is full
     private void craftComponents() {
         for(Facility f: facilities.keySet()) {
             if(f instanceof MetalFactory factory) {
