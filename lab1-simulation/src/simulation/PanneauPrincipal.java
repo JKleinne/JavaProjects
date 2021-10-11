@@ -4,7 +4,6 @@ import network.factories.Facility;
 import network.records.Component;
 import network.records.FacilityCoordinates;
 import network.records.Pathing;
-import network.utilities.IndicatorStatus;
 
 import java.awt.Graphics;
 import java.awt.Point;
@@ -128,13 +127,13 @@ public class PanneauPrincipal extends JPanel {
 
     private void drawBaseComponents(Graphics g) {
         //TODO conditionals for path type { straight, diagonal }
-        for(Component component: components) {
+        //Prevents java.util.ConcurrentModificationException
+        for(Component component: new ArrayList<>(components)) {
             Point position = component.currentPos();
-            Point delta = component.translate();
+
+            translateComponentPosition(component);
 
             var type = component.type();
-
-            position.translate(delta.x, delta.y);
 
             BufferedImage image = null;
 
@@ -148,4 +147,35 @@ public class PanneauPrincipal extends JPanel {
         }
     }
 
+    private Facility getFacilityByCoords(Point p) {
+        return facilities
+                .keySet()
+                .stream()
+                .filter(x -> {
+                    int Fx = x.getConfig().coords().x();
+                    int Fy = x.getConfig().coords().y();
+
+                    var facilityCoords = new Point(Fx, Fy);
+                    return facilityCoords.equals(p);
+                })
+                .findFirst()
+                .get();
+    }
+
+    public void translateComponentPosition(Component c) {
+        var comp = components.stream()
+                .filter(x -> x.equals(c))
+                .findFirst().get();
+
+        Point position = comp.currentPos();
+
+        if(position.equals(comp.to())) {
+            var destinationFacility = getFacilityByCoords(comp.currentPos());
+            destinationFacility.addComponent(comp);
+            components.remove(comp);
+        } else {
+            Point delta = comp.translate();
+            position.translate(delta.x, delta.y);
+        }
+    }
 }

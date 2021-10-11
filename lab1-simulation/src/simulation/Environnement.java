@@ -52,6 +52,7 @@ public class Environnement extends SwingWorker<Object, String> implements IObser
                 //TODO Each Factory craft components each "tour"
                 if(facilities != null) {
                     craftComponents();
+                    //checkComponentsPosition();
                 }
 
                 timeStamp = current;
@@ -146,42 +147,10 @@ public class Environnement extends SwingWorker<Object, String> implements IObser
                     f.setStatus(currentProductionStatus.getNext());
                 }
             }
-//            else if(f instanceof MotorFactory factory) {
-//                factory.craftComponent();
-//            }
-//            else if(f instanceof PlaneFactory factory) {
-//                factory.craftComponent();
-//            }else if(f instanceof WingFactory factory) {
-//                factory.craftComponent();
-//            }
         }
         //TODO Craft rest of components when have enough entryComponent
 
         firePropertyChange("BASE_COMPONENTS_CRAFTED", null, components);
-    }
-
-    //TODO check components position every tour to see if it reaches a facility
-    private void checkComponentsPosition() {
-        for(Component comp: components) {
-            if(comp.currentPos().equals(comp.to())) {
-                var destinationFacility = getFacilityByCoords(comp.currentPos());
-            }
-        }
-    }
-
-    private Facility getFacilityByCoords(Point p) {
-        return facilities
-                .keySet()
-                .stream()
-                .filter(x -> {
-                    int Fx = x.getConfig().coords().x();
-                    int Fy = x.getConfig().coords().y();
-
-                    var facilityCoords = new Point(Fx, Fy);
-                    return facilityCoords.equals(p);
-                })
-                .findFirst()
-                .get();
     }
 
     private Facility getFacilityById(int id) {

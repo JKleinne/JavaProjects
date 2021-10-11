@@ -22,4 +22,8 @@ public class MotorFactory extends Factory {
 
         return c;
     }
+
+    public int getMaxMetalCapacity() {
+        return this.maxMetalCapacity;
+    }
 }
