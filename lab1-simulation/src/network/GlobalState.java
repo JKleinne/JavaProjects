@@ -25,22 +25,6 @@ public class GlobalState implements IObserver {
         return instance;
     }
 
-    public void addPathing(Pathing path) {
-        pathing.add(path);
-    }
-
-    public void addFacility(Facility f, Stack<Component> stock) {
-        facilities.put(f, stock);
-    }
-
-    public void addComponent(Component c) {
-        components.add(c);
-    }
-
-    public void removeComponent(Component c) {
-        components.remove(c);
-    }
-
     @Override
     public void update(Facility f, Stack<Component> stock) {
         facilities.replace(f, stock);
