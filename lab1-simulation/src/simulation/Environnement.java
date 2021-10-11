@@ -121,7 +121,6 @@ public class Environnement extends SwingWorker<Object, String> {
         return map;
     }
 
-    //TODO craft base components only when stock is full
     private void craftComponents() {
         for(Facility f: state.facilities.keySet()) {
             if(f instanceof MetalFactory factory) {

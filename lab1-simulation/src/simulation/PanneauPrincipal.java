@@ -33,13 +33,9 @@ public class PanneauPrincipal extends JPanel {
 		super.paint(g);
 		// On ajoute � la position le delta x et y de la vitesse
 
-        //TODO stop when components reach a Factory and add to Factory stock
-
-        //TODO draw factories with stock status
         drawPathing(g);
         drawFactories(g);
 
-        //TODO draw Components
         drawBaseComponents(g);
     }
 
@@ -52,7 +48,6 @@ public class PanneauPrincipal extends JPanel {
                 .get();
     }
 
-    // TODO Add parameter Map<Facility, IndicatorStatus> facilityStatus
     private void drawFactories(Graphics g) {
         if(state.facilities != null) {
             for (Facility facility : state.facilities.keySet()) {
@@ -106,7 +101,6 @@ public class PanneauPrincipal extends JPanel {
     }
 
     private void drawBaseComponents(Graphics g) {
-        //TODO conditionals for path type { straight, diagonal }
         //Prevents java.util.ConcurrentModificationException
         for(Component component: new ArrayList<>(state.components)) {
             Point position = component.currentPos();

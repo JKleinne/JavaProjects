@@ -45,8 +45,6 @@ public class FenetrePrincipale extends JFrame implements PropertyChangeListener 
             case "NEW_FRAME" -> {
                 repaint();
             }
-
         }
-        //TODO listener for factories stock update
 	}
 }
