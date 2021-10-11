@@ -1,5 +1,6 @@
 package simulation;
 
+import network.GlobalState;
 import network.factories.Warehouse;
 import network.factories.*;
 import network.observer.IObserver;
@@ -21,7 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
-public class Environnement extends SwingWorker<Object, String> implements IObserver {
+public class Environnement extends SwingWorker<Object, String> {
 	private boolean actif = true;
 
 	private static final int DELAI = 100;
@@ -29,9 +30,7 @@ public class Environnement extends SwingWorker<Object, String> implements IObser
 
     private long timeStamp = 0;
 
-    private ArrayList<Pathing> pathing;
-    private Map<Facility, Stack<Component>> facilities;
-    private final ArrayList<Component> components = new ArrayList<>();
+    private GlobalState state = GlobalState.getInstance();
 
     public String configPath = null;
 
@@ -50,9 +49,8 @@ public class Environnement extends SwingWorker<Object, String> implements IObser
 
             if(current - timeStamp >= TOUR) {
                 //TODO Each Factory craft components each "tour"
-                if(facilities != null) {
+                if(state.facilities != null) {
                     craftComponents();
-                    //checkComponentsPosition();
                 }
 
                 timeStamp = current;
@@ -62,24 +60,19 @@ public class Environnement extends SwingWorker<Object, String> implements IObser
 		return null;
 	}
 
-    @Override
-    public void update(Facility f, Stack<Component> stock) {
-        facilities.replace(f, stock);
-    }
-
     public void rebuildNetworkEnvironment() {
         ArrayList<FacilityConfig> factoriesConfig = null;
 
         if(configPath != null) {
             try {
                 factoriesConfig = XMLUtils.getFactoryConfig(configPath);
-                facilities = getFacilitiesMappedWithConfig(factoriesConfig);
-                pathing = XMLUtils.readPathing(configPath);
+                state.facilities = getFacilitiesMappedWithConfig(factoriesConfig);
+                state.pathing = XMLUtils.readPathing(configPath);
 
-                components.clear();
+                state.components.clear();
 
-                firePropertyChange("FACTORIES_STATE_CHANGED", null, facilities);
-                firePropertyChange("PATHING_CHANGED", null, pathing);
+                firePropertyChange("FACTORIES_STATE_CHANGED", null, state.facilities);
+                firePropertyChange("PATHING_CHANGED", null, state.pathing);
             } catch (IOException | SAXException | ParserConfigurationException e) {
                 e.printStackTrace();
             }
@@ -122,8 +115,6 @@ public class Environnement extends SwingWorker<Object, String> implements IObser
                 case "entrepot" -> new Warehouse(config);
                 default -> null;
             };
-
-            f.registerObserver(this);
             map.put(f, new Stack<Component>());
         }
 
@@ -132,7 +123,7 @@ public class Environnement extends SwingWorker<Object, String> implements IObser
 
     //TODO craft base components only when stock is full
     private void craftComponents() {
-        for(Facility f: facilities.keySet()) {
+        for(Facility f: state.facilities.keySet()) {
             if(f instanceof MetalFactory factory) {
                 IndicatorStatus currentProductionStatus = f.getStatus();
 
@@ -141,7 +132,7 @@ public class Environnement extends SwingWorker<Object, String> implements IObser
                     Point from = new Point(f.getConfig().coords().x(), f.getConfig().coords().y());
                     Point translate = getTranslatePoint(f, destination);
 
-                    components.add(factory.craftComponent(translate, from, destination));
+                    state.components.add(factory.craftComponent(translate, from, destination));
                     f.setStatus(IndicatorStatus.EMPTY);
                 } else {
                     f.setStatus(currentProductionStatus.getNext());
@@ -150,11 +141,11 @@ public class Environnement extends SwingWorker<Object, String> implements IObser
         }
         //TODO Craft rest of components when have enough entryComponent
 
-        firePropertyChange("BASE_COMPONENTS_CRAFTED", null, components);
+        firePropertyChange("BASE_COMPONENTS_CRAFTED", null, state.components);
     }
 
     private Facility getFacilityById(int id) {
-        return facilities
+        return state.facilities
                 .keySet()
                 .stream()
                 .filter(x -> x.getConfig().coords().id() == id)
@@ -163,7 +154,7 @@ public class Environnement extends SwingWorker<Object, String> implements IObser
     }
 
     private Point getPathDestinationByFacilityId(Facility f) {
-        var path = pathing.stream()
+        var path = state.pathing.stream()
                 .filter(x -> x.fromFactoryCoordinatesId() == f.getConfig().coords().id())
                 .findFirst()
                 .get();

@@ -1,5 +1,6 @@
 package simulation;
 
+import network.GlobalState;
 import network.factories.Facility;
 import network.records.Component;
 import network.records.FacilityCoordinates;
@@ -11,8 +12,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.Stack;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
@@ -23,17 +22,11 @@ public class PanneauPrincipal extends JPanel {
     private final int X_ALIGNMENT = 10;
     private final int Y_ALIGNMENT = 15;
 
+    private GlobalState state = GlobalState.getInstance();
+
     public static String configPath = null;
-    public Map<Facility, Stack<Component>> facilities;
-    public ArrayList<Pathing> pathing;
-    private ArrayList<Component> components;
 
 	private int taille = 32;
-
-    public PanneauPrincipal() {
-        super();
-        components = new ArrayList<>();
-    }
 	
 	@Override
 	public void paint(Graphics g) {
@@ -50,21 +43,8 @@ public class PanneauPrincipal extends JPanel {
         drawBaseComponents(g);
     }
 
-
-    public void setFacilities(Map<Facility, Stack<Component>> facilities) {
-        this.facilities = facilities;
-    }
-
-    public void setPathing(ArrayList<Pathing> pathing) {
-        this.pathing = pathing;
-    }
-
-    public void setComponentsList(ArrayList<Component> components) {
-        this.components = components;
-    }
-
     private Facility getFacilityById(int id) {
-        return facilities
+        return state.facilities
                 .keySet()
                 .stream()
                 .filter(x -> x.getConfig().coords().id() == id)
@@ -74,8 +54,8 @@ public class PanneauPrincipal extends JPanel {
 
     // TODO Add parameter Map<Facility, IndicatorStatus> facilityStatus
     private void drawFactories(Graphics g) {
-        if(facilities != null) {
-            for (Facility facility : facilities.keySet()) {
+        if(state.facilities != null) {
+            for (Facility facility : state.facilities.keySet()) {
                 if(facility == null)
                     continue;
 
@@ -105,8 +85,8 @@ public class PanneauPrincipal extends JPanel {
     }
 
     private void drawPathing(Graphics g) {
-        if(pathing != null) {
-            for(Pathing path : pathing) {
+        if(state.pathing != null) {
+            for(Pathing path : state.pathing) {
                 FacilityCoordinates from = getFacilityById(path.fromFactoryCoordinatesId())
                         .getConfig()
                         .coords();
@@ -128,7 +108,7 @@ public class PanneauPrincipal extends JPanel {
     private void drawBaseComponents(Graphics g) {
         //TODO conditionals for path type { straight, diagonal }
         //Prevents java.util.ConcurrentModificationException
-        for(Component component: new ArrayList<>(components)) {
+        for(Component component: new ArrayList<>(state.components)) {
             Point position = component.currentPos();
 
             translateComponentPosition(component);
@@ -148,7 +128,7 @@ public class PanneauPrincipal extends JPanel {
     }
 
     private Facility getFacilityByCoords(Point p) {
-        return facilities
+        return state.facilities
                 .keySet()
                 .stream()
                 .filter(x -> {
@@ -163,7 +143,7 @@ public class PanneauPrincipal extends JPanel {
     }
 
     public void translateComponentPosition(Component c) {
-        var comp = components.stream()
+        var comp = state.components.stream()
                 .filter(x -> x.equals(c))
                 .findFirst().get();
 
@@ -172,7 +152,7 @@ public class PanneauPrincipal extends JPanel {
         if(position.equals(comp.to())) {
             var destinationFacility = getFacilityByCoords(comp.currentPos());
             destinationFacility.addComponent(comp);
-            components.remove(comp);
+            state.components.remove(comp);
         } else {
             Point delta = comp.translate();
             position.translate(delta.x, delta.y);

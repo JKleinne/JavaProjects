@@ -45,18 +45,7 @@ public class FenetrePrincipale extends JFrame implements PropertyChangeListener 
             case "NEW_FRAME" -> {
                 repaint();
             }
-            case "FACTORIES_STATE_CHANGED" -> {
-                repaint();
-                panneauPrincipal.setFacilities((Map<Facility, Stack<Component>>) evt.getNewValue());
-            }
-            case "PATHING_CHANGED" -> {
-                repaint();
-                panneauPrincipal.setPathing((ArrayList<Pathing>) evt.getNewValue());
-            }
-            case "BASE_COMPONENTS_CRAFTED" -> {
-                repaint();
-                panneauPrincipal.setComponentsList((ArrayList<Component>) evt.getNewValue());
-            }
+
         }
         //TODO listener for factories stock update
 	}
