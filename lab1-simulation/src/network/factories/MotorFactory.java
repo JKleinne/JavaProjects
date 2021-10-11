@@ -7,11 +7,11 @@ import network.utilities.ComponentType;
 import java.awt.*;
 
 public class MotorFactory extends Factory {
-    private int motorCapacity;
+    private int maxMetalCapacity;
 
-    public MotorFactory(FacilityConfig config, int motorCapacity) {
+    public MotorFactory(FacilityConfig config, int maxMetalCapacity) {
         super(config);
-        this.motorCapacity = motorCapacity;
+        this.maxMetalCapacity = maxMetalCapacity;
     }
 
     @Override
