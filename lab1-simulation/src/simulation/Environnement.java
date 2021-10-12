@@ -6,6 +6,7 @@ import network.factories.*;
 import network.records.Component;
 import network.records.FacilityConfig;
 import network.records.FacilityEntryComponent;
+import network.utilities.ComponentType;
 import network.utilities.IndicatorStatus;
 import network.utilities.XMLUtils;
 import org.xml.sax.SAXException;
@@ -165,6 +166,39 @@ public class Environnement extends SwingWorker<Object, String> {
                     int maxMetalCapacity = factory.getMetalCapacity();
 
                     if(factory.getStock().size() >= maxMetalCapacity) {
+                        f.setStatus(currentProductionStatus.getNext());
+                    }
+                }
+            } else if(f instanceof PlaneFactory factory) {
+                if(currentProductionStatus.getNext() == null) {
+                    Point destination = getPathDestinationByFacilityId(f);
+                    Point from = new Point(f.getConfig().coords().x(), f.getConfig().coords().y());
+                    Point translate = getTranslatePoint(f, destination);
+
+                    state.components.add(factory.craftComponent(translate, from, destination));
+
+                    int wingCapacity = factory.getWingCapacity();
+                    int motorCapacity = factory.getMotorCapacity();
+
+                    factory.popComponentsByType(wingCapacity, ComponentType.WING);
+                    factory.popComponentsByType(motorCapacity, ComponentType.MOTOR);
+
+                    f.setStatus(IndicatorStatus.EMPTY);
+                } else {
+                    int wingCapacity = factory.getWingCapacity();
+                    int motorCapacity = factory.getMotorCapacity();
+
+                    long currentWingCount = factory.getStock()
+                            .stream()
+                            .filter(x -> x.type().equals(ComponentType.WING))
+                            .count();
+
+                    long currentMotorCount = factory.getStock()
+                            .stream()
+                            .filter(x -> x.type().equals(ComponentType.MOTOR))
+                            .count();
+
+                    if(currentWingCount >= wingCapacity && currentMotorCount >= motorCapacity) {
                         f.setStatus(currentProductionStatus.getNext());
                     }
                 }

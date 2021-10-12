@@ -16,6 +16,10 @@ public class Warehouse extends Facility {
         super(config);
     }
 
+    public void removePlane() {
+        this.planes.remove(this.planes.size() - 1);
+    }
+
     public ArrayList<Component> getPlanes() {
         return this.planes;
     }

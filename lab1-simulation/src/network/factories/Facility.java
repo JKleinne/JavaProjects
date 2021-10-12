@@ -4,13 +4,14 @@ import network.observer.IObserver;
 import network.observer.ISubject;
 import network.records.Component;
 import network.records.FacilityConfig;
+import network.utilities.ComponentType;
 import network.utilities.IndicatorStatus;
 
 import java.util.ArrayList;
 import java.util.Stack;
 
 public class Facility implements ISubject {
-    protected Stack<Component> stock;
+    protected ArrayList<Component> stock;
     protected FacilityConfig config;
     protected IndicatorStatus status;
 
@@ -18,7 +19,7 @@ public class Facility implements ISubject {
 
     public Facility(FacilityConfig config) {
         this.config = config;
-        stock = new Stack<>();
+        stock = new ArrayList<>();
         observers = new ArrayList<>();
         status = IndicatorStatus.EMPTY;
     }
@@ -36,11 +37,15 @@ public class Facility implements ISubject {
         if(n < 0)
             return;
 
-        this.stock.pop();
+        this.stock.remove(this.stock.size() - 1);
         popComponents(n - 1);
     }
 
-    public Stack<Component> getStock() {
+    public void popComponentsByType(int n, ComponentType type) {
+        this.stock.removeIf(x -> x.type().equals(type));
+    }
+
+    public ArrayList<Component> getStock() {
         return stock;
     }
 
