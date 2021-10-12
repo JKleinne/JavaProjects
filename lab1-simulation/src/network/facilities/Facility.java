@@ -27,8 +27,8 @@ public class Facility implements ISubject {
     }
 
     public void addComponent(Component c) {
-        stock.add(c);
-        notifyObservers(new ArrayList<Component>(stock));
+        this.stock.add(c);
+        notifyObservers(new ArrayList<>(this.stock));
     }
 
     public void clearStock() {
@@ -51,6 +51,11 @@ public class Facility implements ISubject {
         return stock;
     }
 
+    public void setStock(ArrayList<Component> stock) {
+        this.stock = new ArrayList<>(stock);
+        notifyObservers(new ArrayList<>(this.stock));
+    }
+
     public FacilityConfig getConfig() {
         return config;
     }
@@ -61,7 +66,7 @@ public class Facility implements ISubject {
 
     public void setStatus(IndicatorStatus status) {
         this.status = status;
-        notifyObservers(new ArrayList<Component>(stock));
+        notifyObservers(new ArrayList<>(stock));
     }
 
     @Override
@@ -79,7 +84,7 @@ public class Facility implements ISubject {
         for(IObserver o: observers) {
             if(o instanceof GlobalState) {
                 var map = new HashMap<Facility, ArrayList<Component>>();
-                map.put(this, new ArrayList<Component>(this.stock));
+                map.put(this, new ArrayList<>(this.stock));
                 o.update(this, map);
             }
         }

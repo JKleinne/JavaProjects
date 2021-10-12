@@ -28,6 +28,7 @@ public class GlobalState implements IObserver {
     public final ArrayList<Component> components = new ArrayList<>();
 
     public String configPath;
+    public Warehouse warehouse;
 
 
     public static GlobalState getInstance() {

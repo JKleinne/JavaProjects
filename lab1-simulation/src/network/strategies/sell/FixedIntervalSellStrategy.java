@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class FixedIntervalSellStrategy implements ISellBehavior {
     @Override
-    public void sell(ArrayList<Component> plane) {
-
+    public ArrayList<Component> sell(ArrayList<Component> planes) {
+        return null;
     }
 }
