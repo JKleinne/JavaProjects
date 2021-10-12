@@ -47,7 +47,6 @@ public class Environnement extends SwingWorker<Object, String> {
             long current = instant.getEpochSecond();
 
             if(current - timeStamp >= TOUR) {
-                //TODO Each Factory craft components each "tour"
                 if(state.facilities != null) {
                     craftComponents();
                 }
@@ -210,7 +209,6 @@ public class Environnement extends SwingWorker<Object, String> {
                 }
             }
         }
-        //TODO Craft rest of components when have enough entryComponent
 
         firePropertyChange("BASE_COMPONENTS_CRAFTED", null, state.components);
     }
