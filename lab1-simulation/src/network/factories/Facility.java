@@ -28,6 +28,18 @@ public class Facility implements ISubject {
         notifyObservers();
     }
 
+    public void clearStock() {
+        this.stock.clear();
+    }
+
+    public void popComponents(int n) {
+        if(n < 0)
+            return;
+
+        this.stock.pop();
+        popComponents(n - 1);
+    }
+
     public Stack<Component> getStock() {
         return stock;
     }

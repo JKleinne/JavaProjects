@@ -93,7 +93,8 @@ public class Environnement extends SwingWorker<Object, String> {
                 case "usine-aile" -> {
                     int maxMetalCapacity = config.metadata()
                             .entryType()
-                            .size();
+                            .get(0)
+                            .quantity();
                     yield new WingFactory(config, maxMetalCapacity);
                 }
                 case "usine-assemblage" -> {
@@ -109,7 +110,8 @@ public class Environnement extends SwingWorker<Object, String> {
                 case "usine-moteur" -> {
                     int maxMetalCapacity = config.metadata()
                             .entryType()
-                            .size();
+                            .get(0)
+                            .quantity();
                     yield new MotorFactory(config, maxMetalCapacity);
                 }
                 case "entrepot" -> new Warehouse(config);
@@ -123,9 +125,9 @@ public class Environnement extends SwingWorker<Object, String> {
 
     private void craftComponents() {
         for(Facility f: state.facilities.keySet()) {
-            if(f instanceof MetalFactory factory) {
-                IndicatorStatus currentProductionStatus = f.getStatus();
+            IndicatorStatus currentProductionStatus = f.getStatus();
 
+            if(f instanceof MetalFactory factory) {
                 if(currentProductionStatus.getNext() == null) {
                     Point destination = getPathDestinationByFacilityId(f);
                     Point from = new Point(f.getConfig().coords().x(), f.getConfig().coords().y());
@@ -135,6 +137,22 @@ public class Environnement extends SwingWorker<Object, String> {
                     f.setStatus(IndicatorStatus.EMPTY);
                 } else {
                     f.setStatus(currentProductionStatus.getNext());
+                }
+            } else if(f instanceof MotorFactory factory) {
+                if(currentProductionStatus.getNext() == null) {
+                    Point destination = getPathDestinationByFacilityId(f);
+                    Point from = new Point(f.getConfig().coords().x(), f.getConfig().coords().y());
+                    Point translate = getTranslatePoint(f, destination);
+
+                    state.components.add(factory.craftComponent(translate, from, destination));
+                    factory.popComponents(factory.getMaxMetalCapacity());
+                    f.setStatus(IndicatorStatus.EMPTY);
+                } else {
+                    int maxMetalCapacity = factory.getMaxMetalCapacity();
+
+                    if(factory.getStock().size() >= maxMetalCapacity) {
+                        f.setStatus(currentProductionStatus.getNext());
+                    }
                 }
             }
         }
