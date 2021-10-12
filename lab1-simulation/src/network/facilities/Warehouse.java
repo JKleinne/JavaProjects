@@ -15,7 +15,7 @@ public class Warehouse extends Facility {
     public Warehouse(FacilityConfig config, int planeCapacity) {
         super(config);
         this.planeCapacity = planeCapacity;
-        sellBehavior = new FixedIntervalSellStrategy();
+        sellBehavior = new RandomizedSellStrategy();
     }
 
     public int getPlaneCapacity() {

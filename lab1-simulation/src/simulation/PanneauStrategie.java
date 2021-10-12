@@ -1,5 +1,9 @@
 package simulation;
 
+import network.GlobalState;
+import network.facilities.Warehouse;
+import network.strategies.sell.RandomizedSellStrategy;
+
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.util.Enumeration;
@@ -17,23 +21,39 @@ public class PanneauStrategie extends JPanel {
 
 	public PanneauStrategie() {
 
+        final String RANDOMIZED_SELL = "Randomized Sell";
+        final String FIXED_INTERVAL_SELL = "Fixed Interval Sell";
+
 		ButtonGroup groupeBoutons = new ButtonGroup();
-		JRadioButton strategie1 = new JRadioButton("Stratégie 1");
-		JRadioButton strategie2 = new JRadioButton("Stratégie 2");	
+		JRadioButton strategie1 = new JRadioButton(RANDOMIZED_SELL);
+		JRadioButton strategie2 = new JRadioButton(FIXED_INTERVAL_SELL);
 		
 		JButton boutonConfirmer = new JButton("Confirmer");
 
+        GlobalState state = GlobalState.getInstance();
+        var warehouse = (Warehouse) state.facilities.keySet()
+                                .stream()
+                                .filter(x -> x instanceof Warehouse)
+                                .findFirst()
+                                .get();
+
 		boutonConfirmer.addActionListener((ActionEvent e) -> {
-			// TODO - Appeler la bonne stratégie
+			// TODO - Appeler la bonne stratï¿½gie
 			System.out.println(getSelectedButtonText(groupeBoutons));
-			// Fermer la fenêtre du composant
+
+            if(getSelectedButtonText(groupeBoutons).equals(RANDOMIZED_SELL))
+                warehouse.setSellBehavior(new RandomizedSellStrategy());
+            else if(getSelectedButtonText(groupeBoutons).equals(FIXED_INTERVAL_SELL))
+                warehouse.setSellBehavior(new RandomizedSellStrategy());
+
+			// Fermer la fenï¿½tre du composant
 			SwingUtilities.getWindowAncestor((Component) e.getSource()).dispose();
 		});
 
 		JButton boutonAnnuler = new JButton("Annuler");
 
 		boutonAnnuler.addActionListener((ActionEvent e) -> {
-			// Fermer la fenêtre du composant
+			// Fermer la fenï¿½tre du composant
 			SwingUtilities.getWindowAncestor((Component) e.getSource()).dispose();
 		});
 
@@ -47,7 +67,7 @@ public class PanneauStrategie extends JPanel {
 	}
 
 	/**
-	 * Retourne le bouton sélectionné dans un groupe de boutons.
+	 * Retourne le bouton sï¿½lectionnï¿½ dans un groupe de boutons.
 	 * @param groupeBoutons
 	 * @return
 	 */

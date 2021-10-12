@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class RandomizedSellStrategy implements ISellBehavior {
-    private final int ONE_EIGHT_CHANCE = 8;
+    private final int ONE_TENTH_CHANCE = 10;
     private final int ONE_FOURTH_CHANGE = 4;
     private final int TARGET_INT = 1;
 
@@ -14,7 +14,7 @@ public class RandomizedSellStrategy implements ISellBehavior {
     public ArrayList<Component> sell(ArrayList<Component> planes, long deltaTime, int tour) {
         Random rand = new Random();
 
-        int draw = rand.nextInt(ONE_EIGHT_CHANCE);
+        int draw = rand.nextInt(ONE_TENTH_CHANCE);
 
         if(draw == TARGET_INT) {
             planes.remove(planes.size() - 1);
