@@ -26,6 +26,8 @@ public class Warehouse extends Facility {
 
     private void suspendProduction() {}
     private void resumeProduction() {}
-    private void executeSell(Component p) {}
+    private void executeSell() {
+        sellBehavior.sell(this.planes);
+    }
 
 }
