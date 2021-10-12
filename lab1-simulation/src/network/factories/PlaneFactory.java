@@ -16,6 +16,14 @@ public class PlaneFactory extends Factory {
         this.motorCapacity = motorCapacity;
     }
 
+    public int getWingCapacity() {
+        return this.wingCapacity;
+    }
+
+    public int getMotorCapacity() {
+        return this.motorCapacity;
+    }
+
     public Component craftComponent(Point translate, Point currentPos, Point to) {
         var icon = "src/ressources/avion.png";
         var c = new Component(icon, ComponentType.PLANE, translate, currentPos, to);

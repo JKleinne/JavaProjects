@@ -16,6 +16,10 @@ public class Warehouse extends Facility {
         super(config);
     }
 
+    public ArrayList<Component> getPlanes() {
+        return this.planes;
+    }
+
     private void suspendProduction() {}
     private void resumeProduction() {}
     private void executeSell(Component p) {}

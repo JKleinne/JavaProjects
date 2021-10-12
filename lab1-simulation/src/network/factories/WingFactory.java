@@ -14,6 +14,10 @@ public class WingFactory extends Factory {
         this.metalCapacity = metalCapacity;
     }
 
+    public int getMaxMetalCapacity() {
+        return this.metalCapacity;
+    }
+
     @Override
     public Component craftComponent(Point translate, Point currentPos, Point to) {
         var icon = "src/ressources/aile.png";
