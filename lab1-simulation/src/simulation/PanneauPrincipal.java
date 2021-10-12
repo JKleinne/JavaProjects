@@ -1,9 +1,9 @@
 package simulation;
 
 import network.GlobalState;
-import network.factories.Facility;
+import network.facilities.Facility;
 import network.records.Component;
-import network.records.FacilityCoordinates;
+import network.records.facility.FacilityCoordinates;
 import network.records.Pathing;
 
 import java.awt.Graphics;

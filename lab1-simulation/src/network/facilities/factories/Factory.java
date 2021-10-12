@@ -1,7 +1,8 @@
-package network.factories;
+package network.facilities.factories;
 
+import network.facilities.Facility;
 import network.records.Component;
-import network.records.FacilityConfig;
+import network.records.facility.FacilityConfig;
 
 import java.awt.*;
 

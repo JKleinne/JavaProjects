@@ -1,11 +1,15 @@
 package simulation;
 
 import network.GlobalState;
-import network.factories.Warehouse;
-import network.factories.*;
+import network.facilities.Warehouse;
+import network.facilities.*;
+import network.facilities.factories.MetalFactory;
+import network.facilities.factories.MotorFactory;
+import network.facilities.factories.PlaneFactory;
+import network.facilities.factories.WingFactory;
 import network.records.Component;
-import network.records.FacilityConfig;
-import network.records.FacilityEntryComponent;
+import network.records.facility.FacilityConfig;
+import network.records.facility.FacilityEntryComponent;
 import network.utilities.ComponentType;
 import network.utilities.IndicatorStatus;
 import network.utilities.XMLUtils;

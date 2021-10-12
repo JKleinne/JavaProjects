@@ -1,4 +1,6 @@
-package network.records;
+package network.records.facility;
+
+import network.records.IconMetadata;
 
 import java.util.ArrayList;
 

@@ -1,6 +1,6 @@
-package network.factories;
+package network.facilities;
 
-import network.records.FacilityConfig;
+import network.records.facility.FacilityConfig;
 import network.strategies.sell.ISellBehavior;
 import network.strategies.sell.RandomizedSellStrategy;
 

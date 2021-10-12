@@ -1,6 +1,6 @@
 package network;
 
-import network.factories.Facility;
+import network.facilities.Facility;
 import network.observer.IObserver;
 import network.records.Component;
 import network.records.Pathing;

@@ -1,16 +1,9 @@
 package simulation;
 
-import network.factories.Facility;
-import network.records.Component;
-import network.records.Pathing;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Stack;
 
 import javax.swing.JFrame;
 

@@ -1,9 +1,9 @@
-package network.factories;
+package network.facilities;
 
 import network.observer.IObserver;
 import network.observer.ISubject;
 import network.records.Component;
-import network.records.FacilityConfig;
+import network.records.facility.FacilityConfig;
 import network.utilities.ComponentType;
 import network.utilities.IndicatorStatus;
 

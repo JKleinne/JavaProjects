@@ -4,6 +4,10 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import network.records.*;
+import network.records.facility.FacilityConfig;
+import network.records.facility.FacilityCoordinates;
+import network.records.facility.FacilityEntryComponent;
+import network.records.facility.FactoryMetadata;
 import org.xml.sax.SAXException;
 
 import org.w3c.dom.Document;

@@ -1,6 +1,6 @@
 package network.observer;
 
-import network.factories.Facility;
+import network.facilities.Facility;
 import network.records.Component;
 
 import java.util.Stack;
