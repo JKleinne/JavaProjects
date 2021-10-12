@@ -11,7 +11,7 @@ public class RandomizedSellStrategy implements ISellBehavior {
     private final int TARGET_INT = 1;
 
     @Override
-    public ArrayList<Component> sell(ArrayList<Component> planes) {
+    public ArrayList<Component> sell(ArrayList<Component> planes, long deltaTime, int tour) {
         Random rand = new Random();
 
         int draw = rand.nextInt(ONE_EIGHT_CHANCE);

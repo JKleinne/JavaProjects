@@ -18,9 +18,9 @@ public class Environnement extends SwingWorker<Object, String> {
 	private boolean actif = true;
 
 	private static final int DELAI = 100;
-    private static final int TOUR = 1;
+    private static final int TOUR = 2;
 
-    private long timeStamp = 0;
+    private long timestamp = 0;
 
     private GlobalState state = GlobalState.getInstance();
 
@@ -37,28 +37,28 @@ public class Environnement extends SwingWorker<Object, String> {
             Instant instant = Instant.now();
             long current = instant.getEpochSecond();
 
-            if(current - timeStamp >= TOUR) {
+            if(current - timestamp >= TOUR) {
                 if(!state.facilities.isEmpty()) {
-                    executeSell();
+                    executeSell(current - timestamp, TOUR);
                     craftComponents();
                 }
 
-                timeStamp = current;
+                timestamp = current;
             }
 
 		}
 		return null;
 	}
 
-    private void executeSell() {
+    private void executeSell(long deltaTime, int tour) {
         Warehouse warehouse = (Warehouse) state.facilities.keySet()
                 .stream()
                 .filter(x -> x instanceof Warehouse)
                 .findFirst()
                 .orElse(null);
 
-        System.out.println("Planes: " + warehouse.getStock().size() + "\n");
-        warehouse.executeSell();
+        System.out.println("Planes: " + warehouse.getStock().size());
+        warehouse.executeSell(deltaTime, tour);
     }
 
     private void craftComponents() {

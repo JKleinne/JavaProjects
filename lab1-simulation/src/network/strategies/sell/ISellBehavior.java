@@ -5,5 +5,5 @@ import network.records.Component;
 import java.util.ArrayList;
 
 public interface ISellBehavior {
-    ArrayList<Component> sell(ArrayList<Component> planes);
+    ArrayList<Component> sell(ArrayList<Component> planes, long deltaTime, int tour);
 }
