@@ -14,7 +14,7 @@ public class WingFactory extends Factory {
         this.metalCapacity = metalCapacity;
     }
 
-    public int getMaxMetalCapacity() {
+    public int getMetalCapacity() {
         return this.metalCapacity;
     }
 

@@ -3,11 +3,9 @@ package simulation;
 import network.GlobalState;
 import network.factories.Warehouse;
 import network.factories.*;
-import network.observer.IObserver;
 import network.records.Component;
 import network.records.FacilityConfig;
 import network.records.FacilityEntryComponent;
-import network.records.Pathing;
 import network.utilities.IndicatorStatus;
 import network.utilities.XMLUtils;
 import org.xml.sax.SAXException;
@@ -145,10 +143,26 @@ public class Environnement extends SwingWorker<Object, String> {
                     Point translate = getTranslatePoint(f, destination);
 
                     state.components.add(factory.craftComponent(translate, from, destination));
-                    factory.popComponents(factory.getMaxMetalCapacity());
+                    factory.popComponents(factory.getMetalCapacity());
                     f.setStatus(IndicatorStatus.EMPTY);
                 } else {
-                    int maxMetalCapacity = factory.getMaxMetalCapacity();
+                    int maxMetalCapacity = factory.getMetalCapacity();
+
+                    if(factory.getStock().size() >= maxMetalCapacity) {
+                        f.setStatus(currentProductionStatus.getNext());
+                    }
+                }
+            } else if(f instanceof WingFactory factory) {
+                if(currentProductionStatus.getNext() == null) {
+                    Point destination = getPathDestinationByFacilityId(f);
+                    Point from = new Point(f.getConfig().coords().x(), f.getConfig().coords().y());
+                    Point translate = getTranslatePoint(f, destination);
+
+                    state.components.add(factory.craftComponent(translate, from, destination));
+                    factory.popComponents(factory.getMetalCapacity());
+                    f.setStatus(IndicatorStatus.EMPTY);
+                } else {
+                    int maxMetalCapacity = factory.getMetalCapacity();
 
                     if(factory.getStock().size() >= maxMetalCapacity) {
                         f.setStatus(currentProductionStatus.getNext());
