@@ -79,7 +79,7 @@ public final class XMLUtils {
 
                 // Loop through each entry and create a new FactoryEntryComponent
                 for(int j = 0; j < entryNodeList.getLength(); j++) {
-                    Node entryNode = iconNodesList.item(j);
+                    Node entryNode = entryNodeList.item(j);
 
                     if(entryNode.getNodeType() == Node.ELEMENT_NODE) {
                         Element entryElement = (Element) entryNode;
