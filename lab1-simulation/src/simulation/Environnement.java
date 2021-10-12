@@ -113,7 +113,13 @@ public class Environnement extends SwingWorker<Object, String> {
                             .quantity();
                     yield new MotorFactory(config, maxMetalCapacity);
                 }
-                case "entrepot" -> new Warehouse(config);
+                case "entrepot" -> {
+                    int planeCapacity = config.metadata()
+                            .entryType()
+                            .get(0)
+                            .quantity();
+                    yield new Warehouse(config, planeCapacity);
+                }
                 default -> null;
             };
             map.put(f, new Stack<Component>());
