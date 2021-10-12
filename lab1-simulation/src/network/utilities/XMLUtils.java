@@ -87,8 +87,12 @@ public final class XMLUtils {
                         String type = entryElement.getAttribute("type");
                         int quantity = 0;
 
+
                         if(!entryElement.getAttribute("quantite").equals(""))
                             quantity = Integer.parseInt(entryElement.getAttribute("quantite"));
+                        else if(!entryElement.getAttribute("capacite").equals(""))
+                            quantity = Integer.parseInt(entryElement.getAttribute("capacite"));
+
 
                         entryComponentList.add(new FacilityEntryComponent(type, quantity));
                     }
