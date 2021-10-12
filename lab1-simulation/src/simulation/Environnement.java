@@ -1,29 +1,17 @@
 package simulation;
 
 import network.GlobalState;
-import network.facilities.Warehouse;
-import network.facilities.*;
+import network.facilities.Facility;
 import network.facilities.factories.MetalFactory;
 import network.facilities.factories.MotorFactory;
 import network.facilities.factories.PlaneFactory;
 import network.facilities.factories.WingFactory;
-import network.records.Component;
-import network.records.facility.FacilityConfig;
-import network.records.facility.FacilityEntryComponent;
 import network.utilities.ComponentType;
 import network.utilities.IndicatorStatus;
-import network.utilities.XMLUtils;
-import org.xml.sax.SAXException;
 
-import javax.swing.SwingWorker;
-import javax.xml.parsers.ParserConfigurationException;
+import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Stack;
 
 public class Environnement extends SwingWorker<Object, String> {
 	private boolean actif = true;
@@ -34,8 +22,6 @@ public class Environnement extends SwingWorker<Object, String> {
     private long timeStamp = 0;
 
     private GlobalState state = GlobalState.getInstance();
-
-    public String configPath = null;
 
 	@Override
 	protected Object doInBackground() throws Exception {
@@ -61,75 +47,6 @@ public class Environnement extends SwingWorker<Object, String> {
 		}
 		return null;
 	}
-
-    public void rebuildNetworkEnvironment() {
-        ArrayList<FacilityConfig> factoriesConfig = null;
-
-        if(configPath != null) {
-            try {
-                factoriesConfig = XMLUtils.getFactoryConfig(configPath);
-                state.facilities = getFacilitiesMappedWithConfig(factoriesConfig);
-                state.pathing = XMLUtils.readPathing(configPath);
-
-                state.components.clear();
-
-                firePropertyChange("FACTORIES_STATE_CHANGED", null, state.facilities);
-                firePropertyChange("PATHING_CHANGED", null, state.pathing);
-            } catch (IOException | SAXException | ParserConfigurationException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public void setConfigPath(String configPath) {
-        this.configPath = configPath;
-    }
-
-    private Map<Facility, Stack<Component>> getFacilitiesMappedWithConfig(ArrayList<FacilityConfig> factoriesConfig) {
-        Map<Facility, Stack<Component>> map = new HashMap<>();
-
-        for(FacilityConfig config : factoriesConfig) {
-            String factoryType = config.metadata().factoryType();
-            Facility f = switch(factoryType) {
-                case "usine-matiere" -> new MetalFactory(config);
-                case "usine-aile" -> {
-                    int maxMetalCapacity = config.metadata()
-                            .entryType()
-                            .get(0)
-                            .quantity();
-                    yield new WingFactory(config, maxMetalCapacity);
-                }
-                case "usine-assemblage" -> {
-                    int maxMotorCapacity = 0, maxWingCapacity = 0;
-                    for(FacilityEntryComponent entryComponent : config.metadata().entryType()) {
-                        if(entryComponent.type().equals("moteur"))
-                            maxMotorCapacity = entryComponent.quantity();
-                        else if(entryComponent.type().equals("aile"))
-                            maxWingCapacity = entryComponent.quantity();
-                    }
-                    yield new PlaneFactory(config, maxMotorCapacity, maxWingCapacity);
-                }
-                case "usine-moteur" -> {
-                    int maxMetalCapacity = config.metadata()
-                            .entryType()
-                            .get(0)
-                            .quantity();
-                    yield new MotorFactory(config, maxMetalCapacity);
-                }
-                case "entrepot" -> {
-                    int planeCapacity = config.metadata()
-                            .entryType()
-                            .get(0)
-                            .quantity();
-                    yield new Warehouse(config, planeCapacity);
-                }
-                default -> null;
-            };
-            map.put(f, new Stack<Component>());
-        }
-
-        return map;
-    }
 
     private void craftComponents() {
         for(Facility f: state.facilities.keySet()) {

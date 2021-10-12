@@ -1,5 +1,6 @@
 package network.facilities;
 
+import network.GlobalState;
 import network.observer.IObserver;
 import network.observer.ISubject;
 import network.records.Component;
@@ -8,6 +9,7 @@ import network.utilities.ComponentType;
 import network.utilities.IndicatorStatus;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Stack;
 
 public class Facility implements ISubject {
@@ -26,7 +28,7 @@ public class Facility implements ISubject {
 
     public void addComponent(Component c) {
         stock.add(c);
-        notifyObservers();
+        notifyObservers(new ArrayList<Component>(stock));
     }
 
     public void clearStock() {
@@ -59,7 +61,7 @@ public class Facility implements ISubject {
 
     public void setStatus(IndicatorStatus status) {
         this.status = status;
-        notifyObservers();
+        notifyObservers(new ArrayList<Component>(stock));
     }
 
     @Override
@@ -73,9 +75,13 @@ public class Facility implements ISubject {
     }
 
     @Override
-    public void notifyObservers() {
+    public void notifyObservers(Object payload) {
         for(IObserver o: observers) {
-            o.update(this, (Stack<Component>)stock.clone());
+            if(o instanceof GlobalState) {
+                var map = new HashMap<Facility, ArrayList<Component>>();
+                map.put(this, new ArrayList<Component>(this.stock));
+                o.update(this, map);
+            }
         }
     }
 }

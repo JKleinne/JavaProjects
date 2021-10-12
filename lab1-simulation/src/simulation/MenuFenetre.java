@@ -1,7 +1,12 @@
 package simulation;
 
+import network.GlobalState;
+import network.observer.IObserver;
+import network.observer.ISubject;
+
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
 import javax.swing.JMenu;
@@ -11,7 +16,8 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 
-public class MenuFenetre extends JMenuBar {
+public class MenuFenetre extends JMenuBar implements ISubject {
+    private ArrayList<IObserver> observers = new ArrayList<>();
 
 	private static final long serialVersionUID = 1L;
 	private static final String MENU_FICHIER_TITRE = "Fichier";
@@ -26,6 +32,8 @@ public class MenuFenetre extends JMenuBar {
 		ajouterMenuFichier();
 		ajouterMenuSimulation();
 		ajouterMenuAide();
+
+        registerObserver(GlobalState.getInstance());
 	}
 
 	/**
@@ -50,8 +58,7 @@ public class MenuFenetre extends JMenuBar {
 				File selectedFile = fileChooser.getSelectedFile();
 				System.out.println(selectedFile.getAbsolutePath());
 
-                Simulation.environnement.setConfigPath(selectedFile.getAbsolutePath());
-                Simulation.environnement.rebuildNetworkEnvironment();
+                notifyObservers(selectedFile.getAbsolutePath());
 
                 PanneauPrincipal.configPath = selectedFile.getAbsolutePath();
 			}
@@ -104,4 +111,22 @@ public class MenuFenetre extends JMenuBar {
 		add(menuAide);
 	}
 
+    @Override
+    public void registerObserver(IObserver o) {
+        observers.add(o);
+    }
+
+    @Override
+    public void removeObserver(IObserver o) {
+        observers.remove(o);
+    }
+
+    @Override
+    public void notifyObservers(Object payload) {
+        for(IObserver o: observers) {
+            if(o instanceof GlobalState) {
+                o.update(this, payload);
+            }
+        }
+    }
 }
