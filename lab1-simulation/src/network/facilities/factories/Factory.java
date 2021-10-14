@@ -47,9 +47,20 @@ import java.awt.*;
  */
 public abstract class Factory extends Facility {
 
+    /**
+     * Constructeur qui prend une seule argument
+     * @param config De type {@link network.records.facility.FacilityConfig} qui englobe les métadonnées et les coordonnées d'une usine
+     */
     public Factory(FacilityConfig config) {
         super(config);
     }
 
+    /**
+     * Méthode abstraite pour fabriquer des composants
+     * @param translate Facteur par lequel un composant se déplace dans le plan
+     * @param currentPos Position du composant une fois fabriqué (position actuelle de cette usine)
+     * @param to Position de l'usine de destination
+     * @return Une instance de {@link network.records.Component}
+     */
     public abstract Component craftComponent(Point translate, Point currentPos, Point to);
 }
