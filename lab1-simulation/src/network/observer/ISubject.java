@@ -21,7 +21,7 @@
 package network.observer;
 
 /**
- * Interface de modèle d'observateur -> Sujet
+ * Interface de modèle patron Observateur -> Sujet
  * @author Jonnie Klein Quezada
  * @since 2021-09-19
  */

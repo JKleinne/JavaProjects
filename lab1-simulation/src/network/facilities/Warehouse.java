@@ -77,7 +77,7 @@ public class Warehouse extends Facility {
 
     /**
      * Vend l'avion en fonction de l'ISellBehavior sélectionné
-     * @param deltaTime Temps passé à appel
+     * @param deltaTime Temps écoulé depuis le dernier appel
      * @param tour Unité de temps définie par {@link simulation.Environnement}
      */
     public void executeSell(long deltaTime, int tour) {
