@@ -1,3 +1,23 @@
+/******************************************************
+ Cours:   LOG121
+ Session: A2021
+ Groupe: 04
+ Projet: Laboratoire #1
+ Étudiant: Jonnie Klein Quezada
+
+
+ Professeur : Benoit Galarneau
+ Nom du fichier: PanneauStrategie.java
+ Date créé: 2021-09-15
+ Date dern. modif. 2021-10-12
+ *******************************************************
+ Historique des modifications
+ *******************************************************
+ JKleinne Today 3:34 PM Fixed bug where only RandomizedSellStrategy comes in effect
+ JKleinne 10/12/21, 6:30 AM Project complete: Finished implementing dynamic sell strategies
+ JKleinne 9/15/21, 3:59 PM init
+ *******************************************************/
+
 package simulation;
 
 import network.GlobalState;
@@ -16,10 +36,18 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.SwingUtilities;
 
+/**
+ * Représente le panneau pour la sélection de la stratégie de vente
+ * @author Jonnie Klein Quezada -> construit à partir du squelette fourni
+ * @since 2021-09-15
+ */
 public class PanneauStrategie extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
+    /**
+     * Constructeur sans argument. initialise les différentes stratégies de vente.
+     */
 	public PanneauStrategie() {
 
         final String RANDOMIZED_SELL = "Randomized Sell";
@@ -39,7 +67,6 @@ public class PanneauStrategie extends JPanel {
                                 .get();
 
 		boutonConfirmer.addActionListener((ActionEvent e) -> {
-			// TODO - Appeler la bonne strat�gie
 			System.out.println(getSelectedButtonText(groupeBoutons));
 
             if(getSelectedButtonText(groupeBoutons).equals(RANDOMIZED_SELL))
@@ -68,9 +95,9 @@ public class PanneauStrategie extends JPanel {
 	}
 
 	/**
-	 * Retourne le bouton s�lectionn� dans un groupe de boutons.
+	 * Retourne le bouton selectionne dans un groupe de boutons.
 	 * @param groupeBoutons
-	 * @return
+	 * @return null
 	 */
 	public String getSelectedButtonText(ButtonGroup groupeBoutons) {
 		for (Enumeration<AbstractButton> boutons = groupeBoutons.getElements(); boutons.hasMoreElements();) {

@@ -1,3 +1,24 @@
+/******************************************************
+ Cours:   LOG121
+ Session: A2021
+ Groupe: 04
+ Projet: Laboratoire #1
+ Étudiant: Jonnie Klein Quezada
+
+
+ Professeur : Benoit Galarneau
+ Nom du fichier: MenuFenetre.java
+ Date créé: 2021-09-15
+ Date dern. modif. 2021-10-12
+ *******************************************************
+ Historique des modifications
+ *******************************************************
+ JKleinne 10/12/21, 3:36 AM Refactored network rebuild on config file changed from Environment private methods to Observer pattern
+ JKleinne 9/30/21, 6:04 PM Moved class instantiation from Simulation to Environment
+ JKleinne 9/25/21, 7:13 PM Initial dynamic drawing logic
+ JKleinne 9/15/21, 3:59 PM init
+ *******************************************************/
+
 package simulation;
 
 import network.GlobalState;
@@ -16,6 +37,11 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 
+/**
+ * Représente la fenêtre de menu pour sélectionner le fichier de configuration
+ * @author Jonnie Klein Quezada -> construit à partir du squelette fourni
+ * @since 2021-09-15
+ */
 public class MenuFenetre extends JMenuBar implements ISubject {
     private ArrayList<IObserver> observers = new ArrayList<>();
 
@@ -28,6 +54,9 @@ public class MenuFenetre extends JMenuBar implements ISubject {
 	private static final String MENU_AIDE_TITRE = "Aide";
 	private static final String MENU_AIDE_PROPOS = "� propos de...";
 
+    /**
+     * Constructeur sans argument pour construire la Vue lors de son instantiation
+     */
 	public MenuFenetre() {
 		ajouterMenuFichier();
 		ajouterMenuSimulation();
@@ -60,7 +89,7 @@ public class MenuFenetre extends JMenuBar implements ISubject {
 
                 notifyObservers(selectedFile.getAbsolutePath());
 
-                PanneauPrincipal.configPath = selectedFile.getAbsolutePath();
+                GlobalState.getInstance().configPath = selectedFile.getAbsolutePath();
 			}
 		});
 		
@@ -111,16 +140,28 @@ public class MenuFenetre extends JMenuBar implements ISubject {
 		add(menuAide);
 	}
 
+    /**
+     * Ajoute à la liste des observateurs
+     * @param o observateur à ajouter
+     */
     @Override
     public void registerObserver(IObserver o) {
         observers.add(o);
     }
 
+    /**
+     * Supprime de la liste des observateurs
+     * @param o observateur à supprimer
+     */
     @Override
     public void removeObserver(IObserver o) {
         observers.remove(o);
     }
 
+    /**
+     * Informe tous les observateurs du changement du stock de ce Facility
+     * @param payload le nouveau stock
+     */
     @Override
     public void notifyObservers(Object payload) {
         for(IObserver o: observers) {

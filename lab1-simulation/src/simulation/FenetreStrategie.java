@@ -1,3 +1,21 @@
+/******************************************************
+ Cours:   LOG121
+ Session: A2021
+ Groupe: 04
+ Projet: Laboratoire #1
+ Étudiant: Jonnie Klein Quezada
+
+
+ Professeur : Benoit Galarneau
+ Nom du fichier: FenetreStrategie.java
+ Date créé: 2021-09-15
+ Date dern. modif. 2021-10-12
+ *******************************************************
+ Historique des modifications
+ *******************************************************
+ JKleinne 9/15/21, 3:59 PM init
+ *******************************************************/
+
 package simulation;
 
 import java.awt.Dimension;

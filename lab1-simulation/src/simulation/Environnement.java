@@ -73,7 +73,7 @@ import java.time.Instant;
 
 /**
  * Classe qui représente l'environnement de travail du réseau et de la simulation
- * @author Jonnie Klein Quezada
+ * @author Jonnie Klein Quezada -> construit à partir du squelette fourni
  * @since 2021-09-15
  */
 public class Environnement extends SwingWorker<Object, String> {
