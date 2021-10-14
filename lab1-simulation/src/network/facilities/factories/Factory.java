@@ -1,11 +1,3 @@
-package network.facilities.factories;
-
-import network.facilities.Facility;
-import network.records.Component;
-import network.records.facility.FacilityConfig;
-
-import java.awt.*;
-
 /******************************************************
  Cours:   LOG121
  Session: A2021
@@ -38,6 +30,14 @@ import java.awt.*;
  JKleinne 19/09/21, 15h51 Entrepôt, structure squelette de finition
  JKleinne 19/09/21, 15h36 a créé la structure du projet
  *******************************************************/
+
+package network.facilities.factories;
+
+import network.facilities.Facility;
+import network.records.Component;
+import network.records.facility.FacilityConfig;
+
+import java.awt.*;
 
 /**
  * Classe abstraite qui étend les fonctionnalités de {@link network.facilities.Facility} via un contrat en faisant

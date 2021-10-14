@@ -1,24 +1,3 @@
-package network.utilities;
-
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
-import network.records.*;
-import network.records.facility.FacilityConfig;
-import network.records.facility.FacilityCoordinates;
-import network.records.facility.FacilityEntryComponent;
-import network.records.facility.FacilityMetadata;
-import org.xml.sax.SAXException;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Node;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-
 /******************************************************
  Cours:   LOG121
  Session: A2021
@@ -48,6 +27,27 @@ import java.util.ArrayList;
  JKleinne 20/09/21, 03h47 Création d'enregistrements et démarrage du lecteur XML FactoryMetadata
  JKleinne 19/09/21, 15h36 a créé la structure du projet
  *******************************************************/
+
+package network.utilities;
+
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import network.records.*;
+import network.records.facility.FacilityConfig;
+import network.records.facility.FacilityCoordinates;
+import network.records.facility.FacilityEntryComponent;
+import network.records.facility.FacilityMetadata;
+import org.xml.sax.SAXException;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.Node;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Classe d'assistance pour la lecture et l'analyse du document XML de configuration
