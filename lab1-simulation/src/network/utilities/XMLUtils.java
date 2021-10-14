@@ -13,19 +13,19 @@
  *******************************************************
  Historique des modifications
  *******************************************************
- JKleinne 12/10/21, 02h11 Refactoring: regrouper les classes pertinentes dans des packages plus profonds
- JKleinne 12/10/21, 01h51 Fonctionnalité de capacité de l'avion d'entrepôt
- JKleinne 12/10/21, 00h39 Correction d'un bug qui définit la capacité maximale des composants incorrecte
- JKleinne 02/10/21, 03h44 Renommer les propriétés d'usine génériques en installation
- JKleinne 25/09/21, 19h13 Logique de dessin dynamique initiale
- JKleinne 25/09/21, 16h16 Résolution de l'exception NullPointerException lors de la tentative de lecture usine > 'sortie' à partir de XML
- JKleinne 25/09/21, 15h38 Coords et métadonnées mappés dans des enregistrements de configuration pour un accès facile
- JKleinne 24/09/21, 03h21 Suppression des arguments inutilisés de la boîte à outils et suppression de XMLUtils.readXML()
- JKleinne 24/09/21, 03h10 Terminé XMLUtils.readPathing()
- JKleinne 24/09/21, 02h43 Terminé XMLUtils.readFactoryCoordinates()
- JKleinne 20/09/21, 5h25 Fini l'implémentation de XMLUtils.readFactoryMetadata()
- JKleinne 20/09/21, 03h47 Création d'enregistrements et démarrage du lecteur XML FactoryMetadata
- JKleinne 19/09/21, 15h36 a créé la structure du projet
+ JKleinne 10/12/21, 2:11 AM Refactoring: grouping relevant classes into deeper packages
+ JKleinne 10/12/21, 1:51 AM Warehouse plane capacity functionality
+ JKleinne 10/12/21, 12:39 AM Fixed bug that sets incorrect max component capacity
+ JKleinne 10/2/21, 3:44 AM Renamed generic factory properties to facility
+ JKleinne 9/25/21, 7:13 PM Initial dynamic drawing logic
+ JKleinne 9/25/21, 4:16 PM Resolved NullPointerException when trying to read usine > 'sortie' from XML
+ JKleinne 9/25/21, 3:38 PM Mapped coords and metadata into a config records for ease of access
+ JKleinne 9/24/21, 3:21 AM Removed unused arguments from toolkit and removed XMLUtils.readXML()
+ JKleinne 9/24/21, 3:10 AM Completed XMLUtils.readPathing()
+ JKleinne 9/24/21, 2:43 AM Completed XMLUtils.readFactoryCoordinates()
+ JKleinne 9/20/21, 5:25 AM Finished implmenting XMLUtils.readFactoryMetadata()
+ JKleinne 9/20/21, 3:47 AM Created records and started XML FactoryMetadata reader
+ JKleinne 9/19/21, 3:36 PM created structure of the proejct
  *******************************************************/
 
 package network.utilities;

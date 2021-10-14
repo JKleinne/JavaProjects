@@ -21,20 +21,20 @@ import java.awt.*;
  *******************************************************
  Historique des modifications
  *******************************************************
- JKleinne 12/10/21, 02h11 Refactoring: regrouper les classes pertinentes dans des packages plus profonds
- JKleinne 06/10/21, 22h27 Nettoyage du code
- JKleinne 06/10/21, 22h17 Composants créés et se déplaçant le long du chemin
- JKleinne 05/10/21, 16h55 Ajouter un composant au super (Facility) à chaque appel craftComponent()
- JKleinne 03/10/21, 12h53 Paramètres supprimés pour Factory craftComponent()
- JKleinne 02/10/21, 3h44  Renommer les propriétés d'usine génériques en Facility
- JKleinne 01/10/21, 08h50 Refactorisée iconPath en String pour supprimer DisplayIcon
- JKleinne 25/09/21, 19h11 Stock supprimé du constructeur des sous-classes d'usine et initialisé dans l'usine à la place
- JKleinne 25/09/21, 17h40 Demande à chaque instance de sous-classe Factory de posséder un FactoryConfig
- JKleinne 25/09/21, 00h07 A remplacé ArrayList en tant que conteneur de composant pour la pile
- JKleinne 25/09/21, 00h05 Implémentation de base de craftComponent()
- JKleinne 25/09/21, 00h01 Renommé les classes, attributs, etc. liés au matériau à la nomenclature correcte Métal
- JKleinne 24/09/21, 23h58 Abstraire Facility pour rendre craftComponents() abstrait
- JKleinne 19/09/21, 15h51 Entrepôt, finition structure squelette
+ JKleinne 10/12/21, 2:11 AM Refactoring: grouping relevant classes into deeper packages
+ JKleinne 10/6/21, 10:27 PM Code cleanup
+ JKleinne 10/6/21, 10:17 PM Components created and moving along path
+ JKleinne 10/5/21, 4:55 PM Add Component to super Facility every craftComponent() call
+ JKleinne 10/3/21, 12:53 PM Removed parameters for Factory craftComponent()
+ JKleinne 10/2/21, 3:44 AM Renamed generic factory properties to facility
+ JKleinne 10/1/21, 8:50 AM Refactored iconPath as String to remove DisplayIcon
+ JKleinne 9/25/21, 7:11 PM Removed stock from Factory sub-classes constructor and initialized in Factory instead
+ JKleinne 9/25/21, 5:40 PM Have each Factory sub-class instance possess a FactoryConfig
+ JKleinne 9/25/21, 12:07 AM Replaced ArrayList as container of Component for Stack
+ JKleinne 9/25/21, 12:05 AM Bare implementation of craftComponent()
+ JKleinne 9/25/21, 12:01 AM Renamed Material-related classes, attributes, etc. to the correct nomenclature Metal
+ JKleinne 9/24/21, 11:58 PM Abstracted Factory superclass for abstract craftComponent()
+ JKleinne 9/19/21, 3:51 PM Warehouse, finish skeleton structure
  *******************************************************/
 
 /**
