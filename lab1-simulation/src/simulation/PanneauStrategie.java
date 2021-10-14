@@ -2,6 +2,7 @@ package simulation;
 
 import network.GlobalState;
 import network.facilities.Warehouse;
+import network.strategies.sell.FixedIntervalSellStrategy;
 import network.strategies.sell.RandomizedSellStrategy;
 
 import java.awt.Component;
@@ -44,7 +45,7 @@ public class PanneauStrategie extends JPanel {
             if(getSelectedButtonText(groupeBoutons).equals(RANDOMIZED_SELL))
                 warehouse.setSellBehavior(new RandomizedSellStrategy());
             else if(getSelectedButtonText(groupeBoutons).equals(FIXED_INTERVAL_SELL))
-                warehouse.setSellBehavior(new RandomizedSellStrategy());
+                warehouse.setSellBehavior(new FixedIntervalSellStrategy());
 
 			// Fermer la fen�tre du composant
 			SwingUtilities.getWindowAncestor((Component) e.getSource()).dispose();
