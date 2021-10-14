@@ -18,7 +18,7 @@ public class Environnement extends SwingWorker<Object, String> {
 	private boolean actif = true;
 
 	private static final int DELAI = 100;
-    private static final int TOUR = 1;
+    private static final int TOUR = 2;
 
     private long timestamp = 0;
 
@@ -57,7 +57,6 @@ public class Environnement extends SwingWorker<Object, String> {
                 .findFirst()
                 .orElse(null);
 
-        System.out.println("Planes: " + warehouse.getStock().size());
         warehouse.executeSell(deltaTime, tour);
     }
 

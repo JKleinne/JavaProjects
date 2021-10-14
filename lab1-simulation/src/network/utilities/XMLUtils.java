@@ -7,7 +7,7 @@ import network.records.*;
 import network.records.facility.FacilityConfig;
 import network.records.facility.FacilityCoordinates;
 import network.records.facility.FacilityEntryComponent;
-import network.records.facility.FactoryMetadata;
+import network.records.facility.FacilityMetadata;
 import org.xml.sax.SAXException;
 
 import org.w3c.dom.Document;
@@ -19,18 +19,66 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/******************************************************
+ Cours:   LOG121
+ Session: A2021
+ Groupe: 04
+ Projet: Laboratoire #1
+ Étudiant: Jonnie Klein Quezada
+
+
+ Professeur : Benoit Galarneau
+ Nom du fichier: XMLUtils.java
+ Date créé: 2021-09-19
+ Date dern. modif. 2021-10-12
+ *******************************************************
+ Historique des modifications
+ *******************************************************
+ JKleinne 21/10/21, 02h11 Refactoring: regrouper les classes pertinentes dans des packages plus profonds
+ JKleinne 10/12/21, 01h51 Fonctionnalité de capacité de l'avion d'entrepôt
+ JKleinne 10/12/21, 00h39 Correction d'un bug qui définit la capacité maximale des composants incorrecte
+ JKleinne 10/2/21,  03h44 Renommer les propriétés d'usine génériques en installation
+ JKleinne 25/09/21, 19h13 Logique de dessin dynamique initiale
+ JKleinne 25/09/21, 16h16 Résolution de l'exception NullPointerException lors de la tentative de lecture usine > 'sortie' à partir de XML
+ JKleinne 25/09/21, 15h38 Coords et métadonnées mappés dans des enregistrements de configuration pour un accès facile
+ JKleinne 24/09/21, 03h21 Suppression des arguments inutilisés de la boîte à outils et suppression de XMLUtils.readXML()
+ JKleinne 24/09/21, 03h10 Terminé XMLUtils.readPathing()
+ JKleinne 24/09/21, 02h43 Terminé XMLUtils.readFactoryCoordinates()
+ JKleinne 20/09/21, 5h25 Fini l'implémentation de XMLUtils.readFactoryMetadata()
+ JKleinne 20/09/21, 03h47 Création d'enregistrements et démarrage du lecteur XML FactoryMetadata
+ JKleinne 19/09/21, 15h36 a créé la structure du projet
+ *******************************************************/
+
+/**
+ * Classe d'assistance pour la lecture et l'analyse du document XML de configuration
+ *
+ * @author Jonnie Klein Quezada
+ * @since 2021-09-19
+ */
 public final class XMLUtils {
 
-    // Prevent accidental initialization
+    /**
+     * Empêcher l'initialisation accidentelle
+     */
     private XMLUtils() {}
 
+    /**
+     * Mappe les coordonnées {@link network.records.facility.FacilityCoordinates} et les métadonnées
+     * {@link network.records.facility.FacilityMetadata} de chaque usine
+     * dans un objet {@link network.records.facility.FacilityConfig}
+     * @param filePath Le chemin du fichier de configuration XML
+     * @return Un ArrayList de {@link network.records.facility.FacilityConfig} contenant les métadonnées et les coordonnées de chaque Facility
+     * @throws ParserConfigurationException
+     * @throws IOException
+     * @throws SAXException
+     */
     public static ArrayList<FacilityConfig> getFactoryConfig(String filePath) throws ParserConfigurationException, IOException, SAXException {
         var factoriesMetadata = readFactoryMetadata(filePath);
         var factoriesCoords = readFacilityCoordinates(filePath);
         var configList = new ArrayList<FacilityConfig>();
 
         for(FacilityCoordinates coords : factoriesCoords) {
-            FactoryMetadata metadata = factoriesMetadata.stream()
+            FacilityMetadata metadata = factoriesMetadata.stream()
                     .filter(x -> x.factoryType().equals(coords.factoryType()))
                     .findFirst()
                     .orElse(null);
@@ -41,14 +89,23 @@ public final class XMLUtils {
         return configList;
     }
 
-    public static ArrayList<FactoryMetadata> readFactoryMetadata(String filePath) throws ParserConfigurationException, IOException, SAXException {
+    /**
+     * Mappe les métadonnées de chaque usine
+     * dans un objet {@link network.records.facility.FacilityMetadata}
+     * @param filePath Le chemin du fichier de configuration XML
+     * @return Un ArrayList de {@link network.records.facility.FacilityMetadata} contenant les métadonnées de chaque usine
+     * @throws ParserConfigurationException
+     * @throws IOException
+     * @throws SAXException
+     */
+    public static ArrayList<FacilityMetadata> readFactoryMetadata(String filePath) throws ParserConfigurationException, IOException, SAXException {
         var toolkit = getToolKit(filePath, "metadonnees");
 
         Node branch = toolkit.branch();
 
         NodeList list = ((Element) branch).getElementsByTagName("usine");
 
-        var factoryMetadataList = new ArrayList<FactoryMetadata>();
+        var factoryMetadataList = new ArrayList<FacilityMetadata>();
 
         for(int i = 0; i < list.getLength(); i++) {
             String factoryType = null, exitType = null;
@@ -109,12 +166,21 @@ public final class XMLUtils {
                 }
             }
 
-            factoryMetadataList.add(new FactoryMetadata(factoryType, icons, entryComponentList, exitType, productionInterval));
+            factoryMetadataList.add(new FacilityMetadata(factoryType, icons, entryComponentList, exitType, productionInterval));
         }
 
         return factoryMetadataList;
     }
 
+    /**
+     * Mappe les coordonnées de chaque usine
+     * dans un objet {@link network.records.facility.FacilityCoordinates}
+     * @param filePath Le chemin du fichier de configuration XML
+     * @return Un ArrayList de {@link network.records.facility.FacilityCoordinates} contenant les coordonnées de chaque usine
+     * @throws IOException
+     * @throws SAXException
+     * @throws ParserConfigurationException
+     */
     public static ArrayList<FacilityCoordinates> readFacilityCoordinates(String filePath) throws IOException, SAXException, ParserConfigurationException {
         var toolkit = getToolKit(filePath, "simulation");
 
@@ -145,6 +211,16 @@ public final class XMLUtils {
         return facilityCoords;
     }
 
+    /**
+     * Mappe le cheminement de chaque composant créé par chaque usine
+     * dans un objet {@link network.records.Pathing}
+     * @param filePath Le chemin du fichier de configuration XML
+     * @return Un ArrayList de {@link network.records.Pathing} contenant le cheminement de chaque composant
+     * créé par chaque usine
+     * @throws IOException
+     * @throws ParserConfigurationException
+     * @throws SAXException
+     */
     public static ArrayList<Pathing> readPathing(String filePath) throws IOException, ParserConfigurationException, SAXException {
         var toolkit = getToolKit(filePath, "simulation");
 
@@ -172,6 +248,18 @@ public final class XMLUtils {
         return networkPathing;
     }
 
+    /**
+     * Fonction d'assistance qui exécute le code boilerplate
+     * (Voir <a href="https://en.wikipedia.org/wiki/Boilerplate_code#:~:text=In%20computer%20programming%2C%20boilerplate%20code,Such%20code%20is%20called%20boilerplate.">Wikipedia</a>)
+     * nécessaire pour la lecture XML et renvoie le Node d'un tagName donné
+     * @param filePath Le chemin du fichier de configuration XML
+     * @param tagName Section dans configuration.xml (metadonnees; simulation)
+     * @return Un object {@link network.records.XMLToolKit} qui contient un DocumentBuilderFactory, un DocumentBuilder
+     * et des métadonnées du Node spécifié
+     * @throws IOException
+     * @throws SAXException
+     * @throws ParserConfigurationException
+     */
     private static XMLToolKit getToolKit(String filePath, String tagName) throws IOException, SAXException, ParserConfigurationException {
         var factory = DocumentBuilderFactory.newInstance();
         var builder = factory.newDocumentBuilder();
