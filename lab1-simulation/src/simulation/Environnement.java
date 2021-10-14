@@ -1,3 +1,60 @@
+/******************************************************
+ Cours:   LOG121
+ Session: A2021
+ Groupe: 04
+ Projet: Laboratoire #1
+ Étudiant: Jonnie Klein Quezada
+
+
+ Professeur : Benoit Galarneau
+ Nom du fichier: Environnement.java
+ Date créé: 2021-09-15
+ Date dern. modif. 2021-10-12
+ *******************************************************
+ Historique des modifications
+ *******************************************************
+ JKleinne 10/12/21, 6:30 AM Project complete: Finished implementing dynamic sell strategies
+ JKleinne 10/12/21, 6:17 AM Implemented FixedIntervalSellStrategy
+ JKleinne 10/12/21, 5:28 AM Added functionality to correctly show Warehouse IconStatus
+ JKleinne 10/12/21, 3:36 AM Refactored network rebuild on config file changed from Environment private methods to Observer pattern
+ JKleinne 10/12/21, 2:11 AM Refactoring: grouping relevant classes into deeper packages
+ JKleinne 10/12/21, 2:04 AM Removed completed TODOs, obsolete code
+ JKleinne 10/12/21, 1:51 AM Warehouse plane capacity functionality contd.
+ JKleinne 10/12/21, 1:18 AM Extended Environment.craftComponents() by adding functionality for PlaneFactory
+ JKleinne 10/12/21, 12:50 AM Extended Environment.craftComponents() by adding functionality for WingFactory
+ JKleinne 10/12/21, 12:43 AM Extended Environment.craftComponents() by adding functionality for MotorFactory
+ JKleinne 10/11/21, 5:56 PM Removed completed TODOs
+ JKleinne 10/11/21, 5:12 PM Regrouped network state to a GlobalState singleton class for a single source of truth
+ JKleinne 10/11/21, 4:35 PM Added functionality to add component to factory stock when it reaches destination factory
+ JKleinne 10/9/21, 11:25 PM Made TOUR final
+ JKleinne 10/9/21, 11:15 PM Added Facility production status icon and create new Component only when status is FULL
+ JKleinne 10/9/21, 10:14 PM Added TODOs
+ JKleinne 10/9/21, 8:22 PM checkComponentsPosition()
+ JKleinne 10/8/21, 12:10 AM Removed unused fields/code
+ JKleinne 10/7/21, 11:59 PM Integer.compare() instead of messy if-else for getTranslatePoint()
+ JKleinne 10/7/21, 11:57 PM Clear components on screen and backend when rebuildNetworkEnvironment() call
+ JKleinne 10/6/21, 10:27 PM Code cleanup
+ JKleinne 10/6/21, 10:17 PM Components created and moving along path
+ JKleinne 10/6/21, 9:02 PM Refactoring, renaming ...
+ JKleinne 10/6/21, 2:58 AM New TODOs
+ JKleinne 10/5/21, 7:26 PM Components created each tour and displayed on UI
+ JKleinne 10/5/21, 5:02 PM craftComponents() per tour
+ JKleinne 10/5/21, 4:44 PM Removed facilities, start executeTour()
+ JKleinne 10/5/21, 4:30 PM Changed facilities from ArrayList<Facility> to Map<Facility, Stack<Component>>
+ JKleinne 10/5/21, 3:39 PM Facility Observer pattern
+ JKleinne 10/3/21, 12:46 PM Renamed factories ArrayList to facilities
+ JKleinne 10/2/21, 3:44 AM Renamed generic factory properties to facility
+ JKleinne 9/30/21, 7:21 PM factory capacity logic change TODO
+ JKleinne 9/30/21, 7:20 PM (done) Dynamic drawing of the network
+ JKleinne 9/30/21, 7:00 PM Added Facility above Factory in the hierarchy
+ JKleinne 9/30/21, 6:44 PM Dynamic drawing of factories
+ JKleinne 9/30/21, 6:05 PM typo fix
+ JKleinne 9/30/21, 6:04 PM Moved class instantiation from Simulation to Environment
+ JKleinne 9/29/21, 10:29 AM added TODOs
+ JKleinne 9/25/21, 7:13 PM Initial dynamic drawing logic
+ JKleinne 9/15/21, 3:59 PM init
+ *******************************************************/
+
 package simulation;
 
 import network.GlobalState;
@@ -14,16 +71,26 @@ import javax.swing.*;
 import java.awt.*;
 import java.time.Instant;
 
+/**
+ * Classe qui représente l'environnement de travail du réseau et de la simulation
+ * @author Jonnie Klein Quezada
+ * @since 2021-09-15
+ */
 public class Environnement extends SwingWorker<Object, String> {
 	private boolean actif = true;
 
 	private static final int DELAI = 100;
-    private static final int TOUR = 1;
+    private static final int TOUR = 1; // Définir TOUR comme une seconde
 
-    private long timestamp = 0;
+    private long timestamp = 0; // Timestamp du dernier TOUR
 
     private GlobalState state = GlobalState.getInstance();
 
+    /**
+     * Fonction qui est appelée en arrière-plan et représente l'exécution qui se produit dans un TOUR
+     * @return null
+     * @throws InterruptedException
+     */
 	@Override
 	protected Object doInBackground() throws InterruptedException {
 		while(actif) {
@@ -37,6 +104,7 @@ public class Environnement extends SwingWorker<Object, String> {
             Instant instant = Instant.now();
             long current = instant.getEpochSecond();
 
+            // Si vrai, un TOUR s'est écoulé
             if(current - timestamp >= TOUR) {
                 if(!state.facilities.isEmpty()) {
                     executeSell(current - timestamp, TOUR);
@@ -50,6 +118,11 @@ public class Environnement extends SwingWorker<Object, String> {
 		return null;
 	}
 
+    /**
+     * Vend l'avion en fonction de l'ISellBehavior sélectionné
+     * @param deltaTime Temps écoulé depuis le dernier appel
+     * @param tour Unité de temps
+     */
     private void executeSell(long deltaTime, int tour) {
         Warehouse warehouse = (Warehouse) state.facilities.keySet()
                 .stream()
@@ -60,6 +133,9 @@ public class Environnement extends SwingWorker<Object, String> {
         warehouse.executeSell(deltaTime, tour);
     }
 
+    /**
+     * Créer de nouveaux composants pour chaque usine dans GlobalState.facilities à chaque TOUR
+     */
     private void craftComponents() {
         for(Facility f: state.facilities.keySet()) {
             IndicatorStatus currentProductionStatus = f.getStatus();
@@ -80,7 +156,7 @@ public class Environnement extends SwingWorker<Object, String> {
 
             if(f instanceof MetalFactory factory) {
                 if(currentProductionStatus.getNext() == null) {
-                    Point destination = getPathDestinationByFacilityId(f);
+                    Point destination = getPathDestinationByFacility(f);
                     Point from = new Point(f.getConfig().coords().x(), f.getConfig().coords().y());
                     Point translate = getTranslatePoint(f, destination);
 
@@ -91,7 +167,7 @@ public class Environnement extends SwingWorker<Object, String> {
                 }
             } else if(f instanceof MotorFactory factory) {
                 if(currentProductionStatus.getNext() == null) {
-                    Point destination = getPathDestinationByFacilityId(f);
+                    Point destination = getPathDestinationByFacility(f);
                     Point from = new Point(f.getConfig().coords().x(), f.getConfig().coords().y());
                     Point translate = getTranslatePoint(f, destination);
 
@@ -107,7 +183,7 @@ public class Environnement extends SwingWorker<Object, String> {
                 }
             } else if(f instanceof WingFactory factory) {
                 if(currentProductionStatus.getNext() == null) {
-                    Point destination = getPathDestinationByFacilityId(f);
+                    Point destination = getPathDestinationByFacility(f);
                     Point from = new Point(f.getConfig().coords().x(), f.getConfig().coords().y());
                     Point translate = getTranslatePoint(f, destination);
 
@@ -123,7 +199,7 @@ public class Environnement extends SwingWorker<Object, String> {
                 }
             } else if(f instanceof PlaneFactory factory) {
                 if(currentProductionStatus.getNext() == null) {
-                    Point destination = getPathDestinationByFacilityId(f);
+                    Point destination = getPathDestinationByFacility(f);
                     Point from = new Point(f.getConfig().coords().x(), f.getConfig().coords().y());
                     Point translate = getTranslatePoint(f, destination);
 
@@ -179,6 +255,11 @@ public class Environnement extends SwingWorker<Object, String> {
         }
     }
 
+    /**
+     * Retourne une instance de {@link Facility} basée sur l'identifiant donné
+     * @param id Identifiant de l'instance de {@link Facility}
+     * @return Instance de {@link Facility}
+     */
     private Facility getFacilityById(int id) {
         return state.facilities
                 .keySet()
@@ -188,7 +269,12 @@ public class Environnement extends SwingWorker<Object, String> {
                 .get();
     }
 
-    private Point getPathDestinationByFacilityId(Facility f) {
+    /**
+     * Retourne l'instance de {@link Facility} de destination en fonction de l'instance de {@link Facility} de départ
+     * @param f Instance de {@link Facility} de départ
+     * @return Instance de {@link Facility} de destination
+     */
+    private Point getPathDestinationByFacility(Facility f) {
         var path = state.pathing.stream()
                 .filter(x -> x.fromFactoryCoordinatesId() == f.getConfig().coords().id())
                 .findFirst()
@@ -207,6 +293,12 @@ public class Environnement extends SwingWorker<Object, String> {
         return new Point(x, y);
     }
 
+    /**
+     * Retourne le facteur par lequel un composant se déplace dans le plan
+     * @param from Instance de {@link Facility} de départ
+     * @param to Coordonnées Point de destination
+     * @return Facteur par lequel un composant se déplace dans le plan
+     */
     private Point getTranslatePoint(Facility from, Point to) {
         int x, y;
 

@@ -46,7 +46,7 @@ import java.util.*;
 /**
  * Classe singleton pour représenter l'état global du réseau et implémente IObserver
  * @author Jonnie Klein Quezada
- * @since 2021-09-19
+ * @since 2021-10-11
  */
 public class GlobalState implements IObserver {
     private static GlobalState instance = null;
