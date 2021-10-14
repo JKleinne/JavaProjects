@@ -22,8 +22,8 @@ import java.awt.*;
  Historique des modifications
  *******************************************************
  JKleinne 12/10/21, 02h11 Refactoring: regrouper les classes pertinentes dans des packages plus profonds
- JKleinne 12/10/21, 22h27 Nettoyage du code
- JKleinne 12/10/21, 22h17 Composants créés et se déplaçant le long du chemin
+ JKleinne 06/10/21, 22h27 Nettoyage du code
+ JKleinne 06/10/21, 22h17 Composants créés et se déplaçant le long du chemin
  JKleinne 05/10/21, 16h55 Ajouter un composant au super (Facility) à chaque appel craftComponent()
  JKleinne 03/10/21, 12h53 Paramètres supprimés pour Factory craftComponent()
  JKleinne 02/10/21, 3h44  Renommer les propriétés d'usine génériques en Facility
@@ -39,9 +39,14 @@ import java.awt.*;
 
 /**
  * Classe abstraite qui étend les fonctionnalités de {@link network.facilities.factories.Factory} en
- * implémentant craftComponent()
+ * implémentant craftComponent() spécifiquement pour les composants de metal
  */
 public class MetalFactory extends Factory {
+
+    /**
+     * Constructeur qui prend une seule argument
+     * @param config De type {@link network.records.facility.FacilityConfig} qui englobe les métadonnées et les coordonnées d'une usine
+     */
     public MetalFactory(FacilityConfig config) {
         super(config);
     }
