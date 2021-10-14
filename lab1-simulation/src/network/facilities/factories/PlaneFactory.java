@@ -38,24 +38,49 @@ import network.utilities.ComponentType;
 
 import java.awt.*;
 
+/**
+ * Classe qui étend les fonctionnalités de {@link network.facilities.factories.Factory} en
+ * implémentant craftComponent() spécifiquement pour les composants avions
+ */
 public class PlaneFactory extends Factory {
     private int wingCapacity;
     private int motorCapacity;
 
+    /**
+     * Constructeur qui prend 3 arguments
+     * @param config De type {@link network.records.facility.FacilityConfig} qui englobe les métadonnées et les coordonnées d'une usine
+     * @param wingCapacity Nombre de composants d'ailes dont il a besoin avant de démarrer la production
+     * @param motorCapacity Nombre de composants moteurs dont il a besoin avant de démarrer la production
+     */
     public PlaneFactory(FacilityConfig config, int wingCapacity, int motorCapacity) {
         super(config);
         this.wingCapacity = wingCapacity;
         this.motorCapacity = motorCapacity;
     }
 
+    /**
+     * Getter pour wingCapacity
+     * @return Nombre de composants d'ailes dont il a besoin avant de démarrer la production
+     */
     public int getWingCapacity() {
         return this.wingCapacity;
     }
 
+    /**
+     * Getter pour motorCapacity
+     * @return Nombre de composants moteurs dont il a besoin avant de démarrer la production
+     */
     public int getMotorCapacity() {
         return this.motorCapacity;
     }
 
+    /**
+     * Implémentation de {@link network.facilities.factories.Factory#craftComponent(Point, Point, Point)}
+     * @param translate Facteur par lequel un composant se déplace dans le plan
+     * @param currentPos Position du composant une fois fabriqué (position actuelle de cette usine)
+     * @param to Position de l'usine de destination
+     * @return Une instance de {@link network.records.Component}
+     */
     public Component craftComponent(Point translate, Point currentPos, Point to) {
         var icon = "src/ressources/avion.png";
         var c = new Component(icon, ComponentType.PLANE, translate, currentPos, to);

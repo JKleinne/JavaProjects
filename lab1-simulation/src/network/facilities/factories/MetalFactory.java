@@ -38,7 +38,7 @@ import java.awt.*;
  *******************************************************/
 
 /**
- * Classe abstraite qui étend les fonctionnalités de {@link network.facilities.factories.Factory} en
+ * Classe qui étend les fonctionnalités de {@link network.facilities.factories.Factory} en
  * implémentant craftComponent() spécifiquement pour les composants de metal
  */
 public class MetalFactory extends Factory {
