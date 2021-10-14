@@ -18,7 +18,7 @@ public class Environnement extends SwingWorker<Object, String> {
 	private boolean actif = true;
 
 	private static final int DELAI = 100;
-    private static final int TOUR = 2;
+    private static final int TOUR = 1;
 
     private long timestamp = 0;
 
@@ -73,7 +73,8 @@ public class Environnement extends SwingWorker<Object, String> {
             var warehouseMaxPlaneCapacity = w.getPlaneCapacity();
             var warehouseCurrentPlaneStock = w.getStock().size();
 
-            if(warehouseCurrentPlaneStock >= warehouseMaxPlaneCapacity) {
+            if(warehouseCurrentPlaneStock + 1 >= warehouseMaxPlaneCapacity) {
+                w.setStatus(IndicatorStatus.FULL);
                 continue;
             }
 
