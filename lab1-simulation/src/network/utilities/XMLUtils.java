@@ -68,9 +68,9 @@ public final class XMLUtils {
      * dans un objet {@link network.records.facility.FacilityConfig}
      * @param filePath Le chemin du fichier de configuration XML
      * @return Un ArrayList de {@link network.records.facility.FacilityConfig} contenant les métadonnées et les coordonnées de chaque Facility
-     * @throws ParserConfigurationException
-     * @throws IOException
-     * @throws SAXException
+     * @throws ParserConfigurationException peut être lancé par getToolKit()
+     * @throws IOException peut être lancé par getToolKit()
+     * @throws SAXException peut être lancé par getToolKit()
      */
     public static ArrayList<FacilityConfig> getFactoryConfig(String filePath) throws ParserConfigurationException, IOException, SAXException {
         var factoriesMetadata = readFactoryMetadata(filePath);
@@ -94,9 +94,9 @@ public final class XMLUtils {
      * dans un objet {@link network.records.facility.FacilityMetadata}
      * @param filePath Le chemin du fichier de configuration XML
      * @return Un ArrayList de {@link network.records.facility.FacilityMetadata} contenant les métadonnées de chaque usine
-     * @throws ParserConfigurationException
-     * @throws IOException
-     * @throws SAXException
+     * @throws ParserConfigurationException peut être lancé par getToolKit()
+     * @throws IOException peut être lancé par getToolKit()
+     * @throws SAXException peut être lancé par getToolKit()
      */
     public static ArrayList<FacilityMetadata> readFactoryMetadata(String filePath) throws ParserConfigurationException, IOException, SAXException {
         var toolkit = getToolKit(filePath, "metadonnees");
@@ -177,9 +177,9 @@ public final class XMLUtils {
      * dans un objet {@link network.records.facility.FacilityCoordinates}
      * @param filePath Le chemin du fichier de configuration XML
      * @return Un ArrayList de {@link network.records.facility.FacilityCoordinates} contenant les coordonnées de chaque usine
-     * @throws IOException
-     * @throws SAXException
-     * @throws ParserConfigurationException
+     * @throws IOException peut être lancé par getToolKit()
+     * @throws SAXException peut être lancé par getToolKit()
+     * @throws ParserConfigurationException peut être lancé par getToolKit()
      */
     public static ArrayList<FacilityCoordinates> readFacilityCoordinates(String filePath) throws IOException, SAXException, ParserConfigurationException {
         var toolkit = getToolKit(filePath, "simulation");
@@ -217,9 +217,9 @@ public final class XMLUtils {
      * @param filePath Le chemin du fichier de configuration XML
      * @return Un ArrayList de {@link network.records.Pathing} contenant le cheminement de chaque composant
      * créé par chaque usine
-     * @throws IOException
-     * @throws ParserConfigurationException
-     * @throws SAXException
+     * @throws IOException peut être lancé par getToolKit()
+     * @throws ParserConfigurationException peut être lancé par getToolKit()
+     * @throws SAXException peut être lancé par getToolKit()
      */
     public static ArrayList<Pathing> readPathing(String filePath) throws IOException, ParserConfigurationException, SAXException {
         var toolkit = getToolKit(filePath, "simulation");
@@ -256,11 +256,11 @@ public final class XMLUtils {
      * @param tagName Section dans configuration.xml (metadonnees; simulation)
      * @return Un object {@link network.records.XMLToolKit} qui contient un DocumentBuilderFactory, un DocumentBuilder
      * et des métadonnées du Node spécifié
-     * @throws IOException
-     * @throws SAXException
-     * @throws ParserConfigurationException
+     * @throws IOException DocumentBuilder{instance}.parse() peut lever cette exception
+     * @throws SAXException DocumentBuilder{instance}.parse() peut lever cette exception
+     * @throws ParserConfigurationException DocumentBuilder{instance}.parse() peut lever cette exception
      */
-    private static XMLToolKit getToolKit(String filePath, String tagName) throws IOException, SAXException, ParserConfigurationException {
+    private static XMLToolKit getToolKit(String filePath, String tagName) throws IOException, ParserConfigurationException, SAXException {
         var factory = DocumentBuilderFactory.newInstance();
         var builder = factory.newDocumentBuilder();
 
