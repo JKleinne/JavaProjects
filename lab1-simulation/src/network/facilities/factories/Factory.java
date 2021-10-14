@@ -24,15 +24,15 @@ import java.awt.*;
  JKleinne 12/10/21, 02h11 Refactoring: regrouper les classes pertinentes dans des packages plus profonds
  JKleinne 06/10/21, 22h27 Nettoyage du code
  JKleinne 06/10/21, 22h17 Composants créés et se déplaçant le long du chemin
- JKleinne 05/10/21, 15h39 Modèle d'observateur d'installation
+ JKleinne 05/10/21, 15h39 Patron Observateur: Facility
  JKleinne 03/10/21, 12h53 Paramètres supprimés pour Factory craftComponent ()
  JKleinne 02/10/21, 3h44  Renommer les propriétés d'usine génériques en Facility
- JKleinne 30/09/21, 19h00 Ajout de l'installation au-dessus de l'usine dans la hiérarchie
+ JKleinne 30/09/21, 19h00 Ajout de Facility au-dessus de Factory dans la hiérarchie
  JKleinne 30/09/21, 18h44 Dessin dynamique d'usines
  JKleinne 25/09/21, 19h11 Stock supprimé du constructeur des sous-classes d'usine et initialisé dans l'usine à la place
  JKleinne 25/09/21, 17h40 Faire en sorte que chaque instance de sous-classe Factory possède un FactoryConfig
  JKleinne 25/09/21, 00h07 A remplacé ArrayList en tant que conteneur de composant pour la pile
- JKleinne 24/09/21, 23h58 Superclasse d'usine abstraite pour abstrait craftComponent()
+ JKleinne 24/09/21, 23h58 Abstraire Facility pour rendre craftComponents() abstrait
  JKleinne 24/09/21, 23h47 Noms d'interface formalisés
  JKleinne 24/09/21, 23h15 Composant refactorisé -> classe à enregistrer
  JKleinne 19/09/21, 15h51 Entrepôt, structure squelette de finition
