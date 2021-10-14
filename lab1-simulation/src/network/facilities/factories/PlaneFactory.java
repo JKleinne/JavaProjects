@@ -41,6 +41,8 @@ import java.awt.*;
 /**
  * Classe qui étend les fonctionnalités de {@link network.facilities.factories.Factory} en
  * implémentant craftComponent() spécifiquement pour les composants avions
+ * @author Jonnie Klein Quezada
+ * @since 2021-09-19
  */
 public class PlaneFactory extends Factory {
     private int wingCapacity;

@@ -40,6 +40,8 @@ import java.awt.*;
 /**
  * Classe qui étend les fonctionnalités de {@link network.facilities.factories.Factory} en
  * implémentant craftComponent() spécifiquement pour les composants de metal
+ * @author Jonnie Klein Quezada
+ * @since 2021-09-19
  */
 public class MetalFactory extends Factory {
 

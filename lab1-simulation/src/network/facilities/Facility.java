@@ -42,6 +42,8 @@ import java.util.HashMap;
 /**
  * Classe parent de {@link network.facilities.Warehouse} et {@link network.facilities.factories.Factory}.
  * Représente toutes les usines et entropots.
+ * @author Jonnie Klein Quezada
+ * @since 2021-09-30
  */
 public class Facility implements ISubject {
     protected ArrayList<Component> stock;
