@@ -34,10 +34,10 @@ import java.util.ArrayList;
  *******************************************************
  Historique des modifications
  *******************************************************
- JKleinne 21/10/21, 02h11 Refactoring: regrouper les classes pertinentes dans des packages plus profonds
- JKleinne 10/12/21, 01h51 Fonctionnalité de capacité de l'avion d'entrepôt
- JKleinne 10/12/21, 00h39 Correction d'un bug qui définit la capacité maximale des composants incorrecte
- JKleinne 10/2/21,  03h44 Renommer les propriétés d'usine génériques en installation
+ JKleinne 12/10/21, 02h11 Refactoring: regrouper les classes pertinentes dans des packages plus profonds
+ JKleinne 12/10/21, 01h51 Fonctionnalité de capacité de l'avion d'entrepôt
+ JKleinne 12/10/21, 00h39 Correction d'un bug qui définit la capacité maximale des composants incorrecte
+ JKleinne 02/10/21, 03h44 Renommer les propriétés d'usine génériques en installation
  JKleinne 25/09/21, 19h13 Logique de dessin dynamique initiale
  JKleinne 25/09/21, 16h16 Résolution de l'exception NullPointerException lors de la tentative de lecture usine > 'sortie' à partir de XML
  JKleinne 25/09/21, 15h38 Coords et métadonnées mappés dans des enregistrements de configuration pour un accès facile
