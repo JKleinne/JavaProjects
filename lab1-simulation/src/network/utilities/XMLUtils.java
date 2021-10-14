@@ -51,7 +51,6 @@ import java.util.ArrayList;
 
 /**
  * Classe d'assistance pour la lecture et l'analyse du document XML de configuration
- *
  * @author Jonnie Klein Quezada
  * @since 2021-09-19
  */
