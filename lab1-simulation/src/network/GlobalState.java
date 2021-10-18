@@ -106,7 +106,7 @@ public class GlobalState implements IObserver {
             this.configPath = (String) payload;
             try {
                 var factoriesConfig = XMLUtils.getFacilityConfig(configPath);
-                this.facilities = getFacilitiesMappedWithStock(factoriesConfig);
+                this.facilities = generateNetworkFacilities(factoriesConfig);
                 this.pathing = XMLUtils.readPathing(configPath);
 
                 this.components.clear();
@@ -122,7 +122,7 @@ public class GlobalState implements IObserver {
      * @param factoriesConfig La configuration {@link FacilityConfig} de chaque {@link FacilityConfig} du réseau
      * @return Un Map des Facility avec leurs stocks respectifs
      */
-    private Map<Facility, ArrayList<Component>> getFacilitiesMappedWithStock(ArrayList<FacilityConfig> factoriesConfig) {
+    private Map<Facility, ArrayList<Component>> generateNetworkFacilities(ArrayList<FacilityConfig> factoriesConfig) {
         Map<Facility, ArrayList<Component>> map = new HashMap<>();
 
         for(FacilityConfig config : factoriesConfig) {
