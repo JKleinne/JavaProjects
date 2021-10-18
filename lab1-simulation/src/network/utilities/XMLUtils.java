@@ -72,7 +72,7 @@ public final class XMLUtils {
      * @throws SAXException peut être lancé par getToolKit()
      */
     public static ArrayList<FacilityConfig> getFactoryConfig(String filePath) throws ParserConfigurationException, IOException, SAXException {
-        var factoriesMetadata = readFactoryMetadata(filePath);
+        var factoriesMetadata = readFacilityMetadata(filePath);
         var factoriesCoords = readFacilityCoordinates(filePath);
         var configList = new ArrayList<FacilityConfig>();
 
@@ -97,7 +97,7 @@ public final class XMLUtils {
      * @throws IOException peut être lancé par getToolKit()
      * @throws SAXException peut être lancé par getToolKit()
      */
-    public static ArrayList<FacilityMetadata> readFactoryMetadata(String filePath) throws ParserConfigurationException, IOException, SAXException {
+    public static ArrayList<FacilityMetadata> readFacilityMetadata(String filePath) throws ParserConfigurationException, IOException, SAXException {
         var toolkit = getToolKit(filePath, "metadonnees");
 
         Node branch = toolkit.branch();
