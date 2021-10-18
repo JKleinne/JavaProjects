@@ -24,4 +24,4 @@ package network.records;
  * @author Jonnie Klein Quezada
  * @since 2021-09-24
  */
-public record Pathing(int fromFactoryCoordinatesId, int toFactoryCoordinatesId) {}
+public record Pathing(int fromFacilityCoordinatesId, int toFacilityCoordinatesId) {}

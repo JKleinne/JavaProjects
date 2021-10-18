@@ -148,10 +148,10 @@ public class PanneauPrincipal extends JPanel {
     private void drawPathing(Graphics g) {
         if(state.pathing != null) {
             for(Pathing path : state.pathing) {
-                FacilityCoordinates from = getFacilityById(path.fromFactoryCoordinatesId())
+                FacilityCoordinates from = getFacilityById(path.fromFacilityCoordinatesId())
                         .getConfig()
                         .coords();
-                FacilityCoordinates to = getFacilityById(path.toFactoryCoordinatesId())
+                FacilityCoordinates to = getFacilityById(path.toFacilityCoordinatesId())
                         .getConfig()
                         .coords();
 

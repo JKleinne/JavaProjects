@@ -125,7 +125,7 @@ public class GlobalState implements IObserver {
         Map<Facility, ArrayList<Component>> map = new HashMap<>();
 
         for(FacilityConfig config : factoriesConfig) {
-            String factoryType = config.metadata().factoryType();
+            String factoryType = config.metadata().facilityType();
             Facility f = switch(factoryType) {
                 case "usine-matiere" -> new MetalFactory(config);
                 case "usine-aile" -> {

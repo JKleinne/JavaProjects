@@ -78,7 +78,7 @@ public final class XMLUtils {
 
         for(FacilityCoordinates coords : factoriesCoords) {
             FacilityMetadata metadata = factoriesMetadata.stream()
-                    .filter(x -> x.factoryType().equals(coords.factoryType()))
+                    .filter(x -> x.facilityType().equals(coords.facilityType()))
                     .findFirst()
                     .orElse(null);
 

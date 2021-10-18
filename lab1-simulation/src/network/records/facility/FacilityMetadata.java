@@ -28,5 +28,5 @@ import java.util.ArrayList;
  * @author Jonnie Klein Quezada
  * @since 2021-10-02
  */
-public record FacilityMetadata(String factoryType, ArrayList<IconMetadata> icons, ArrayList<FacilityEntryComponent> entryType, String exitType, int productionInterval) {
+public record FacilityMetadata(String facilityType, ArrayList<IconMetadata> icons, ArrayList<FacilityEntryComponent> entryType, String exitType, int productionInterval) {
 }

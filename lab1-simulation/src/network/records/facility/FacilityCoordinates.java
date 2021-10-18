@@ -24,4 +24,4 @@ package network.records.facility;
  * @author Jonnie Klein Quezada
  * @since 2021-10-02
  */
-public record FacilityCoordinates(String factoryType, int id, int x, int y) {}
+public record FacilityCoordinates(String facilityType, int id, int x, int y) {}

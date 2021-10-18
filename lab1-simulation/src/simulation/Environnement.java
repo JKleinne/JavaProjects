@@ -276,11 +276,11 @@ public class Environnement extends SwingWorker<Object, String> {
      */
     private Point getPathDestinationByFacility(Facility f) {
         var path = state.pathing.stream()
-                .filter(x -> x.fromFactoryCoordinatesId() == f.getConfig().coords().id())
+                .filter(x -> x.fromFacilityCoordinatesId() == f.getConfig().coords().id())
                 .findFirst()
                 .get();
 
-        var destinationFacility = getFacilityById(path.toFactoryCoordinatesId());
+        var destinationFacility = getFacilityById(path.toFacilityCoordinatesId());
 
         var x = destinationFacility.getConfig()
                 .coords()
