@@ -22,6 +22,11 @@ import java.awt.Dimension;
 
 import javax.swing.JFrame;
 
+/**
+ * Représente la fenêtre pour la sélection de la stratégie de vente
+ * @author Jonnie Klein Quezada -> construit à partir du squelette fourni
+ * @since 2021-09-15
+ */
 public class FenetreStrategie extends JFrame {
 
 	private static final long serialVersionUID = 1L;
