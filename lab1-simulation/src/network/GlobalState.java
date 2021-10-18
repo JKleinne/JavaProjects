@@ -104,7 +104,7 @@ public class GlobalState implements IObserver {
         } else if(subject instanceof MenuFenetre) {
             this.configPath = (String) payload;
             try {
-                var factoriesConfig = XMLUtils.getFactoryConfig(configPath);
+                var factoriesConfig = XMLUtils.getFacilityConfig(configPath);
                 this.facilities = getFacilitiesMappedWithStock(factoriesConfig);
                 this.pathing = XMLUtils.readPathing(configPath);
 

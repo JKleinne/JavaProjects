@@ -71,7 +71,7 @@ public final class XMLUtils {
      * @throws IOException peut être lancé par getToolKit()
      * @throws SAXException peut être lancé par getToolKit()
      */
-    public static ArrayList<FacilityConfig> getFactoryConfig(String filePath) throws ParserConfigurationException, IOException, SAXException {
+    public static ArrayList<FacilityConfig> getFacilityConfig(String filePath) throws ParserConfigurationException, IOException, SAXException {
         var factoriesMetadata = readFacilityMetadata(filePath);
         var factoriesCoords = readFacilityCoordinates(filePath);
         var configList = new ArrayList<FacilityConfig>();
