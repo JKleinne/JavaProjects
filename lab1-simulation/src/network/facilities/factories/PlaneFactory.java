@@ -45,7 +45,13 @@ import java.awt.*;
  * @since 2021-09-19
  */
 public class PlaneFactory extends Factory {
+    /**
+     * {@link Component} d'ailes nécessaires pour démarrer la production
+     */
     private int wingCapacity;
+    /**
+     * {@link Component} de moteurs nécessaires pour démarrer la production
+     */
     private int motorCapacity;
 
     /**

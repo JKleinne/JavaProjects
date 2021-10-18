@@ -80,10 +80,19 @@ public class Environnement extends SwingWorker<Object, String> {
 	private boolean actif = true;
 
 	private static final int DELAI = 100;
-    private static final int TOUR = 1; // Définir TOUR comme une seconde
+    /**
+     * Définir TOUR comme une seconde
+     */
+    private static final int TOUR = 1;
 
-    private long timestamp = 0; // Timestamp du dernier TOUR
+    /**
+     * Timestamp du dernier TOUR
+     */
+    private long timestamp = 0;
 
+    /**
+     * État global du réseau
+     */
     private GlobalState state = GlobalState.getInstance();
 
     /**

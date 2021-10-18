@@ -43,6 +43,9 @@ import javax.swing.filechooser.FileSystemView;
  * @since 2021-09-15
  */
 public class MenuFenetre extends JMenuBar implements ISubject {
+    /**
+     * Liste des observateurs souscrits aux changement de fichier de configuration
+     */
     private ArrayList<IObserver> observers = new ArrayList<>();
 
 	private static final long serialVersionUID = 1L;

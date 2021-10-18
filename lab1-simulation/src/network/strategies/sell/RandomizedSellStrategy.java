@@ -35,7 +35,13 @@ import java.util.Random;
  * @since 2021-09-19
  */
 public class RandomizedSellStrategy implements ISellBehavior {
-    private final int ONE_TWENTIETH_CHANCE = 20; // à chaque tour, il y a 1/20 de chance qu'une vente se produise
+    /**
+     * Chaque tour, il y a 1/20 de chance qu'une vente se produise
+     */
+    private final int ONE_TWENTIETH_CHANCE = 20;
+    /**
+     * Nombre entier ciblé dans math.random() pour une chance de vente de 1/n
+     */
     private final int TARGET_INT = 1;
 
     /**

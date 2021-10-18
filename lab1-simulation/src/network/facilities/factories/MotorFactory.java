@@ -47,6 +47,9 @@ import java.awt.*;
  * @since 2021-09-19
  */
 public class MotorFactory extends Factory {
+    /**
+     * {@link Component} métalliques nécessaires pour démarrer la production
+     */
     private int metalCapacity;
 
     /**

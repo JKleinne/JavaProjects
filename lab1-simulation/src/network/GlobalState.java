@@ -51,20 +51,20 @@ import java.util.*;
 public class GlobalState implements IObserver {
     private static GlobalState instance = null;
 
-    /*
+    /**
      * liste des chemins que chaque composant doit emprunter pour atteindre le Facility de destination
      */
     public ArrayList<Pathing> pathing = new ArrayList<>();
-    /*
+    /**
      * Liste des Facility du réseau
      */
     public Map<Facility, ArrayList<Component>> facilities = new HashMap<>();
-    /*
+    /**
      * Composants actuels en route dans le réseau
      */
     public final ArrayList<Component> components = new ArrayList<>();
 
-    /*
+    /**
      * Le chemin vers le fichier de configuration XML
      */
     public String configPath;

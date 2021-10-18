@@ -72,6 +72,9 @@ public class PanneauPrincipal extends JPanel {
     private final int X_ALIGNMENT = 10;
     private final int Y_ALIGNMENT = 15;
 
+    /**
+     * État global du réseau
+     */
     private GlobalState state = GlobalState.getInstance();
 
 	private int taille = 32;

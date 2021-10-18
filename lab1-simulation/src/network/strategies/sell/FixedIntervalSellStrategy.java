@@ -33,8 +33,14 @@ import java.util.ArrayList;
  * @since 2021-09-19
  */
 public class FixedIntervalSellStrategy implements ISellBehavior {
+    /**
+     * Nombre de tournées écoulées avant chaque vente
+     */
     private final int INTERVAL_TOUR_FACTOR = 5; // Sell every n tours
 
+    /**
+     * Nombre de secondes écoulées depuis la dernière vente
+     */
     private long timestamp = 0;
 
     /**

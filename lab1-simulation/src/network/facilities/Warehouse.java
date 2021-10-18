@@ -45,7 +45,13 @@ import java.util.ArrayList;
  * @since 2021-09-19
  */
 public class Warehouse extends Facility {
+    /**
+     * Nombre maximum de {@link network.records.Component} de type {@link network.utilities.ComponentType} avion qu'il peut contenir
+     */
     private int planeCapacity;
+    /**
+     * Comportement de vente sélectionné
+     */
     private ISellBehavior sellBehavior;
 
     /**

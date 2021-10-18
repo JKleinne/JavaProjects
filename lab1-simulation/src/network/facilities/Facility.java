@@ -46,10 +46,22 @@ import java.util.HashMap;
  * @since 2021-09-30
  */
 public class Facility implements ISubject {
+    /**
+     * Nombre de {@link Component} présents dans ce Facility
+     */
     protected ArrayList<Component> stock;
+    /**
+     * Métadonnées et coordonnées de ce Facility
+     */
     protected FacilityConfig config;
+    /**
+     * État du stock de ce Facility
+     */
     protected IndicatorStatus status;
 
+    /**
+     * Liste des observateurs souscrits aux variations de stock de ce Facility
+     */
     private final ArrayList<IObserver> observers;
 
     /**
