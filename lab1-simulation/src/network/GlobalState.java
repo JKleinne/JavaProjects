@@ -40,6 +40,7 @@ import org.xml.sax.SAXException;
 import simulation.MenuFenetre;
 
 import javax.xml.parsers.ParserConfigurationException;
+import java.awt.*;
 import java.io.IOException;
 import java.util.*;
 
@@ -165,5 +166,81 @@ public class GlobalState implements IObserver {
         }
 
         return map;
+    }
+
+    /**
+     * Retourne une instance de {@link Facility} basée sur l'identifiant donné
+     * @param id Identifiant de l'instance de {@link Facility}
+     * @return Instance de {@link Facility}
+     */
+    public Facility getFacilityById(int id) {
+        return facilities
+                .keySet()
+                .stream()
+                .filter(x -> x.getConfig().coords().id() == id)
+                .findFirst()
+                .get();
+    }
+
+    /**
+     * Retourne l'instance de {@link Facility} de destination en fonction de l'instance de {@link Facility} de départ
+     * @param f Instance de {@link Facility} de départ
+     * @return Instance de {@link Facility} de destination
+     */
+    public Point getPathDestinationByFacility(Facility f) {
+        var path = pathing.stream()
+                .filter(x -> x.fromFacilityCoordinatesId() == f.getConfig().coords().id())
+                .findFirst()
+                .get();
+
+        var destinationFacility = getFacilityById(path.toFacilityCoordinatesId());
+
+        var x = destinationFacility.getConfig()
+                .coords()
+                .x();
+
+        var y = destinationFacility.getConfig()
+                .coords()
+                .y();
+
+        return new Point(x, y);
+    }
+
+    /**
+     * Retourne le facteur par lequel un composant se déplace dans le plan
+     * @param from Instance de {@link Facility} de départ
+     * @param to Coordonnées Point de destination
+     * @return Facteur par lequel un composant se déplace dans le plan
+     */
+    public Point getTranslatePoint(Facility from, Point to) {
+        int x, y;
+
+        int deltaX = to.x - from.getConfig().coords().x();
+        int deltaY = to.y - from.getConfig().coords().y();
+
+        x = Integer.compare(deltaX, 0);
+        y = Integer.compare(deltaY, 0);
+
+        return new Point(x, y);
+    }
+
+    /**
+     * Fonction qui retourne l'instance de {@link Facility} en fonction du point donné
+     * @param p Point de l'instance de {@link Facility} voulu
+     * @return Instance de {@link Facility}
+     */
+    public Facility getFacilityByCoords(Point p) {
+        return facilities
+                .keySet()
+                .stream()
+                .filter(x -> {
+                    int Fx = x.getConfig().coords().x();
+                    int Fy = x.getConfig().coords().y();
+
+                    var facilityCoords = new Point(Fx, Fy);
+                    return facilityCoords.equals(p);
+                })
+                .findFirst()
+                .get();
     }
 }

@@ -47,7 +47,7 @@ import java.util.HashMap;
  */
 public class Facility implements ISubject {
     /**
-     * Nombre de {@link Component} présents dans ce Facility
+     * Liste de {@link Component} présents dans ce Facility
      */
     protected ArrayList<Component> stock;
     /**

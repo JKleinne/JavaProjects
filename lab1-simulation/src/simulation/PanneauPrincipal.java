@@ -95,20 +95,6 @@ public class PanneauPrincipal extends JPanel {
     }
 
     /**
-     * Fonction qui retourne l'instance {@link Facility} en fonction de l'identifiant donné
-     * @param id L'identifiant de l'instance de {@link Facility}
-     * @return L'instance {@link Facility} en fonction de l'identifiant donné
-     */
-    private Facility getFacilityById(int id) {
-        return state.facilities
-                .keySet()
-                .stream()
-                .filter(x -> x.getConfig().coords().id() == id)
-                .findFirst()
-                .get();
-    }
-
-    /**
      * Fonction qui dessine les {@link Facility} du réseau
      * @param g Objet Graphique
      */
@@ -151,10 +137,10 @@ public class PanneauPrincipal extends JPanel {
     private void drawPathing(Graphics g) {
         if(state.pathing != null) {
             for(Pathing path : state.pathing) {
-                FacilityCoordinates from = getFacilityById(path.fromFacilityCoordinatesId())
+                FacilityCoordinates from = state.getFacilityById(path.fromFacilityCoordinatesId())
                         .getConfig()
                         .coords();
-                FacilityCoordinates to = getFacilityById(path.toFacilityCoordinatesId())
+                FacilityCoordinates to = state.getFacilityById(path.toFacilityCoordinatesId())
                         .getConfig()
                         .coords();
 
@@ -195,26 +181,6 @@ public class PanneauPrincipal extends JPanel {
     }
 
     /**
-     * Fonction qui retourne l'instance de {@link Facility} en fonction du point donné
-     * @param p Point de l'instance de {@link Facility} voulu
-     * @return Instance de {@link Facility}
-     */
-    private Facility getFacilityByCoords(Point p) {
-        return state.facilities
-                .keySet()
-                .stream()
-                .filter(x -> {
-                    int Fx = x.getConfig().coords().x();
-                    int Fy = x.getConfig().coords().y();
-
-                    var facilityCoords = new Point(Fx, Fy);
-                    return facilityCoords.equals(p);
-                })
-                .findFirst()
-                .get();
-    }
-
-    /**
      * Fonction qui modifie la position actuelle de chaque composant mobile en fonction de leur facteur de translation à chaque tour
      * @param c Instance de {@link Component}
      */
@@ -226,7 +192,7 @@ public class PanneauPrincipal extends JPanel {
         Point position = comp.currentPos();
 
         if(position.equals(comp.to())) {
-            var destinationFacility = getFacilityByCoords(comp.currentPos());
+            var destinationFacility = state.getFacilityByCoords(comp.currentPos());
             destinationFacility.addComponent(comp);
             state.components.remove(comp);
         } else {

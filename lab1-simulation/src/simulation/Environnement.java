@@ -165,9 +165,9 @@ public class Environnement extends SwingWorker<Object, String> {
 
             if(f instanceof MetalFactory factory) {
                 if(currentProductionStatus.getNext() == null) {
-                    Point destination = getPathDestinationByFacility(f);
+                    Point destination = state.getPathDestinationByFacility(f);
                     Point from = new Point(f.getConfig().coords().x(), f.getConfig().coords().y());
-                    Point translate = getTranslatePoint(f, destination);
+                    Point translate = state.getTranslatePoint(f, destination);
 
                     state.components.add(factory.craftComponent(translate, from, destination));
                     f.setStatus(IndicatorStatus.EMPTY);
@@ -176,9 +176,9 @@ public class Environnement extends SwingWorker<Object, String> {
                 }
             } else if(f instanceof MotorFactory factory) {
                 if(currentProductionStatus.getNext() == null) {
-                    Point destination = getPathDestinationByFacility(f);
+                    Point destination = state.getPathDestinationByFacility(f);
                     Point from = new Point(f.getConfig().coords().x(), f.getConfig().coords().y());
-                    Point translate = getTranslatePoint(f, destination);
+                    Point translate = state.getTranslatePoint(f, destination);
 
                     state.components.add(factory.craftComponent(translate, from, destination));
                     factory.popComponents(factory.getMetalCapacity());
@@ -192,9 +192,9 @@ public class Environnement extends SwingWorker<Object, String> {
                 }
             } else if(f instanceof WingFactory factory) {
                 if(currentProductionStatus.getNext() == null) {
-                    Point destination = getPathDestinationByFacility(f);
+                    Point destination = state.getPathDestinationByFacility(f);
                     Point from = new Point(f.getConfig().coords().x(), f.getConfig().coords().y());
-                    Point translate = getTranslatePoint(f, destination);
+                    Point translate = state.getTranslatePoint(f, destination);
 
                     state.components.add(factory.craftComponent(translate, from, destination));
                     factory.popComponents(factory.getMetalCapacity());
@@ -208,9 +208,9 @@ public class Environnement extends SwingWorker<Object, String> {
                 }
             } else if(f instanceof PlaneFactory factory) {
                 if(currentProductionStatus.getNext() == null) {
-                    Point destination = getPathDestinationByFacility(f);
+                    Point destination = state.getPathDestinationByFacility(f);
                     Point from = new Point(f.getConfig().coords().x(), f.getConfig().coords().y());
-                    Point translate = getTranslatePoint(f, destination);
+                    Point translate = state.getTranslatePoint(f, destination);
 
                     state.components.add(factory.craftComponent(translate, from, destination));
 
@@ -262,61 +262,5 @@ public class Environnement extends SwingWorker<Object, String> {
                 f.setStatus(status);
             }
         }
-    }
-
-    /**
-     * Retourne une instance de {@link Facility} basée sur l'identifiant donné
-     * @param id Identifiant de l'instance de {@link Facility}
-     * @return Instance de {@link Facility}
-     */
-    private Facility getFacilityById(int id) {
-        return state.facilities
-                .keySet()
-                .stream()
-                .filter(x -> x.getConfig().coords().id() == id)
-                .findFirst()
-                .get();
-    }
-
-    /**
-     * Retourne l'instance de {@link Facility} de destination en fonction de l'instance de {@link Facility} de départ
-     * @param f Instance de {@link Facility} de départ
-     * @return Instance de {@link Facility} de destination
-     */
-    private Point getPathDestinationByFacility(Facility f) {
-        var path = state.pathing.stream()
-                .filter(x -> x.fromFacilityCoordinatesId() == f.getConfig().coords().id())
-                .findFirst()
-                .get();
-
-        var destinationFacility = getFacilityById(path.toFacilityCoordinatesId());
-
-        var x = destinationFacility.getConfig()
-                .coords()
-                .x();
-
-        var y = destinationFacility.getConfig()
-                .coords()
-                .y();
-
-        return new Point(x, y);
-    }
-
-    /**
-     * Retourne le facteur par lequel un composant se déplace dans le plan
-     * @param from Instance de {@link Facility} de départ
-     * @param to Coordonnées Point de destination
-     * @return Facteur par lequel un composant se déplace dans le plan
-     */
-    private Point getTranslatePoint(Facility from, Point to) {
-        int x, y;
-
-        int deltaX = to.x - from.getConfig().coords().x();
-        int deltaY = to.y - from.getConfig().coords().y();
-
-        x = Integer.compare(deltaX, 0);
-        y = Integer.compare(deltaY, 0);
-
-        return new Point(x, y);
     }
 }
