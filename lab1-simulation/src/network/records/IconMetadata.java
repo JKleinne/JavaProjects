@@ -6,7 +6,7 @@
  Étudiant: Jonnie Klein Quezada
 
 
- Professeur : Benoit Galarneau
+ Professeure : Bianca Popa
  Nom du fichier: IconMetadata.java
  Date créé: 2021-09-20
  Date dern. modif. 2021-09-20

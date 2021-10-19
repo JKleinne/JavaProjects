@@ -6,7 +6,7 @@
  Étudiant: Jonnie Klein Quezada
 
 
- Professeur : Benoit Galarneau
+ Professeure : Bianca Popa
  Nom du fichier: ISubject.java
  Date créé: 2021-09-24
  Date dern. modif. 2021-10-12

@@ -6,7 +6,7 @@
  Étudiant: Jonnie Klein Quezada
 
 
- Professeur : Benoit Galarneau
+ Professeure : Bianca Popa
  Nom du fichier: MotorFactory.java
  Date créé: 2021-09-19
  Date dern. modif. 2021-10-12
