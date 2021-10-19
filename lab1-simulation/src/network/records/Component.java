@@ -28,7 +28,7 @@ import network.utilities.ComponentType;
 import java.awt.*;
 
 /**
- * Record englobant les métadonnées d'un composant qu'une instance de {@link network.facilities.Facility} peut recevpor
+ * Record englobant les métadonnées d'un composant qu'une instance de {@link network.facilities.Facility} peut recevoir
  * @author Jonnie Klein Quezada
  * @since 2021-09-24
  */
