@@ -50,8 +50,8 @@ public class PanneauStrategie extends JPanel {
      */
 	public PanneauStrategie() {
 
-        final String RANDOMIZED_SELL = "Randomized Sell";
-        final String FIXED_INTERVAL_SELL = "Fixed Interval Sell";
+        final String RANDOMIZED_SELL = "Vente aléatoire";
+        final String FIXED_INTERVAL_SELL = "Vente à intervalle fixe";
 
 		ButtonGroup groupeBoutons = new ButtonGroup();
 		JRadioButton strategie1 = new JRadioButton(RANDOMIZED_SELL);
