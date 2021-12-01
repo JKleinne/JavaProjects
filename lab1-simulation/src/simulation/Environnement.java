@@ -118,6 +118,9 @@ public class Environnement extends SwingWorker<Object, String> {
                 if(!state.facilities.isEmpty()) {
                     executeSell(current - timestamp, TOUR);
                     craftComponents();
+
+                    var f = state.getFacilityById(51);
+                    System.out.println("Avions: " + f.getStock().size());
                 }
 
                 timestamp = current;
